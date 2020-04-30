@@ -29,9 +29,8 @@ namespace CommonTools
 					return;
 				Invalidate(Util.Rect(ColorSelectorRectangle));
 				m_selectedColor = value;
-				if (SelectedColorChanged != null)
-					SelectedColorChanged(this, null);
-				Refresh();//Invalidate(Util.Rect(ColorSelectorRectangle));
+                SelectedColorChanged?.Invoke(this, null);
+                Refresh();//Invalidate(Util.Rect(ColorSelectorRectangle));
 			}
 		}
 		public ColorWheel()

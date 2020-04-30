@@ -38,7 +38,7 @@ namespace CAPTCHA
             }
             get
             {
-                return this.text;
+                return text;
             }
         }
 
@@ -58,15 +58,15 @@ namespace CAPTCHA
             // Create a new 32-bit bitmap image.
 
             Bitmap bitmap = new Bitmap(
-              this.Width,
-              this.Height,
+              Width,
+              Height,
               PixelFormat.Format32bppArgb);
 
             // Create a graphics object for drawing.
 
             Graphics g = Graphics.FromImage(bitmap);
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
+            Rectangle rect = new Rectangle(0, 0, Width, Height);
 
             // Fill in the background.
 
@@ -90,7 +90,7 @@ namespace CAPTCHA
                   new FontFamily("Arial"),
                   fontSize,
                   FontStyle.Bold);
-                size = g.MeasureString(this.text, font);
+                size = g.MeasureString(text, font);
             } while (size.Width > rect.Width);
 
             // Set up the text format.
@@ -103,7 +103,7 @@ namespace CAPTCHA
 
             GraphicsPath path = new GraphicsPath();
             path.AddString(
-              this.text,
+              text,
               font.FontFamily,
               (int)font.Style,
               font.Size, rect,
@@ -112,17 +112,17 @@ namespace CAPTCHA
             PointF[] points =
       {
         new PointF(
-          this.random.Next(rect.Width) / v,
-          this.random.Next(rect.Height) / v),
+          random.Next(rect.Width) / v,
+          random.Next(rect.Height) / v),
         new PointF(
-          rect.Width - this.random.Next(rect.Width) / v,
-          this.random.Next(rect.Height) / v),
+          rect.Width - random.Next(rect.Width) / v,
+          random.Next(rect.Height) / v),
         new PointF(
-          this.random.Next(rect.Width) / v,
-          rect.Height - this.random.Next(rect.Height) / v),
+          random.Next(rect.Width) / v,
+          rect.Height - random.Next(rect.Height) / v),
         new PointF(
-          rect.Width - this.random.Next(rect.Width) / v,
-          rect.Height - this.random.Next(rect.Height) / v)
+          rect.Width - random.Next(rect.Width) / v,
+          rect.Height - random.Next(rect.Height) / v)
       };
             Matrix matrix = new Matrix();
             matrix.Translate(0F, 0F);
@@ -141,10 +141,10 @@ namespace CAPTCHA
             int m = Math.Max(rect.Width, rect.Height);
             for (int i = 0; i < (int)(rect.Width * rect.Height / 30F); i++)
             {
-                int x = this.random.Next(rect.Width);
-                int y = this.random.Next(rect.Height);
-                int w = this.random.Next(m / 50);
-                int h = this.random.Next(m / 50);
+                int x = random.Next(rect.Width);
+                int y = random.Next(rect.Height);
+                int w = random.Next(m / 50);
+                int h = random.Next(m / 50);
                 g.FillEllipse(hatchBrush, x, y, w, h);
             }
 
@@ -156,7 +156,7 @@ namespace CAPTCHA
 
             // Set the image.
 
-            this.Image = bitmap;
+            Image = bitmap;
         }
 
         public void Renew()

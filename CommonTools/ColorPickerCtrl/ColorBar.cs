@@ -54,9 +54,8 @@ namespace CommonTools
 				if (value != m_percent)
 				{
 					m_percent = value;
-					if (SelectedValueChanged != null)
-						SelectedValueChanged(this, null);
-					Invalidate();
+                    SelectedValueChanged?.Invoke(this, null);
+                    Invalidate();
 				}
 
 			}

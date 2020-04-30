@@ -17,24 +17,24 @@ namespace MultiRemoteDesktopClient
 
         void InitializeServerListEvents()
         {
-            this.lvServerLists.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(lvServerLists_ItemSelectionChanged);
-            this.lvServerLists.DoubleClick += new EventHandler(lvServerLists_DoubleClick);
-            this.lvServerLists.MouseDown += new MouseEventHandler(lvServerLists_MouseDown);
+            lvServerLists.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(lvServerLists_ItemSelectionChanged);
+            lvServerLists.DoubleClick += new EventHandler(lvServerLists_DoubleClick);
+            lvServerLists.MouseDown += new MouseEventHandler(lvServerLists_MouseDown);
 
-            this.tlvServerLists.AfterSelect += new TreeViewEventHandler(tlvServerLists_AfterSelect);
-            this.tlvServerLists.DoubleClick += new EventHandler(tlvServerLists_DoubleClick);
-            this.tlvServerLists.MouseDown += new MouseEventHandler(tlvServerLists_MouseDown);
+            tlvServerLists.AfterSelect += new TreeViewEventHandler(tlvServerLists_AfterSelect);
+            tlvServerLists.DoubleClick += new EventHandler(tlvServerLists_DoubleClick);
+            tlvServerLists.MouseDown += new MouseEventHandler(tlvServerLists_MouseDown);
 
-            this.btnHideServerLists.Click += new EventHandler(btnHideServerLists_Click);
-            this.btnPinServerLists.Click += new EventHandler(btnPinServerLists_Click);
-            this.tabServerLists.Click += new EventHandler(tabServerLists_Click);
+            btnHideServerLists.Click += new EventHandler(btnHideServerLists_Click);
+            btnPinServerLists.Click += new EventHandler(btnPinServerLists_Click);
+            tabServerLists.Click += new EventHandler(tabServerLists_Click);
 
             #region server list context menu
             {
-                this.lvServerListsContextMenu_NewClient.Click += new EventHandler(ShowNewForm);
-                this.lvServerListsContextMenu_DeleteClient.Click += new EventHandler(btnDelete_Click);
-                this.lvServerListsContextMenu_EditClientSettings.Click += new EventHandler(OpenSettingsWindow);
-                this.lvServerListsContextMenu_ConnectAll.Click += new EventHandler(toolbar_ConnectAll_Click);
+                lvServerListsContextMenu_NewClient.Click += new EventHandler(ShowNewForm);
+                lvServerListsContextMenu_DeleteClient.Click += new EventHandler(btnDelete_Click);
+                lvServerListsContextMenu_EditClientSettings.Click += new EventHandler(OpenSettingsWindow);
+                lvServerListsContextMenu_ConnectAll.Click += new EventHandler(toolbar_ConnectAll_Click);
             }
             #endregion
         }
@@ -51,12 +51,12 @@ namespace MultiRemoteDesktopClient
 
         void lvServerLists_DoubleClick(object sender, EventArgs e)
         {
-            this.Connect();
+            Connect();
         }
 
         void lvServerLists_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            this._selIndex = e.ItemIndex;
+            _selIndex = e.ItemIndex;
         }
 
         void lvServerLists_MouseDown(object sender, MouseEventArgs e)
@@ -89,7 +89,7 @@ namespace MultiRemoteDesktopClient
             {
                 if (!thisSelectedNode.Key.Contains("gid")) // we don't need parent node / group
                 {
-                    this.Connect();
+                    Connect();
                 }
             }
         }
@@ -106,11 +106,11 @@ namespace MultiRemoteDesktopClient
             // just get the first node selection
             CommonTools.Node n = tlvServerLists.NodesSelection[0];
 
-            ListViewItem thisItem = this.lvServerLists.FindItemWithText(n[0].ToString());
+            ListViewItem thisItem = lvServerLists.FindItemWithText(n[0].ToString());
 
             if (thisItem != null)
             {
-                this._selIndex = thisItem.Index;
+                _selIndex = thisItem.Index;
             }
         }
 
@@ -124,9 +124,9 @@ namespace MultiRemoteDesktopClient
                 {
                     Database.ServerDetails sd = (Database.ServerDetails)thisSelectedNode.Tag;
                     status_TextStatus.Text = sd.ServerName + " - " + sd.Server;
-                    this.tlvch.EnableControls(true);
+                    tlvch.EnableControls(true);
 
-                    ListViewItem thisItem = this.lvServerLists.FindItemWithText(thisSelectedNode[0].ToString());
+                    ListViewItem thisItem = lvServerLists.FindItemWithText(thisSelectedNode[0].ToString());
 
                     if (thisItem != null)
                     {
@@ -137,7 +137,7 @@ namespace MultiRemoteDesktopClient
                 else
                 {
                     // disable all unnecessary controls
-                    this.tlvch.EnableControls(false);
+                    tlvch.EnableControls(false);
 
                     // ok .. we like our ConnectAll button and Menu strip item to be enabled 
                     // so we can use it when we selected our parent node / group
@@ -164,7 +164,7 @@ namespace MultiRemoteDesktopClient
                         if (item != null)
                         {
                             // ok so we have it.
-                            this._selIndex = item.Index;
+                            _selIndex = item.Index;
                         }
 
                         item = null;
@@ -175,7 +175,7 @@ namespace MultiRemoteDesktopClient
                         // no child nodes
                         // let's just disable ConnectAll buttons and menu items again
                         // disable all unnecessary controls
-                        this.tlvch.EnableControls(false);
+                        tlvch.EnableControls(false);
                     }
                 }
             }
@@ -183,7 +183,7 @@ namespace MultiRemoteDesktopClient
             {
                 // disable all unnecessary controls
                 // if nothing is selected
-                this.tlvch.EnableControls(false);
+                tlvch.EnableControls(false);
             }
         }
 
@@ -191,8 +191,8 @@ namespace MultiRemoteDesktopClient
         {
             //this._lastPanelWidth = this.panelServerLists.Width;
 
-            this.panelServerLists.Enabled = false;
-            this.panelServerLists.Visible = false;
+            panelServerLists.Enabled = false;
+            panelServerLists.Visible = false;
         }
 
         void btnPinServerLists_Click(object sender, EventArgs e)

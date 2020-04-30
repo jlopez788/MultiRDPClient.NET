@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Database
 {
@@ -11,23 +9,11 @@ namespace Database
             DUPLICATE_ENTRY
         }
 
-        ExceptionTypes _exTypes;
+        public ExceptionTypes ExceptionType { get; set; }
 
         public DatabaseException(ExceptionTypes exception_type)
         {
-            this._exTypes = exception_type;
-        }
-
-        public ExceptionTypes ExceptionType
-        {
-            get
-            {
-                return this._exTypes;
-            }
-            set
-            {
-                this._exTypes = value;
-            }
+            ExceptionType = exception_type;
         }
     }
 }

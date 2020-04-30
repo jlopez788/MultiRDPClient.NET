@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+﻿using Database;
 using System.Windows.Forms;
-using Database;
 
 namespace MultiRemoteDesktopClient
 {
@@ -12,6 +8,7 @@ namespace MultiRemoteDesktopClient
         // Summary:
         //     Each item appears as a full-sized icon with a label below it.
         LargeIcon = 0,
+
         //
         // Summary:
         //     Each item appears on a separate line with further information about each
@@ -20,15 +17,18 @@ namespace MultiRemoteDesktopClient
         //     A column displays a header which can display a caption for the column. The
         //     user can resize each column at run time.
         Details = 1,
+
         //
         // Summary:
         //     Each item appears as a small icon with a label to its right.
         SmallIcon = 2,
+
         //
         // Summary:
         //     Each item appears as a small icon with a label to its right. Items are arranged
         //     in columns with no column headers.
         List = 3,
+
         //
         // Summary:
         //     Each item appears as a full-sized icon with the item label and subitem information
@@ -38,6 +38,7 @@ namespace MultiRemoteDesktopClient
         //     the System.Windows.Forms.ListView control displays in the System.Windows.Forms.View.LargeIcon
         //     view.
         Tile = 4,
+
         //
         // Summary:
         //     viewed as Tree
@@ -52,7 +53,6 @@ namespace MultiRemoteDesktopClient
 
         public static ControlHideShow controlHideShow = new ControlHideShow();
         public static Form[] MDIChildrens;
-        
 
         public static LiveInformationBox.InfoWindow infoWin = new LiveInformationBox.InfoWindow(
             System.IO.Path.Combine(Application.StartupPath, "XMLInfoFile.xml"),
@@ -63,9 +63,8 @@ namespace MultiRemoteDesktopClient
         {
             cb.Items.Clear();
 
-            dbGroups.Read();
-
-            foreach (Database.GroupDetails gd in dbGroups.ArrayListGroups)
+            var groups = dbGroups.Items;
+            foreach (GroupDetails gd in groups)
             {
                 cb.Items.Add(gd.GroupName);
             }

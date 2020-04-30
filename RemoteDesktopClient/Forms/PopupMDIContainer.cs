@@ -25,7 +25,7 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            this.tabMDIChild.SelectionChanged += new EventHandler(tabMDIChild_SelectionChanged);
+            tabMDIChild.SelectionChanged += new EventHandler(tabMDIChild_SelectionChanged);
         }
 
         void tabMDIChild_SelectionChanged(object sender, EventArgs e)

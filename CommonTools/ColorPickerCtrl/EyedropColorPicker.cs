@@ -38,7 +38,7 @@ namespace CommonTools
 		}
 		public EyedropColorPicker()
 		{
-			this.DoubleBuffered = true;
+			DoubleBuffered = true;
 			m_icon = new Bitmap(typeof(EyedropColorPicker), "ColorPickerCtrl.Resources.eyedropper.bmp");
 			m_icon.MakeTransparent(Color.Magenta);
 		}
@@ -65,7 +65,7 @@ namespace CommonTools
 		}
 		void GetSnapshot()
 		{
-			Point p = Control.MousePosition;
+			Point p = MousePosition;
 			p.X -= m_snapshot.Width / 2;
 			p.Y -= m_snapshot.Height / 2;
 
@@ -79,9 +79,8 @@ namespace CommonTools
 				if (c != m_selectedColor)
 				{
 					m_selectedColor = c;
-					if (SelectedColorChanged != null)
-						SelectedColorChanged(this, null);
-				}
+                    SelectedColorChanged?.Invoke(this, null);
+                }
 			}
 		}
 		protected override void OnPaint(PaintEventArgs e)

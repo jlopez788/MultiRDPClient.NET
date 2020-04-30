@@ -50,9 +50,8 @@ namespace CommonTools
 				m_colorBar.SelectedHSLColor = value;
 				m_colorWheel.SelectedHSLColor = value;
 				m_selectedColor = value;
-				if (SelectedColorChanged != null)
-					SelectedColorChanged(this, null);
-			}
+                SelectedColorChanged?.Invoke(this, null);
+            }
 		}
 	}
 }

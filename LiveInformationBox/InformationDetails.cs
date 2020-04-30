@@ -19,7 +19,7 @@ namespace LiveInformationBox
 
         public XMLInformationReader(string XMLInfoFile)
         {
-            this._xmlInfoFile = XMLInfoFile;
+            _xmlInfoFile = XMLInfoFile;
         }
 
         public InformationDetails Read(string ControlName)
@@ -80,11 +80,11 @@ namespace LiveInformationBox
         {
             set
             {
-                this._title = value;
+                _title = value;
             }
             get
             {
-                return this._title;
+                return _title;
             }
         }
 
@@ -92,11 +92,11 @@ namespace LiveInformationBox
         {
             set
             {
-                this._short_description = value;
+                _short_description = value;
             }
             get
             {
-                return this._short_description;
+                return _short_description;
             }
         }
 
@@ -104,11 +104,11 @@ namespace LiveInformationBox
         {
             set
             {
-                this._infos = value;
+                _infos = value;
             }
             get
             {
-                return this._infos;
+                return _infos;
             }
         }
     }

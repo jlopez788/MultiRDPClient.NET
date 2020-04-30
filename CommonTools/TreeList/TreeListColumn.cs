@@ -180,7 +180,7 @@ namespace CommonTools
 		public bool ishot = false;
 		public virtual void Draw(Graphics dc, ColumnHeaderPainter painter, Rectangle r)
 		{
-			painter.DrawHeader(dc, r, this, this.HeaderFormat, ishot);
+			painter.DrawHeader(dc, r, this, HeaderFormat, ishot);
 		}
 
 		bool	m_autoSize = false;

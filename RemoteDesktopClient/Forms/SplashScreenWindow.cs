@@ -16,8 +16,8 @@ namespace MultiRemoteDesktopClient
         public SplashScreenWindow()
         {
             InitializeComponent();
-            this.Opacity = 0.0f;
-            this.Shown += new EventHandler(SplashScreenWindow_Shown);
+            Opacity = 0.0f;
+            Shown += new EventHandler(SplashScreenWindow_Shown);
         }
 
         void SplashScreenWindow_Shown(object sender, EventArgs e)
@@ -29,12 +29,12 @@ namespace MultiRemoteDesktopClient
 
         void timer2_Tick(object sender, EventArgs e)
         {
-            if (this.Opacity >= 0 || this.Opacity <= 1)
+            if (Opacity >= 0 || Opacity <= 1)
             {
-                this.Opacity += this._opacity;
+                Opacity += _opacity;
             }
 
-            if(this.Opacity == 1)
+            if(Opacity == 1)
             {
                 timer1.Enabled = true;
                 timer1.Tick += new EventHandler(timer1_Tick);
@@ -43,7 +43,7 @@ namespace MultiRemoteDesktopClient
 
         void timer1_Tick(object sender, EventArgs e)
         {
-            this.timer2.Enabled = false;
+            timer2.Enabled = false;
             Close();
         }
     }

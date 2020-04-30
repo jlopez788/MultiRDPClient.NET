@@ -16,30 +16,30 @@ namespace MultiRemoteDesktopClient
 
         public ApplicationSettings()
         {
-            this._exeFileMap.ExeConfigFilename = Path.Combine(Application.StartupPath, "ApplicationSettings.config");
-            config = ConfigurationManager.OpenMappedExeConfiguration(this._exeFileMap, ConfigurationUserLevel.None);
+            _exeFileMap.ExeConfigFilename = Path.Combine(Application.StartupPath, "ApplicationSettings.config");
+            config = ConfigurationManager.OpenMappedExeConfiguration(_exeFileMap, ConfigurationUserLevel.None);
 
-            if (!File.Exists(this._exeFileMap.ExeConfigFilename))
+            if (!File.Exists(_exeFileMap.ExeConfigFilename))
             {
-                this._isAppConfigExists = false;
-                this.Settings.Password = "pass";
+                _isAppConfigExists = false;
+                Settings.Password = "pass";
                 Save();
             }
             else
             {
-                this._isAppConfigExists = true;
+                _isAppConfigExists = true;
                 Read();
             }
         }
 
         public bool IsAppConfigExists()
         {
-            return this._isAppConfigExists;
+            return _isAppConfigExists;
         }
 
         public void Read()
         {
-            this.Settings = config.GetSection("SettingsModel") as SettingsModel;
+            Settings = config.GetSection("SettingsModel") as SettingsModel;
         }
 
         public bool Save()
@@ -49,9 +49,9 @@ namespace MultiRemoteDesktopClient
             try
             {
                 SettingsModel smodel = new SettingsModel();
-                smodel.Password = this.Settings.Password;
-                smodel.HideWhenMinimized = this.Settings.HideWhenMinimized;
-                smodel.HideInformationPopupWindow = this.Settings.HideInformationPopupWindow;
+                smodel.Password = Settings.Password;
+                smodel.HideWhenMinimized = Settings.HideWhenMinimized;
+                smodel.HideInformationPopupWindow = Settings.HideInformationPopupWindow;
 
                 config.Sections.Remove("SettingsModel");
                 config.Sections.Add("SettingsModel", smodel);

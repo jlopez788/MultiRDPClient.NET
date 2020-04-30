@@ -45,7 +45,7 @@ namespace CommonTools
 			Control selectedview = GetView(key);
 			foreach (Control view in m_views.Values)
 			{
-				if (object.ReferenceEquals(selectedview, view) == false)
+				if (ReferenceEquals(selectedview, view) == false)
 					view.Hide();
 			}
 			if (selectedview != null)

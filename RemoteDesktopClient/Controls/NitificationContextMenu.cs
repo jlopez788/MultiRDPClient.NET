@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
 {
     public delegate void DelegateDisconnectEvent(object sender, EventArgs e);
+
     public delegate void DelegateConfigurationEvent(object sender, EventArgs e);
+
     public delegate void DelegateLockEvent(object sender, EventArgs e);
+
     public delegate void DelegateServerEvent(object sender, EventArgs e, Database.ServerDetails server_details);
 
     public class NotificationContextMenu : ContextMenuStrip
@@ -25,11 +25,11 @@ namespace MultiRemoteDesktopClient
 
         private void AddMenuItems()
         {
-            this.Items.Clear();
+            Items.Clear();
 
             GlobalHelper.dbGroups.GetGroupsWithServerCount();
-            ArrayList groups = GlobalHelper.dbGroups.ArrayListGroups;
-            ArrayList servers = GlobalHelper.dbServers.ArrayListServers;
+            var groups = GlobalHelper.dbGroups.Items;
+            var servers = GlobalHelper.dbServers.Items;
 
             ToolStripMenuItem[] menuItemGroups = new ToolStripMenuItem[groups.Count];
 
@@ -42,7 +42,7 @@ namespace MultiRemoteDesktopClient
                 int scnt = 0;
                 foreach (Database.ServerDetails sd in servers)
                 {
-                    if (gd.GroupID == sd.GroupID)
+                    if (gd.Id == sd.GroupID)
                     {
                         System.Diagnostics.Debug.WriteLine(sd.ServerName);
                         menuItemServers[scnt] = new ToolStripMenuItem(sd.ServerName, Properties.Resources.mstscax_dll_I345e_0409_16, new EventHandler(Servers_Clicked));
@@ -55,8 +55,8 @@ namespace MultiRemoteDesktopClient
                 menuItemGroups[cnt] = new ToolStripMenuItem(gd.GroupName, Properties.Resources.manage_groups_16, menuItemServers);
                 cnt++;
             }
-            
-            this.Items.AddRange(new ToolStripItem[] {
+
+            Items.AddRange(new ToolStripItem[] {
                 new ToolStripMenuItem("Servers", null, menuItemGroups),
                 new ToolStripMenuItem("Disconnect All", Properties.Resources.disconnect_all_16, new EventHandler(DisconnectAll_Clicked)),
                 new ToolStripSeparator(),
@@ -72,40 +72,28 @@ namespace MultiRemoteDesktopClient
             AddMenuItems();
         }
 
-        void DisconnectAll_Clicked(object sender, EventArgs e)
+        private void DisconnectAll_Clicked(object sender, EventArgs e)
         {
-            if (OnDisconnect_Clicked != null)
-            {
-                OnDisconnect_Clicked(this, e);
-            }
+            OnDisconnect_Clicked?.Invoke(this, e);
         }
 
-        void Servers_Clicked(object sender, EventArgs e)
+        private void Servers_Clicked(object sender, EventArgs e)
         {
             ToolStripMenuItem menuItem = (ToolStripMenuItem)sender;
-            if (OnServer_Clicked != null)
-            {
-                OnServer_Clicked(this, e, (Database.ServerDetails)menuItem.Tag);
-            }
+            OnServer_Clicked?.Invoke(this, e, (Database.ServerDetails)menuItem.Tag);
         }
 
-        void Configuration_Clicked(object sender, EventArgs e)
+        private void Configuration_Clicked(object sender, EventArgs e)
         {
-            if (OnConfiguration_Clicked != null)
-            {
-                OnConfiguration_Clicked(this, e);
-            }
+            OnConfiguration_Clicked?.Invoke(this, e);
         }
 
-        void Lock_Clicked(object sender, EventArgs e)
+        private void Lock_Clicked(object sender, EventArgs e)
         {
-            if (OnLock_Clicked != null)
-            {
-                OnLock_Clicked(this, e);
-            }
+            OnLock_Clicked?.Invoke(this, e);
         }
 
-        void Exit_Clicked(object sender, EventArgs e)
+        private void Exit_Clicked(object sender, EventArgs e)
         {
             Application.Exit();
         }

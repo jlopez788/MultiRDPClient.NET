@@ -141,11 +141,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._screenMode;
+                return _screenMode;
             }
             set
             {
-                this._screenMode = value;
+                _screenMode = value;
             }
         }
 
@@ -153,11 +153,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._desktopWidth;
+                return _desktopWidth;
             }
             set
             {
-                this._desktopWidth = value;
+                _desktopWidth = value;
             }
         }
 
@@ -165,11 +165,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._desktopHeight;
+                return _desktopHeight;
             }
             set
             {
-                this._desktopHeight = value;
+                _desktopHeight = value;
             }
         }
 
@@ -177,11 +177,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._sessionBPP;
+                return _sessionBPP;
             }
             set
             {
-                this._sessionBPP = value;
+                _sessionBPP = value;
             }
         }
 
@@ -189,11 +189,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._winPosStr;
+                return _winPosStr;
             }
             set
             {
-                this._winPosStr = value;
+                _winPosStr = value;
             }
         }
 
@@ -201,11 +201,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._fullAddress;
+                return _fullAddress;
             }
             set
             {
-                this._fullAddress = value;
+                _fullAddress = value;
             }
         }
 
@@ -213,11 +213,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._compression;
+                return _compression;
             }
             set
             {
-                this._compression = value;
+                _compression = value;
             }
         }
 
@@ -225,11 +225,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._keyboardHook;
+                return _keyboardHook;
             }
             set
             {
-                this._keyboardHook = value;
+                _keyboardHook = value;
             }
         }
 
@@ -237,11 +237,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._audiomode;
+                return _audiomode;
             }
             set
             {
-                this._audiomode = value;
+                _audiomode = value;
             }
         }
 
@@ -249,11 +249,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._redirectDrives;
+                return _redirectDrives;
             }
             set
             {
-                this._redirectDrives = value;
+                _redirectDrives = value;
             }
         }
 
@@ -261,11 +261,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._redirectPrinters;
+                return _redirectPrinters;
             }
             set
             {
-                this._redirectPrinters = value;
+                _redirectPrinters = value;
             }
         }
 
@@ -273,11 +273,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._redirectComPorts;
+                return _redirectComPorts;
             }
             set
             {
-                this._redirectComPorts = value;
+                _redirectComPorts = value;
             }
         }
 
@@ -285,11 +285,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._redirectSmartCards;
+                return _redirectSmartCards;
             }
             set
             {
-                this._redirectSmartCards = value;
+                _redirectSmartCards = value;
             }
         }
 
@@ -297,11 +297,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._displayConnectionBar;
+                return _displayConnectionBar;
             }
             set
             {
-                this._displayConnectionBar = value;
+                _displayConnectionBar = value;
             }
         }
 
@@ -309,11 +309,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._autoReconnectionEnabled;
+                return _autoReconnectionEnabled;
             }
             set
             {
-                this._autoReconnectionEnabled = value;
+                _autoReconnectionEnabled = value;
             }
         }
 
@@ -321,11 +321,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._username;
+                return _username;
             }
             set
             {
-                this._username = value;
+                _username = value;
             }
         }
 
@@ -333,11 +333,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._domain;
+                return _domain;
             }
             set
             {
-                this._domain = value;
+                _domain = value;
             }
         }
 
@@ -345,11 +345,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._alternateShell;
+                return _alternateShell;
             }
             set
             {
-                this._alternateShell = value;
+                _alternateShell = value;
             }
         }
 
@@ -357,11 +357,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._shellWorkingDirectory;
+                return _shellWorkingDirectory;
             }
             set
             {
-                this._shellWorkingDirectory = value;
+                _shellWorkingDirectory = value;
             }
         }
 
@@ -369,11 +369,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._password;
+                return _password;
             }
             set
             {
-                this._password = value;
+                _password = value;
             }
         }
 
@@ -381,11 +381,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._disableWallpaper;
+                return _disableWallpaper;
             }
             set
             {
-                this._disableWallpaper = value;
+                _disableWallpaper = value;
             }
         }
 
@@ -393,11 +393,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._disableFullWindowDrag;
+                return _disableFullWindowDrag;
             }
             set
             {
-                this._disableFullWindowDrag = value;
+                _disableFullWindowDrag = value;
             }
         }
 
@@ -405,11 +405,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._disableMenuAnims;
+                return _disableMenuAnims;
             }
             set
             {
-                this._disableMenuAnims = value;
+                _disableMenuAnims = value;
             }
         }
 
@@ -417,11 +417,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._disableThemes;
+                return _disableThemes;
             }
             set
             {
-                this._disableThemes = value;
+                _disableThemes = value;
             }
         }
 
@@ -429,11 +429,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._disableCursorSettings;
+                return _disableCursorSettings;
             }
             set
             {
-                this._displayConnectionBar = value;
+                _displayConnectionBar = value;
             }
         }
 
@@ -441,11 +441,11 @@ namespace RDPFileReader
         {
             get
             {
-                return this._bitmapCachePersistEnable;
+                return _bitmapCachePersistEnable;
             }
             set
             {
-                this._bitmapCachePersistEnable = value;
+                _bitmapCachePersistEnable = value;
             }
         }
 
@@ -455,7 +455,7 @@ namespace RDPFileReader
 
         public void Read(string filepath)
         {
-            this._filename = filepath;
+            _filename = filepath;
 
             string data = string.Empty;
 
@@ -482,115 +482,115 @@ namespace RDPFileReader
                     switch (m.Groups["type"].Value)
                     {
                         case "screen mode id":
-                            this._screenMode = int.Parse(v);
+                            _screenMode = int.Parse(v);
                             break;
 
                         case "desktopwidth":
-                            this._desktopWidth = int.Parse(v);
+                            _desktopWidth = int.Parse(v);
                             break;
 
                         case "desktopheight":
-                            this._desktopHeight = int.Parse(v);
+                            _desktopHeight = int.Parse(v);
                             break;
 
                         case "session bpp":
-                            this._sessionBPP = (SessionBPPs)int.Parse(v);
+                            _sessionBPP = (SessionBPPs)int.Parse(v);
                             break;
 
                         case "winposstr":
                             string[] vals = v.Split(',');
 
-                            this._winPosStr.WinState = (WindowState)int.Parse(vals[1]);
+                            _winPosStr.WinState = (WindowState)int.Parse(vals[1]);
 
-                            this._winPosStr.Rect.Top = int.Parse(vals[2]);
-                            this._winPosStr.Rect.Left = int.Parse(vals[3]);
-                            this._winPosStr.Rect.Width = int.Parse(vals[4]);
-                            this._winPosStr.Rect.Height = int.Parse(vals[5]);
+                            _winPosStr.Rect.Top = int.Parse(vals[2]);
+                            _winPosStr.Rect.Left = int.Parse(vals[3]);
+                            _winPosStr.Rect.Width = int.Parse(vals[4]);
+                            _winPosStr.Rect.Height = int.Parse(vals[5]);
 
                             break;
 
                         case "full address":
-                            this._fullAddress = v;
+                            _fullAddress = v;
                             break;
                             
                         case "compression":
-                            this._compression = int.Parse(v);
+                            _compression = int.Parse(v);
                             break;
 
                         case "keyboardhook":
-                            this._keyboardHook = (KeyboardHooks)int.Parse(v);
+                            _keyboardHook = (KeyboardHooks)int.Parse(v);
                             break;
 
                         case "audiomode":
-                            this._audiomode = (AudioModes)int.Parse(v);
+                            _audiomode = (AudioModes)int.Parse(v);
                             break;
 
                         case "redirectdrives":
-                            this._redirectDrives = int.Parse(v);
+                            _redirectDrives = int.Parse(v);
                             break;
 
                         case "redirectprinters":
-                            this._redirectPrinters = int.Parse(v);
+                            _redirectPrinters = int.Parse(v);
                             break;
 
                         case "redirectcomports":
-                            this._redirectComPorts = int.Parse(v);
+                            _redirectComPorts = int.Parse(v);
                             break;
 
                         case "redirectsmartcards":
-                            this._redirectSmartCards = int.Parse(v);
+                            _redirectSmartCards = int.Parse(v);
                             break;
 
                         case "displayconnectionbar":
-                            this._displayConnectionBar = int.Parse(v);
+                            _displayConnectionBar = int.Parse(v);
                             break;
 
                         case "autoreconnection enabled":
-                            this._autoReconnectionEnabled = int.Parse(v);
+                            _autoReconnectionEnabled = int.Parse(v);
                             break;
 
                         case "username":
-                            this._username = v;
+                            _username = v;
                             break;
 
                         case "domain":
-                            this._domain = v;
+                            _domain = v;
                             break;
 
                         case "alternate shell":
-                            this._alternateShell = v;
+                            _alternateShell = v;
                             break;
 
                         case "shell working directory":
-                            this._shellWorkingDirectory = v;
+                            _shellWorkingDirectory = v;
                             break;
 
                         case "password 51":
-                            this._password = v;
+                            _password = v;
                             break;
 
                         case "disable wallpaper":
-                            this._disableWallpaper = int.Parse(v);
+                            _disableWallpaper = int.Parse(v);
                             break;
 
                         case "disable full window drag":
-                            this._disableFullWindowDrag = int.Parse(v);
+                            _disableFullWindowDrag = int.Parse(v);
                             break;
 
                         case "disable menu anims":
-                            this._disableMenuAnims = int.Parse(v);
+                            _disableMenuAnims = int.Parse(v);
                             break;
 
                         case "disable themes":
-                            this._disableThemes = int.Parse(v);
+                            _disableThemes = int.Parse(v);
                             break;
 
                         case "disable cursor setting":
-                            this._disableCursorSettings = int.Parse(v);
+                            _disableCursorSettings = int.Parse(v);
                             break;
 
                         case "bitmapcachepersistenable":
-                            this._bitmapCachePersistEnable = int.Parse(v);
+                            _bitmapCachePersistEnable = int.Parse(v);
                             break;
                     }
                 }
@@ -599,47 +599,47 @@ namespace RDPFileReader
 
         public void Update()
         {
-            Save(this._filename);
+            Save(_filename);
         }
 
         public void Save(string filepath)
         {
-            this._filename = filepath;
+            _filename = filepath;
 
             string template = string.Empty;
 
-            foreach (string temp in this._rdpTemplate)
+            foreach (string temp in _rdpTemplate)
             {
                 template += temp + "\r\n";
             }
 
             string data = string.Format(template,
-                this._screenMode,
-                this._desktopWidth,
-                this._desktopHeight,
-                (int)this._sessionBPP,
-                (int)this._winPosStr.WinState, this._winPosStr.Rect.Top, this._winPosStr.Rect.Left, this._winPosStr.Rect.Width, this._winPosStr.Rect.Height,
-                this._fullAddress,
-                this._compression,
-                (int)this._keyboardHook,
-                (int)this._audiomode,
-                this._redirectDrives,
-                this._redirectPrinters,
-                this._redirectComPorts,
-                this._redirectSmartCards,
-                this._displayConnectionBar,
-                this._autoReconnectionEnabled,
-                this._username,
-                this._domain,
-                this._alternateShell,
-                this._shellWorkingDirectory,
-                this._password,
-                this._disableWallpaper,
-                this._disableFullWindowDrag,
-                this._disableMenuAnims,
-                this._disableThemes,
-                this._disableCursorSettings,
-                this._bitmapCachePersistEnable
+                _screenMode,
+                _desktopWidth,
+                _desktopHeight,
+                (int)_sessionBPP,
+                (int)_winPosStr.WinState, _winPosStr.Rect.Top, _winPosStr.Rect.Left, _winPosStr.Rect.Width, _winPosStr.Rect.Height,
+                _fullAddress,
+                _compression,
+                (int)_keyboardHook,
+                (int)_audiomode,
+                _redirectDrives,
+                _redirectPrinters,
+                _redirectComPorts,
+                _redirectSmartCards,
+                _displayConnectionBar,
+                _autoReconnectionEnabled,
+                _username,
+                _domain,
+                _alternateShell,
+                _shellWorkingDirectory,
+                _password,
+                _disableWallpaper,
+                _disableFullWindowDrag,
+                _disableMenuAnims,
+                _disableThemes,
+                _disableCursorSettings,
+                _bitmapCachePersistEnable
             );
 
             using (StreamWriter writer = new StreamWriter(filepath))

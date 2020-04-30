@@ -91,7 +91,7 @@ namespace CommonTools
 
 		public DropdownContainerControl()
 		{
-			this.DoubleBuffered = true;
+			DoubleBuffered = true;
 			m_container = new DropdownContainer<T>(this);
 		}
 		public virtual void CloseDropdown(bool acceptValue)
@@ -280,8 +280,8 @@ namespace CommonTools
 				Controls.Add(m_cancelButton);
 			
 			Rectangle client = ClientRectangle;
-			this.Width += ctrl.Width - client.Width;
-			this.Height += ctrl.Height - client.Height;
+			Width += ctrl.Width - client.Width;
+			Height += ctrl.Height - client.Height;
 			ctrl.Location = ClientRectangle.Location;
 			Controls.Add(ctrl);
 

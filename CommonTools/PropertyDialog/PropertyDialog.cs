@@ -12,7 +12,7 @@ namespace CommonTools
 	{
 		public PropertyDialog()
 		{
-			this.DoubleBuffered = true;
+			DoubleBuffered = true;
 			InitializeComponent();
 		}
 		
@@ -58,9 +58,9 @@ namespace CommonTools
 				diffx = 0;
 			if (diffy < 0)
 				diffy = 0;
-			this.Width += diffx;
-			this.Height += diffy;
-			this.MinimumSize = this.Size;
+			Width += diffx;
+			Height += diffy;
+			MinimumSize = Size;
 		}
 		public void SelectPage(object key)
 		{

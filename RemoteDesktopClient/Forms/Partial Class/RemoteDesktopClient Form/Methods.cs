@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
 {
@@ -15,9 +12,8 @@ namespace MultiRemoteDesktopClient
 
             GetGroups();
 
-            GlobalHelper.dbServers.Read();
-
-            foreach (Database.ServerDetails sd in GlobalHelper.dbServers.ArrayListServers)
+            var items = GlobalHelper.dbServers.Items;
+            foreach (Database.ServerDetails sd in items)
             {
                 // add items to ListView
                 ListViewItem item = new ListViewItem(sd.ServerName);
@@ -37,8 +33,9 @@ namespace MultiRemoteDesktopClient
                              };
                 CommonTools.Node n = new CommonTools.Node(o);
                 n.Tag = sd;
-                tlvServerLists.Nodes["gid" + sd.GroupID.ToString()].Nodes.Add(sd.UID, n);
-                tlvServerLists.Nodes["gid" + sd.GroupID.ToString()].ExpandAll();
+                var key = $"gid_{sd.GroupID}";
+                tlvServerLists.Nodes[key].Nodes.Add(sd.Id.ToString(), n);
+                tlvServerLists.Nodes[key].ExpandAll();
             }
 
             FixListViewColumn();
@@ -46,18 +43,18 @@ namespace MultiRemoteDesktopClient
 
         public void GetGroups()
         {
-            GlobalHelper.dbGroups.Read();
-            
-            foreach (Database.GroupDetails gd in GlobalHelper.dbGroups.ArrayListGroups)
+            var items = GlobalHelper.dbGroups.Items;
+            foreach (Database.GroupDetails gd in items)
             {
                 // add groups to ListView
-                ListViewGroup lvg = new ListViewGroup("gid" + gd.GroupID.ToString(), gd.GroupName);
+                var key = $"gid_{gd.Id}";
+                ListViewGroup lvg = new ListViewGroup(key, gd.GroupName);
                 lvServerLists.Groups.Add(lvg);
 
                 // add parent node to TreeListView
-                CommonTools.Node n = new CommonTools.Node(gd.GroupName);
+                var n = new CommonTools.Node(gd.GroupName);
                 n.MakeVisible();
-                this.tlvServerLists.Nodes.Add("gid" + gd.GroupID.ToString(), n);
+                tlvServerLists.Nodes.Add(key, gd.GroupName);
             }
         }
 
@@ -67,7 +64,7 @@ namespace MultiRemoteDesktopClient
 
             lock (x) // force to resize the listview columns
             {
-                foreach (ColumnHeader ch in this.lvServerLists.Columns)
+                foreach (ColumnHeader ch in lvServerLists.Columns)
                 {
                     ch.Width = -2;
                 }
@@ -81,7 +78,7 @@ namespace MultiRemoteDesktopClient
             string formTitlePattern = "Remote Desktop Client - {0}@{1}[{2}]";
             string formTitle = string.Format(formTitlePattern, args);
 
-            foreach (RdpClientWindow f in this.MdiChildren)
+            foreach (RdpClientWindow f in MdiChildren)
             {
                 if (f.Text == formTitle)
                 {
@@ -92,9 +89,9 @@ namespace MultiRemoteDesktopClient
             return ret;
         }
 
-        void DisconnectAll()
+        private void DisconnectAll()
         {
-            foreach (RdpClientWindow f in this.MdiChildren)
+            foreach (RdpClientWindow f in MdiChildren)
             {
                 f.Disconnect();
             }
@@ -102,7 +99,6 @@ namespace MultiRemoteDesktopClient
 
         private void ShowMe()
         {
-            
             if (WindowState == FormWindowState.Minimized)
             {
                 WindowState = FormWindowState.Normal;
@@ -140,10 +136,10 @@ namespace MultiRemoteDesktopClient
 
         public void ConnectByServerName(string server_name)
         {
-            ListViewItem item = this.lvServerLists.FindItemWithText(server_name, false, 0, true);
+            ListViewItem item = lvServerLists.FindItemWithText(server_name, false, 0, true);
             if (item != null)
-            {   
-                this._selIndex = item.Index;
+            {
+                _selIndex = item.Index;
                 Connect();
             }
         }
@@ -154,13 +150,13 @@ namespace MultiRemoteDesktopClient
 
             lock (x)
             {
-                Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[this._selIndex].Tag;
+                Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[_selIndex].Tag;
 
                 bool canCreateNewForm = true;
                 string formTitlePattern = "Remote Desktop Client - {0}@{1}[{2}]";
                 string formTitle = string.Format(formTitlePattern, sd.Username, sd.ServerName, sd.Server);
 
-                foreach (Form f in this.MdiChildren)
+                foreach (Form f in MdiChildren)
                 {
                     if (f.Text == formTitle)
                     {
@@ -183,8 +179,8 @@ namespace MultiRemoteDesktopClient
                     clientWin.ServerSettingsChanged += new ServerSettingsChanged(clientWin_ServerSettingsChanged);
                     clientWin.Text = formTitle;
                     clientWin.MdiParent = this;
-                    System.Diagnostics.Debug.WriteLine(this.Handle);
-                    clientWin.ListIndex = this._selIndex;
+                    System.Diagnostics.Debug.WriteLine(Handle);
+                    clientWin.ListIndex = _selIndex;
                     clientWin.Show();
                     clientWin.BringToFront();
                     clientWin.Connect();
@@ -200,13 +196,13 @@ namespace MultiRemoteDesktopClient
             // hmmm... let's just rely on our ListView
 
             // check what group are we at
-            ListViewGroup thisGroup = this.lvServerLists.Items[this._selIndex].Group;
+            ListViewGroup thisGroup = lvServerLists.Items[_selIndex].Group;
 
             // connect all items in the group
             foreach (ListViewItem thisItem in thisGroup.Items)
             {
-                this._selIndex = thisItem.Index;
-                this.Connect();
+                _selIndex = thisItem.Index;
+                Connect();
             }
         }
 
@@ -214,7 +210,7 @@ namespace MultiRemoteDesktopClient
         {
             bool foundAGroup = false;
 
-            foreach (ListViewGroup group in this.lvServerLists.Groups)
+            foreach (ListViewGroup group in lvServerLists.Groups)
             {
                 System.Diagnostics.Debug.WriteLine(group.Header + ", " + groupname);
                 if (group.Header == groupname)
@@ -223,7 +219,7 @@ namespace MultiRemoteDesktopClient
                     if (group.Items.Count != 0)
                     {
                         // so let's just get the first item
-                        this._selIndex = group.Items[0].Index;
+                        _selIndex = group.Items[0].Index;
 
                         // and connect all items in the group
                         GroupConnectAll();
@@ -237,7 +233,7 @@ namespace MultiRemoteDesktopClient
 
             if (!foundAGroup)
             {
-                MessageBox.Show("No server's found on associated on this group '" + groupname + "'", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("No server's found on associated on this group '" + groupname + "'", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -245,28 +241,25 @@ namespace MultiRemoteDesktopClient
         {
             DialogResult dr;
 
-            Database.Database db = new Database.Database();
-
+            var db = new Database.Groups();
             if (!GlobalHelper.appSettings.IsAppConfigExists())
             {
                 dr = MessageBox.Show(
                     "Looks like it's your first time to use Multi Remote Desktop Client .Net!\r\n\r\nThe application created a default password for you called \"pass\".\r\nDo you like to update your password now?",
-                    this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question
+                    Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question
                 );
 
                 if (dr == DialogResult.Yes)
                 {
                     // call our toolbar_Configuration event method.
-                    this.toolbar_Configuration_Click(this.toolbar_Configuration, null);
+                    toolbar_Configuration_Click(toolbar_Configuration, null);
                 }
 
                 // create our new database schema and default datas
                 db.ResetDatabase();
-                
             }
 
             db.Delete(false);
-            db = null;
         }
 
         public bool AskPassword(object sender)

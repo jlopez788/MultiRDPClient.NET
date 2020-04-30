@@ -21,12 +21,12 @@ namespace MultiRemoteDesktopClient
 
             ResizeWindow(false);
 
-            this.FormClosing += new FormClosingEventHandler(PasswordWindow_FormClosing);
-            this.Shown += new EventHandler(PasswordWindow_Shown);
+            FormClosing += new FormClosingEventHandler(PasswordWindow_FormClosing);
+            Shown += new EventHandler(PasswordWindow_Shown);
 
-            this.btnGo.Click += new EventHandler(btnGo_Click);
-            this.btnCancel.Click += new EventHandler(btnCancel_Click);
-            this.btnRenewCAPTCHA.Click += new EventHandler(btnRenewCAPTCHA_Click);
+            btnGo.Click += new EventHandler(btnGo_Click);
+            btnCancel.Click += new EventHandler(btnCancel_Click);
+            btnRenewCAPTCHA.Click += new EventHandler(btnRenewCAPTCHA_Click);
         }
 
         void PasswordWindow_Shown(object sender, EventArgs e)
@@ -38,9 +38,9 @@ namespace MultiRemoteDesktopClient
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Your password has been tampered and it will cause the application to terminate and it will not run until you deleted the configuration file.\r\n\r\nDatabase is safe, please make a backup before deleting the configuration file.\r\n\r\nApplication will now terminate ...", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Your password has been tampered and it will cause the application to terminate and it will not run until you deleted the configuration file.\r\n\r\nDatabase is safe, please make a backup before deleting the configuration file.\r\n\r\nApplication will now terminate ...", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 isCanceled = true;
-                this.Close();
+                Close();
             }
         }
 
@@ -49,11 +49,11 @@ namespace MultiRemoteDesktopClient
             // set the default DialogResult value to OK
             // we have to set this because this form's DialogResult 
             // is set to Cancel
-            this.DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.OK;
 
             if (isCanceled)
             {
-                this.DialogResult = DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             }
         }
 
@@ -76,17 +76,17 @@ namespace MultiRemoteDesktopClient
                 if (ok)
                 {
                     isCanceled = false;
-                    this.Close();
+                    Close();
                 }
             }
             else
             {
-                DialogResult dr = MessageBox.Show("Incorrect password.\r\n\r\nPlease try again or press Cancel button to terminate this application", this.Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                DialogResult dr = MessageBox.Show("Incorrect password.\r\n\r\nPlease try again or press Cancel button to terminate this application", Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
 
                 if (dr == DialogResult.Cancel)
                 {
                     isCanceled = true;
-                    this.Close();
+                    Close();
                 }
 
                 incPassCount++;
@@ -112,14 +112,14 @@ namespace MultiRemoteDesktopClient
         {
             if (!showCAPTCHA)
             {
-                this.Height = 190;
+                Height = 190;
             }
             else
             {
-                this.Height = 352;
+                Height = 352;
 
                 // center form to parent
-                this.Top = ((this.Owner.Height - this.Height) / 2) + this.Owner.Top;
+                Top = ((Owner.Height - Height) / 2) + Owner.Top;
             }
 
             groupboxCAPTCHA.Visible = showCAPTCHA;

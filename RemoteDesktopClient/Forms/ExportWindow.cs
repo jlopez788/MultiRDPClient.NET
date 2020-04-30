@@ -49,8 +49,8 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            this.Shown += new EventHandler(ExportWindow_Shown);
-            this.btnStart.Click += new EventHandler(btnStart_Click);
+            Shown += new EventHandler(ExportWindow_Shown);
+            btnStart.Click += new EventHandler(btnStart_Click);
         }
 
         void btnStart_Click(object sender, EventArgs e)
@@ -121,7 +121,7 @@ namespace MultiRemoteDesktopClient
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("An error occured while exporting the server '" + sd.ServerName + "' to RDP file format.\r\n\r\nError Message: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show("An error occured while exporting the server '" + sd.ServerName + "' to RDP file format.\r\n\r\nError Message: " + ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 System.Diagnostics.Debug.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
 
                                 continue;

@@ -32,9 +32,9 @@ namespace TextboxRequiredWrappers
         /// <param name="textbox"></param>
         public void AddRange(Control[] textbox)
         {
-            this._textbox = textbox;
+            _textbox = textbox;
 
-            foreach (Control ctrl in this._textbox)
+            foreach (Control ctrl in _textbox)
             {
                 if (ctrl.Text == string.Empty)
                 {
@@ -50,7 +50,7 @@ namespace TextboxRequiredWrappers
 
         public void AddAssociateControl(Control[] ctl)
         {
-            this._assocCtl = ctl;
+            _assocCtl = ctl;
         }
 
         void ctrl_TextChanged(object sender, EventArgs e)
@@ -63,9 +63,9 @@ namespace TextboxRequiredWrappers
             {
                 ctrl.Font = new System.Drawing.Font(ctrl.Font.FontFamily, ctrl.Font.Size, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 
-                if (this._assocCtl != null)
+                if (_assocCtl != null)
                 {
-                    foreach (Control c in this._assocCtl)
+                    foreach (Control c in _assocCtl)
                     {
                         c.Enabled = true;
                     }
@@ -73,9 +73,9 @@ namespace TextboxRequiredWrappers
             }
             else
             {
-                if (this._assocCtl != null)
+                if (_assocCtl != null)
                 {
-                    foreach (Control c in this._assocCtl)
+                    foreach (Control c in _assocCtl)
                     {
                         c.Enabled = false;
                     }
@@ -108,12 +108,12 @@ namespace TextboxRequiredWrappers
         {
             bool ret = true;
 
-            if (this._textbox == null)
+            if (_textbox == null)
             {
                 return true;
             }
 
-            foreach (Control ctrl in this._textbox)
+            foreach (Control ctrl in _textbox)
             {
                 if (ctrl.Text == reqFieldMessage)
                 {

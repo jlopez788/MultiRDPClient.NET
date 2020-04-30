@@ -109,7 +109,7 @@ namespace CommonTools
 			{
 				value = value.Replace("Color ", "");
 				value = value.Trim(new char[] { '[', ']' });
-				System.Drawing.Color c = System.Drawing.Color.FromName(value);
+				System.Drawing.Color c = Color.FromName(value);
 				if (c.IsKnownColor)
 					return c;
 				ColorWrapper color = new ColorWrapper();
@@ -175,7 +175,7 @@ namespace CommonTools
 			}
 			public System.Drawing.Color Color
 			{
-				get { return System.Drawing.Color.FromArgb(a, r, g, b); }
+				get { return Color.FromArgb(a, r, g, b); }
 			}
 		}
 	}

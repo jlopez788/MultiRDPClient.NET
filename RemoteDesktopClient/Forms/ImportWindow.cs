@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
+﻿using DataProtection;
 using RDPFileReader;
-using DataProtection;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
 {
     public partial class ImportWindow : Form
     {
-        OpenFileDialog ofd = null;
+        private OpenFileDialog ofd = null;
 
         public ImportWindow()
         {
@@ -28,12 +23,12 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            this.Shown += new EventHandler(ImportWindow_Shown);
-            this.btnStart.Click += new EventHandler(btnStart_Click);
-            this.btnBrowse.Click += new EventHandler(btnBrowse_Click);
+            Shown += new EventHandler(ImportWindow_Shown);
+            btnStart.Click += new EventHandler(btnStart_Click);
+            btnBrowse.Click += new EventHandler(btnBrowse_Click);
         }
 
-        void btnBrowse_Click(object sender, EventArgs e)
+        private void btnBrowse_Click(object sender, EventArgs e)
         {
             ofd = new OpenFileDialog();
             ofd.Filter = "RDP File|*.rdp";
@@ -56,22 +51,24 @@ namespace MultiRemoteDesktopClient
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("An error occured while reading '" + Path.GetFileName(thisFile) + "' and it will be skipped.\r\n\r\nError Message: " + ex.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("An error occured while reading '" + Path.GetFileName(thisFile) + "' and it will be skipped.\r\n\r\nError Message: " + ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         System.Diagnostics.Debug.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
 
                         continue;
                     }
                 }
+
                 #endregion
 
                 Database.ServerDetails sd = new Database.ServerDetails();
-                sd.UID = DateTime.Now.Ticks.ToString();
-                sd.GroupID = 1;
-                sd.ServerName = System.IO.Path.GetFileNameWithoutExtension(thisFile);
+                //TODO: Find out what this group id 1 is
+                //sd.GroupID = 1;
+                sd.ServerName = Path.GetFileNameWithoutExtension(thisFile);
                 sd.Server = rdpfile.FullAddress;
                 sd.Username = rdpfile.Username;
 
                 #region Try decrypting the password from RDP file
+
                 {
                     try
                     {
@@ -85,7 +82,7 @@ namespace MultiRemoteDesktopClient
                             // so let's just removed THAT!
                             RDPPassword = RDPPassword.Substring(0, RDPPassword.Length - 1);
                             // and decrypt it!
-                            RDPPassword = DataProtection.DataProtectionForRDPWrapper.Decrypt(RDPPassword);
+                            RDPPassword = DataProtectionForRDPWrapper.Decrypt(RDPPassword);
 
                             sd.Password = RDPPassword;
                         }
@@ -98,18 +95,19 @@ namespace MultiRemoteDesktopClient
 
                         if (Ex.Message == "Problem converting Hex to Bytes")
                         {
-                            MessageBox.Show("This RDP File '" + Path.GetFileNameWithoutExtension(thisFile) + "' contains a secured password which is currently unsported by this application.\r\nThe importing can still continue but without the password.\r\nYou can edit the password later by selecting a server in 'All Listed Servers' and click 'Edit Settings' button on the toolbar", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                            MessageBox.Show("This RDP File '" + Path.GetFileNameWithoutExtension(thisFile) + "' contains a secured password which is currently unsported by this application.\r\nThe importing can still continue but without the password.\r\nYou can edit the password later by selecting a server in 'All Listed Servers' and click 'Edit Settings' button on the toolbar", Text, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         }
                         else if (Ex.Message.Contains("Exception decrypting"))
                         {
-                            MessageBox.Show("Failed to decrypt the password from '" + Path.GetFileNameWithoutExtension(thisFile) + "'", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Failed to decrypt the password from '" + Path.GetFileNameWithoutExtension(thisFile) + "'", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                         {
-                            MessageBox.Show("An unknown error occured while decrypting the password from '" + Path.GetFileNameWithoutExtension(thisFile) + "'", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("An unknown error occured while decrypting the password from '" + Path.GetFileNameWithoutExtension(thisFile) + "'", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
+
                 #endregion
 
                 sd.Description = "Imported from " + thisFile;
@@ -133,7 +131,7 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void btnStart_Click(object sender, EventArgs e)
+        private void btnStart_Click(object sender, EventArgs e)
         {
             foreach (ListViewItem thisItem in lvRDPFiles.Items)
             {
@@ -143,13 +141,13 @@ namespace MultiRemoteDesktopClient
 
                 try
                 {
-                    GlobalHelper.dbServers.Save(true, sd);
+                    GlobalHelper.dbServers.Save(sd);
                 }
                 catch (Database.DatabaseException settingEx)
                 {
                     if (settingEx.ExceptionType == Database.DatabaseException.ExceptionTypes.DUPLICATE_ENTRY)
                     {
-                        MessageBox.Show("Can't save '" + sd.ServerName + "' due to duplicate entry", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Can't save '" + sd.ServerName + "' due to duplicate entry", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
 
@@ -162,9 +160,8 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void ImportWindow_Shown(object sender, EventArgs e)
+        private void ImportWindow_Shown(object sender, EventArgs e)
         {
-            
         }
     }
 }

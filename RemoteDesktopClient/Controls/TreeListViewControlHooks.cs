@@ -16,20 +16,20 @@ namespace MultiRemoteDesktopClient.Controls
 
         public TreeListViewControlHooks(ref TreeListView tlv)
         {
-            this._treelistview = tlv;
+            _treelistview = tlv;
 
             tlv.MouseClick +=new MouseEventHandler(tlv_MouseClick);
         }
 
         public void AddControlForEmptyListItem(Object[] ctrl)
         {
-            this._objCtrl_EmptyListItem = ctrl;
-            EnableControls(false, this._objCtrl_EmptyListItem);
+            _objCtrl_EmptyListItem = ctrl;
+            EnableControls(false, _objCtrl_EmptyListItem);
         }
 
         public void AddControlForItemSelection(Object[] ctrl)
         {
-            this._objCtrl_ItemSelection = ctrl;
+            _objCtrl_ItemSelection = ctrl;
         }
 
         private void EnableControls(bool enable, Object[] ctrl)
@@ -51,18 +51,18 @@ namespace MultiRemoteDesktopClient.Controls
 
         public void EnableControls(bool enable)
         {
-            EnableControls(enable, this._objCtrl_ItemSelection);
+            EnableControls(enable, _objCtrl_ItemSelection);
         }
 
         void tlv_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right || e.Button == MouseButtons.Left)
             {
-                Node n = this._treelistview.CalcHitNode(new System.Drawing.Point(e.X, e.Y));
+                Node n = _treelistview.CalcHitNode(new System.Drawing.Point(e.X, e.Y));
 
                 if (n == null)
                 {
-                    EnableControls(false, this._objCtrl_ItemSelection);
+                    EnableControls(false, _objCtrl_ItemSelection);
                 }
                 else
                 {

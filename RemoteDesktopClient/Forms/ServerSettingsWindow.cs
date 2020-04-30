@@ -6,6 +6,7 @@ using TextboxRequiredWrappers;
 namespace MultiRemoteDesktopClient
 {
     public delegate void ApplySettings(object sender, Database.ServerDetails sd);
+
     public delegate Rectangle GetClientWindowSize();
 
     public partial class ServerSettingsWindow : Form
@@ -13,8 +14,8 @@ namespace MultiRemoteDesktopClient
         public event ApplySettings ApplySettings;
         public event GetClientWindowSize GetClientWindowSize;
 
-        TextboxRequiredWrapper trw = new TextboxRequiredWrapper();
-        Database.ServerDetails oldSD;
+        private TextboxRequiredWrapper trw = new TextboxRequiredWrapper();
+        private Database.ServerDetails oldSD;
 
         private bool isUpdating = false;
 
@@ -48,7 +49,7 @@ namespace MultiRemoteDesktopClient
             tbColor.Value = 2;
             tbColor_Scroll(tbColor, null);
 
-            this.isUpdating = false;
+            isUpdating = false;
 
             btnGetClientWinS.Enabled = false;
 
@@ -57,7 +58,7 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControls(Database.ServerDetails sd)
         {
-            this.oldSD = sd;
+            oldSD = sd;
 
             trw.AddRange(new Control[] {
                 txServername,
@@ -79,12 +80,15 @@ namespace MultiRemoteDesktopClient
                 case 24:
                     tbColor.Value = 1;
                     break;
+
                 case 16:
                     tbColor.Value = 2;
                     break;
+
                 case 15:
                     tbColor.Value = 3;
                     break;
+
                 case 8:
                     tbColor.Value = 4;
                     break;
@@ -125,14 +129,14 @@ namespace MultiRemoteDesktopClient
             txHeight.Text = sd.DesktopHeight.ToString();
             cbFullscreen.Checked = sd.Fullscreen;
 
-            this.isUpdating = true;
+            isUpdating = true;
 
             GlobalHelper.PopulateGroupsDropDown(ddGroup, GlobalHelper.dbGroups.GetGroupNameByID(sd.GroupID));
 
             btnGetClientWinS.Enabled = true;
         }
 
-        void ddGroup_SelectedIndexChanged(object sender, EventArgs e)
+        private void ddGroup_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ddGroup.SelectedIndex == ddGroup.Items.Count - 1)
             {
@@ -154,7 +158,7 @@ namespace MultiRemoteDesktopClient
             ddGroup.SelectedIndexChanged += new EventHandler(ddGroup_SelectedIndexChanged);
         }
 
-        void btnGetClientWinS_Click(object sender, EventArgs e)
+        private void btnGetClientWinS_Click(object sender, EventArgs e)
         {
             if (GetClientWindowSize != null)
             {
@@ -164,11 +168,11 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void btnSave_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             if (!trw.isAllFieldSet())
             {
-                MessageBox.Show("One of the required field is empty", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("One of the required field is empty", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -185,15 +189,15 @@ namespace MultiRemoteDesktopClient
             sd.DesktopWidth = int.Parse(txWidth.Text);
             sd.DesktopHeight = int.Parse(txHeight.Text);
             sd.Fullscreen = cbFullscreen.Checked;
-            
+
             try
             {
-                if (this.isUpdating)
+                if (isUpdating)
                 {
                     // pass our old UID to new UID for saving
-                    sd.UID = oldSD.UID;
-                    
-                    GlobalHelper.dbServers.Save(false, sd);
+                    sd.Id = oldSD.Id;
+
+                    GlobalHelper.dbServers.Save(sd);
                     if (sd.Password != string.Empty)
                     {
                         sd.Password = RijndaelSettings.Decrypt(sd.Password);
@@ -201,37 +205,32 @@ namespace MultiRemoteDesktopClient
 
                     // new settings changed
                     // pass new settings on our oldSD
-                    this.oldSD = sd;
+                    oldSD = sd;
 
-                    DialogResult dr = MessageBox.Show("Conection settings successfully updated.\r\nDo you want to apply your current changes.", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    DialogResult dr = MessageBox.Show("Conection settings successfully updated.\r\nDo you want to apply your current changes.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (dr == DialogResult.Yes)
                     {
-                        if (ApplySettings != null)
-                        {
-                            ApplySettings(sender, this.oldSD);
-                        }
+                        ApplySettings?.Invoke(sender, oldSD);
                     }
 
-                    this.Close();
+                    Close();
                 }
                 else
                 {
-                    sd.UID = DateTime.Now.Ticks.ToString();
-                    GlobalHelper.dbServers.Save(true, sd);
-
-                    MessageBox.Show("New conenction settings successfully saved", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    GlobalHelper.dbServers.Save(sd);
+                    MessageBox.Show("New conenction settings successfully saved", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Database.DatabaseException settingEx)
             {
                 if (settingEx.ExceptionType == Database.DatabaseException.ExceptionTypes.DUPLICATE_ENTRY)
                 {
-                    MessageBox.Show("Can't save your connection settings due to duplicate entry", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Can't save your connection settings due to duplicate entry", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
-        void tbColor_Scroll(object sender, EventArgs e)
+        private void tbColor_Scroll(object sender, EventArgs e)
         {
             switch (tbColor.Value)
             {
@@ -240,16 +239,19 @@ namespace MultiRemoteDesktopClient
                     lblColorDepth.Text = "True Color (24 bit)";
                     lblColorDepth.Tag = 24;
                     break;
+
                 case 2:
                     pictureColor.BackgroundImage = imageList1.Images[1];
                     lblColorDepth.Text = "High Color (16 bit)";
                     lblColorDepth.Tag = 16;
                     break;
+
                 case 3:
                     pictureColor.BackgroundImage = imageList1.Images[1];
                     lblColorDepth.Text = "High Color (15 bit)";
                     lblColorDepth.Tag = 15;
                     break;
+
                 case 4:
                     pictureColor.BackgroundImage = imageList1.Images[2];
                     lblColorDepth.Text = "256 Colors";
@@ -258,7 +260,7 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void tbDeskSize_Scroll(object sender, EventArgs e)
+        private void tbDeskSize_Scroll(object sender, EventArgs e)
         {
             switch (tbDeskSize.Value)
             {
@@ -303,6 +305,7 @@ namespace MultiRemoteDesktopClient
                     txHeight.Text = "800";
 
                     break;
+
                 case 7:
                     lblResolution.Text = "1280 by 1024 pixels";
                     txWidth.Text = "1280";

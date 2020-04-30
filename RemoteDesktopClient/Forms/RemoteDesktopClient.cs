@@ -47,12 +47,12 @@ namespace MultiRemoteDesktopClient
             
             if (a["sname"] != null)
             {
-                this.ConnectByServerName(a["sname"]);
+                ConnectByServerName(a["sname"]);
             }
 
             if (a["gname"] != null)
             {
-                this.GroupConnectAll(a["gname"]);
+                GroupConnectAll(a["gname"]);
             }
         }
 
@@ -67,12 +67,12 @@ namespace MultiRemoteDesktopClient
 
             #region views
             {
-                this.m_View_SLIV_Details.Tag = ServerListViews.Details;
-                this.m_View_SLIV_Tile.Tag = ServerListViews.Tile;
-                this.m_View_SLIV_Tree.Tag = ServerListViews.Tree;
-                this.toolbar_SLIV_Details.Tag = ServerListViews.Details;
-                this.toolbar_SLIV_Tile.Tag = ServerListViews.Tile;
-                this.toolbar_SLIV_Tree.Tag = ServerListViews.Tree;
+                m_View_SLIV_Details.Tag = ServerListViews.Details;
+                m_View_SLIV_Tile.Tag = ServerListViews.Tile;
+                m_View_SLIV_Tree.Tag = ServerListViews.Tree;
+                toolbar_SLIV_Details.Tag = ServerListViews.Details;
+                toolbar_SLIV_Tile.Tag = ServerListViews.Tile;
+                toolbar_SLIV_Tree.Tag = ServerListViews.Tree;
             }
             #endregion
 
@@ -80,9 +80,9 @@ namespace MultiRemoteDesktopClient
             {
                 GlobalHelper.infoWin.EnableInformationWindow = !GlobalHelper.appSettings.Settings.HideInformationPopupWindow;
                 GlobalHelper.infoWin.AddControl(new object[] {
-                    this.lvServerLists,
-                    this.tlvServerLists,
-                    this.toolbar_EditSettings
+                    lvServerLists,
+                    tlvServerLists,
+                    toolbar_EditSettings
                 });
             }
             #endregion
@@ -112,7 +112,7 @@ namespace MultiRemoteDesktopClient
 
             #region tree listview control hooks
             {
-                tlvch = new MultiRemoteDesktopClient.Controls.TreeListViewControlHooks(ref this.tlvServerLists);
+                tlvch = new MultiRemoteDesktopClient.Controls.TreeListViewControlHooks(ref tlvServerLists);
 
                 tlvch.AddControlForEmptyListItem(new object[] {
                     toolbar_DeleteClient,
@@ -148,10 +148,10 @@ namespace MultiRemoteDesktopClient
             tlvServerLists.Columns["server"].AutoSizeRatio = 50;
             #endregion
 
-            this._lastPanelWidth = this.panelServerLists.Width;
+            _lastPanelWidth = panelServerLists.Width;
 
             // change server list view
-            IconViews(this.toolbar_SLIV_Tree, null);
+            IconViews(toolbar_SLIV_Tree, null);
 
             // show thumbnail form;
             //RDThumbnailsWindow rdtnwin = new RDThumbnailsWindow();
@@ -160,16 +160,16 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            this.Shown += new EventHandler(RemoteDesktopClient_Shown);
-            this.FormClosing += new FormClosingEventHandler(RemoteDesktopClient_FormClosing);
-            this.SizeChanged += new EventHandler(RemoteDesktopClient_SizeChanged);
-            this.m_Help_About.Click += new EventHandler(aboutToolStripMenuItem_Click);
+            Shown += new EventHandler(RemoteDesktopClient_Shown);
+            FormClosing += new FormClosingEventHandler(RemoteDesktopClient_FormClosing);
+            SizeChanged += new EventHandler(RemoteDesktopClient_SizeChanged);
+            m_Help_About.Click += new EventHandler(aboutToolStripMenuItem_Click);
 
             #region splitter
             {
-                this.splitter.MouseDown += new MouseEventHandler(splitter_MouseDown);
-                this.splitter.MouseMove += new MouseEventHandler(splitter_MouseMove);
-                this.splitter.MouseUp += new MouseEventHandler(splitter_MouseUp);
+                splitter.MouseDown += new MouseEventHandler(splitter_MouseDown);
+                splitter.MouseMove += new MouseEventHandler(splitter_MouseMove);
+                splitter.MouseUp += new MouseEventHandler(splitter_MouseUp);
             }
             #endregion
 
@@ -187,8 +187,8 @@ namespace MultiRemoteDesktopClient
 
             #region mdi tabs
             {
-                this.tabMDIChild.SelectionChanged += new EventHandler(tabMDIChild_SelectionChanged);
-                this.tabMDIChild.ClosePressed += new EventHandler(tabMDIChild_ClosePressed);
+                tabMDIChild.SelectionChanged += new EventHandler(tabMDIChild_SelectionChanged);
+                tabMDIChild.ClosePressed += new EventHandler(tabMDIChild_ClosePressed);
             }
             #endregion
 
@@ -213,7 +213,7 @@ namespace MultiRemoteDesktopClient
             ncm.OnLock_Clicked += new DelegateLockEvent(toobar_Lock_Click);
             ncm.OnServer_Clicked += new DelegateServerEvent(ncm_OnServer_Clicked);
 
-            this.systray.ContextMenuStrip = ncm;
+            systray.ContextMenuStrip = ncm;
             //CommonTools.Node n = tlvServerLists.FindNode("92.48.83.65", true);
             //if (n != null)
             //{
@@ -227,14 +227,14 @@ namespace MultiRemoteDesktopClient
             ListViewItem thisItem = lvServerLists.FindItemWithText(server_details.ServerName, false, 0);
             if (thisItem != null)
             {
-                this._selIndex = thisItem.Index;
-                this.Connect();
+                _selIndex = thisItem.Index;
+                Connect();
             }
         }
 
         void RemoteDesktopClient_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Are you sure you want to exit", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Are you sure you want to exit", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.No)
             {
                 e.Cancel = true;
@@ -249,7 +249,7 @@ namespace MultiRemoteDesktopClient
 
         private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         #region show/hide toolbar and stats events
@@ -291,7 +291,7 @@ namespace MultiRemoteDesktopClient
         {
             if (tabMDIChild.SelectedTab == null) { return; }
 
-            foreach (RdpClientWindow f in this.MdiChildren)
+            foreach (RdpClientWindow f in MdiChildren)
             {
                 if ((IntPtr)tabMDIChild.SelectedTab.Tag == f.Handle)
                 {
@@ -305,7 +305,7 @@ namespace MultiRemoteDesktopClient
 
         void tabMDIChild_ClosePressed(object sender, EventArgs e)
         {
-            this.ActiveMdiChild.Close();
+            ActiveMdiChild.Close();
         }
 
         #endregion
@@ -339,26 +339,26 @@ namespace MultiRemoteDesktopClient
         void RemoteDesktopClient_SizeChanged(object sender, EventArgs e)
         {
             // we only want the Maximize and Normal state of this window
-            if (this.WindowState != FormWindowState.Minimized)
+            if (WindowState != FormWindowState.Minimized)
             {
-                this._lastWindowState = this.WindowState;
+                _lastWindowState = WindowState;
             }
 
-            if (this.WindowState == FormWindowState.Minimized)
+            if (WindowState == FormWindowState.Minimized)
             {
                 if (GlobalHelper.appSettings.Settings.HideWhenMinimized)
                 {
-                    this.Visible = false;
+                    Visible = false;
                 }
             }
         }
 
         void systray_DoubleClick(object sender, EventArgs e)
         {
-            this.Visible = true;
-            this.WindowState = this._lastWindowState;
-            this.Activate();
-            this.BringToFront();
+            Visible = true;
+            WindowState = _lastWindowState;
+            Activate();
+            BringToFront();
         }
 
         #endregion

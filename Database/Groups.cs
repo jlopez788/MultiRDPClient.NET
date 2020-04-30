@@ -1,105 +1,31 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
-using System.Text;
+﻿using LiteDB;
+using System;
+using System.Linq;
 
 namespace Database
 {
     public class GroupDetails
     {
-        int _groupID = 0;
-        string _group_name = string.Empty;
-        int _serverCount = 0;
+        public Guid Id { set; get; }
+        public string GroupName { set; get; } = string.Empty;
+        public int ServerCount { set; get; } = 0;
 
-        public GroupDetails()
-        {
-        }
+        public GroupDetails() => Id = Guid.NewGuid();
 
-        public int GroupID
+        public GroupDetails(string groupName)
         {
-            set
-            {
-                this._groupID = value;
-            }
-            get
-            {
-                return this._groupID;
-            }
-        }
-
-        public string GroupName
-        {
-            set
-            {
-                this._group_name = value;
-            }
-            get
-            {
-                return this._group_name;
-            }
-        }
-
-        public int ServerCount
-        {
-            set
-            {
-                this._serverCount = value;
-            }
-            get
-            {
-                return this._serverCount;
-            }
+            Id = Guid.NewGuid();
+            GroupName = groupName;
         }
     }
 
-    public class Groups : Database
+    public class Groups : Database<GroupDetails>
     {
-        ArrayList _alGroups = new ArrayList();
+        public static readonly Guid UncategorizedId = new Guid("10000000-0000-0000-0000-000000000012");
 
-        public Groups()
-        {
-        }
-
-        public ArrayList ArrayListGroups
-        {
-            get
-            {
-                return this._alGroups;
-            }
-        }
-
-        public void Read()
-        {
-            string sql = "SELECT groupid, group_name FROM Groups";
-
-            SQLiteDataReader reader;
-            string result = ExecuteQuery(sql, null, out reader);
-
-            this._alGroups.Clear();
-
-            if (result == string.Empty)
-            {
-                while (reader.Read())
-                {
-                    GroupDetails gd = new GroupDetails();
-                    gd.GroupID = int.Parse(reader["groupid"].ToString());
-                    gd.GroupName = reader["group_name"].ToString();
-
-                    this._alGroups.Add(gd);
-                }
-				reader.Close();
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-                throw new Exception(result);
-            }
-
-            CloseConnection();
-        }
+        public static readonly Lazy<GroupDetails> Uncategorized = new Lazy<GroupDetails>(() => new GroupDetails("Uncategorized") {
+            Id = UncategorizedId
+        });
 
         public void Save(bool isNew, GroupDetails group_details)
         {
@@ -113,176 +39,42 @@ namespace Database
             }
         }
 
-        private void Save(GroupDetails group_details)
-        {
-            string sql = "INSERT INTO Groups(groupid, group_name) VALUES((select count(Groups.groupid) from groups) + 1, @gname);";
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@gname", group_details.GroupName)
-                                           };
+        private void Save(GroupDetails groupDetails) => Execute(context => context.Insert(new BsonValue(groupDetails.Id), groupDetails));
 
-            string result = ExecuteNonQuery(sql, parameters);
+        private void Update(GroupDetails groupDetails) => Execute(context => context.Upsert(new BsonValue(groupDetails.Id), groupDetails));
 
-            if (result == string.Empty)
-            {
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
+        public void DeleteByID(Guid id) => Execute(context => context.Delete(new BsonValue(id)));
 
-                if (result.Contains("Abort due to constraint violation"))
-                {
-                    throw new DatabaseException(DatabaseException.ExceptionTypes.DUPLICATE_ENTRY);
-                }
-                else
-                {
-                    throw new Exception(result);
-                }
-            }
+        public string GetGroupNameByID(Guid id) => Execute(context => context.FindById(id)?.GroupName);
 
-            CloseConnection();
-        }
-
-        private void Update(GroupDetails group_details)
-        {
-            string sql = "UPDATE Groups SET groupid = @gid, group_name = @gname WHERE groupid = @gid";
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@gid", group_details.GroupID),
-                                               new SQLiteParameter("@gname", group_details.GroupName)
-                                           };
-
-            string result = ExecuteNonQuery(sql, parameters);
-
-            if (result == string.Empty)
-            {
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-
-                if (result.Contains("Abort due to constraint violation"))
-                {
-                    throw new DatabaseException(DatabaseException.ExceptionTypes.DUPLICATE_ENTRY);
-                }
-                else
-                {
-                    throw new Exception(result);
-                }
-            }
-
-            CloseConnection();
-        }
-
-        public void DeleteByID(int id)
-        {
-            string sql = "DELETE FROM Groups WHERE Groups.groupid = @gid";
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@gid", id)
-                                           };
-
-            string result = ExecuteNonQuery(sql, parameters);
-
-            if (result == string.Empty)
-            {
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-                throw new Exception(result);
-            }
-
-            CloseConnection();
-        }
-
-        public string GetGroupNameByID(int id)
-        {
-            string ret = string.Empty;
-
-            string SQL = "SELECT group_name FROM Groups WHERE groupid = @gid";
-            SQLiteParameter[] paramters = {
-                                              new SQLiteParameter("@gid", id)
-                                          };
-
-            SQLiteDataReader reader;
-            string result = ExecuteQuery(SQL, paramters, out reader);
-
-            if (result == string.Empty)
-            {
-                reader.Read();
-                ret = reader["group_name"].ToString();
-				reader.Close();
-            }
-            else
-            {
-                CloseConnection();
-                throw new Exception(result);
-            }
-
-            CloseConnection();
-
-            return ret;
-        }
-
-        public int GetIDByGroupName(string name)
-        {
-            int ret = 0;
-
-            string SQL = "SELECT groupid FROM Groups WHERE group_name = @gname";
-            SQLiteParameter[] paramters = {
-                                              new SQLiteParameter("@gname", name)
-                                          };
-
-            SQLiteDataReader reader;
-            string result = ExecuteQuery(SQL, paramters, out reader);
-
-            if (result == string.Empty)
-            {
-                reader.Read();
-                ret = int.Parse(reader["groupid"].ToString());
-				reader.Close();
-            }
-            else
-            {
-                CloseConnection();
-                throw new Exception(result);
-            }
-
-            CloseConnection();
-
-            return ret;
-        }
+        public Guid GetIDByGroupName(string name) => Execute(context => context.FindOne(Query.EQ(nameof(GroupDetails.GroupName), name))?.Id ?? UncategorizedId);
 
         public void GetGroupsWithServerCount()
         {
-            string sql = "select * from viewGroupsWithServerCount";
-
-            SQLiteDataReader reader;
-            string result = ExecuteQuery(sql, null, out reader);
-
-            if (result == string.Empty)
-            {
-                this._alGroups.Clear();
-
-                while (reader.Read())
+            ExecuteDb(db => {
+                var groupCollection = db.GetCollection<GroupDetails>();
+                var servers = db.GetCollection<ServerDetails>().FindAll();
+                var groups = groupCollection.FindAll().ToDictionary(kp => kp.Id, kp => {
+                    kp.ServerCount = 0;
+                    return kp;
+                });
+                foreach (var server in servers)
                 {
-                    GroupDetails gd = new GroupDetails();
-                    gd.GroupID = int.Parse(reader["groupid"].ToString());
-                    gd.GroupName = reader["group_name"].ToString();
-                    gd.ServerCount = int.Parse(reader["ServerCount"].ToString());
-
-                    this._alGroups.Add(gd);
+                    groups[server.GroupID].ServerCount++;
                 }
-				reader.Close();
-            }
-            else
-            {
-                CloseConnection();
-                throw new Exception(result);
-            }
-
-            CloseConnection();
+                groupCollection.Update(groups.Values);
+                return 1;
+            });
         }
+
+        protected override void OnReset() => Execute(context => {
+            context.InsertBulk(new[] {
+                    Uncategorized.Value,
+                    new GroupDetails("Application Servers"),
+                    new GroupDetails("Web Servers")}
+            );
+
+            var items = context.FindAll().ToList();
+        });
     }
 }

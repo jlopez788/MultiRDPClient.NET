@@ -21,11 +21,8 @@ namespace CommonTools
 		}
 		protected virtual void raiseAfterSelect(Node node)
 		{
-            if (AfterSelect != null)
-            {
-                AfterSelect(this, new TreeViewEventArgs(null));
-            }
-		}
+            AfterSelect?.Invoke(this, new TreeViewEventArgs(null));
+        }
 
 		public delegate void NotifyBeforeExpandHandler(Node node, bool isExpanding);
 		public event NotifyBeforeExpandHandler NotifyBeforeExpand;
@@ -35,9 +32,8 @@ namespace CommonTools
 		}
 		protected virtual void raiseNotifyBeforeExpand(Node node, bool isExpanding)
 		{
-			if (NotifyBeforeExpand != null)
-				NotifyBeforeExpand(node, isExpanding);
-		}
+            NotifyBeforeExpand?.Invoke(node, isExpanding);
+        }
 
 		public delegate void NotifyAfterHandler(Node node, bool isExpanding);
 		public event NotifyAfterHandler NotifyAfterExpand;
@@ -47,9 +43,8 @@ namespace CommonTools
 		}
 		protected virtual void raiseNotifyAfterExpand(Node node, bool isExpanded)
 		{
-			if (NotifyAfterExpand != null)
-				NotifyAfterExpand(node, isExpanded);
-		}
+            NotifyAfterExpand?.Invoke(node, isExpanded);
+        }
 
 		TreeListViewNodes			m_nodes;
 		TreeListColumnCollection	m_columns;
@@ -115,9 +110,9 @@ namespace CommonTools
 		}
 		public TreeListView()
 		{
-			this.DoubleBuffered = true;
-			this.BackColor = SystemColors.Window;
-			this.TabStop = true;
+			DoubleBuffered = true;
+			BackColor = SystemColors.Window;
+			TabStop = true;
 
 			m_rowPainter = new RowPainter();
 			m_cellPainter = new CellPainter(this);
@@ -211,7 +206,7 @@ namespace CommonTools
 			{
 				Node curNode = FocusedNode;
                 
-				if (object.ReferenceEquals(curNode, value))
+				if (ReferenceEquals(curNode, value))
 					return;
                 //if (MultiSelect == false)
                 //    NodesSelection.Clear();
@@ -251,7 +246,7 @@ namespace CommonTools
 		}
 		public Node GetHitNode()
 		{
-			return CalcHitNode(PointToClient(Control.MousePosition));
+			return CalcHitNode(PointToClient(MousePosition));
 		}
 		public CommonTools.HitInfo CalcColumnHit(Point mousepoint)
 		{
@@ -394,7 +389,7 @@ namespace CommonTools
 
 		void MultiSelectAdd(Node clickedNode, Keys modifierKeys)
 		{
-			if (Control.ModifierKeys == Keys.None)
+			if (ModifierKeys == Keys.None)
 			{
 				foreach (Node node in NodesSelection)
 				{
@@ -404,7 +399,7 @@ namespace CommonTools
 				NodesSelection.Clear();
 				NodesSelection.Add(clickedNode);
 			}
-			if (Control.ModifierKeys == Keys.Shift)
+			if (ModifierKeys == Keys.Shift)
 			{
 				if (NodesSelection.Count == 0)
 					NodesSelection.Add(clickedNode);
@@ -430,7 +425,7 @@ namespace CommonTools
 					}
 				}
 			}
-			if (Control.ModifierKeys == Keys.Control)
+			if (ModifierKeys == Keys.Control)
 			{
 				if (NodesSelection.Contains(clickedNode))
 					NodesSelection.Remove(clickedNode);
@@ -456,7 +451,7 @@ namespace CommonTools
 
                     if (MultiSelect)
                     {
-                        MultiSelectAdd(clickedNode, Control.ModifierKeys);
+                        MultiSelectAdd(clickedNode, ModifierKeys);
                     }
                     else
                         FocusedNode = clickedNode;
@@ -520,7 +515,7 @@ namespace CommonTools
 		}
 		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			this.Focus();
+			Focus();
 			if (e.Button == MouseButtons.Right)
 			{
 				Point mousePoint = new Point(e.X, e.Y);
@@ -531,7 +526,7 @@ namespace CommonTools
 					if (MultiSelect)
 					{
 						if (NodesSelection.Contains(clickedNode) == false)
-							MultiSelectAdd(clickedNode, Control.ModifierKeys);
+							MultiSelectAdd(clickedNode, ModifierKeys);
 					}
 
 					FocusedNode = clickedNode;
@@ -560,9 +555,8 @@ namespace CommonTools
 				Columns.RecalcVisibleColumsRect();
 				UpdateScrollBars();
 				Invalidate();
-				if (AfterResizingColumn != null)
-					AfterResizingColumn(this, e);
-			}
+                AfterResizingColumn?.Invoke(this, e);
+            }
 			base.OnMouseUp(e);
 		}
 		protected override void OnMouseDoubleClick(MouseEventArgs e)
@@ -650,15 +644,15 @@ namespace CommonTools
 			get
 			{
 				CreateParams p = base.CreateParams;
-				p.Style &= ~(int)CommonTools.WinUtil.WS_BORDER;
-				p.ExStyle &= ~(int)CommonTools.WinUtil.WS_EX_CLIENTEDGE;
+				p.Style &= ~(int)WinUtil.WS_BORDER;
+				p.ExStyle &= ~(int)WinUtil.WS_EX_CLIENTEDGE;
 				switch (ViewOptions.BorderStyle)
 				{
 					case BorderStyle.Fixed3D:
-						p.ExStyle |= (int)CommonTools.WinUtil.WS_EX_CLIENTEDGE;
+						p.ExStyle |= (int)WinUtil.WS_EX_CLIENTEDGE;
 						break;
 					case BorderStyle.FixedSingle:
-						p.Style |= (int)CommonTools.WinUtil.WS_BORDER;
+						p.Style |= (int)WinUtil.WS_BORDER;
 						break;
 					default:
 						break;
@@ -704,7 +698,7 @@ namespace CommonTools
 		}
 		protected virtual void PaintCell(Graphics dc, Rectangle cellRect, Node node, TreeListColumn column)
 		{
-			if (this.DesignMode)
+			if (DesignMode)
 				CellPainter.PaintCell(dc, cellRect, node, column, GetFormatting(node, column), GetDataDesignMode(node, column));
 			else
 				CellPainter.PaintCell(dc, cellRect, node, column, GetFormatting(node, column), GetData(node, column));
@@ -777,7 +771,7 @@ namespace CommonTools
 		protected virtual void PaintLines(Graphics dc, Rectangle cellRect, Node node)
 		{
 			Pen pen = new Pen(Color.Gray);
-			pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+			pen.DashStyle = DashStyle.Dot;
 
 			int halfPoint = cellRect.Top + (cellRect.Height / 2);
 			// line should start from center at first root node 
@@ -872,7 +866,7 @@ namespace CommonTools
 			}
 
 			int visibleRowIndex = 0;
-			TreeListColumn[] visibleColumns = this.Columns.VisibleColumns;
+			TreeListColumn[] visibleColumns = Columns.VisibleColumns;
 			int columnsWidth = Columns.ColumnsWidth;
 			foreach (Node node in NodeCollection.ForwardNodeIterator(m_firstVisibleNode, true))
 			{
@@ -1008,10 +1002,10 @@ namespace CommonTools
 					// keys none,		the selected node is added as the focused and selected node
 					// keys control,	only focused node is moved, the selected nodes collection is not modified
 					// keys shift,		selection from first selected node to current node is done
-					if (Control.ModifierKeys == Keys.Control)
+					if (ModifierKeys == Keys.Control)
 						FocusedNode = newnode;
 					else
-						MultiSelectAdd(newnode, Control.ModifierKeys);
+						MultiSelectAdd(newnode, ModifierKeys);
 				}
 				else
 					FocusedNode = newnode;
@@ -1022,7 +1016,7 @@ namespace CommonTools
 
 		internal void internalUpdateStyles()
 		{
-			base.UpdateStyles();
+            UpdateStyles();
 		}
 
 		#region ISupportInitialize Members
@@ -1046,7 +1040,7 @@ namespace CommonTools
         {
             CommonTools.Node ret = null;
 
-            NodeFind(text, this.Nodes, searchFields, out ret);
+            NodeFind(text, Nodes, searchFields, out ret);
 
             return ret;
         }
@@ -1057,9 +1051,9 @@ namespace CommonTools
             bool found = false;
             outNode = null;
 
-            foreach (Node n in NodeCollection.ForwardNodeIterator(this.Nodes[0], false))
+            foreach (Node n in NodeCollection.ForwardNodeIterator(Nodes[0], false))
             {
-                for (int f = 0; f <= this.Columns.Count - 1; f++)
+                for (int f = 0; f <= Columns.Count - 1; f++)
                 {
                     if (n[f] == null) { continue; }
 

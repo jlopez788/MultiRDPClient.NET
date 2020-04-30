@@ -96,9 +96,8 @@ namespace CommonTools
 					m_colorTable.SetCustomColor(selcol);
 			}
 			UpdateInfo();
-			if (SelectionChanged != null)
-				SelectionChanged(this, null);
-		}
+            SelectionChanged?.Invoke(this, null);
+        }
 		void UpdateInfo()
 		{
 			Color c = Color.FromArgb((int)Math.Floor(255f*m_opacity), m_selectedColor);

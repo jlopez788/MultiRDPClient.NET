@@ -12,42 +12,42 @@ namespace MultiRemoteDesktopClient
         {
             #region import / export buttons
             {
-                this.toolbar_ImportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
-                this.toolbar_ExportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
-                this.m_File_ImportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
-                this.m_File_ExportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
+                toolbar_ImportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
+                toolbar_ExportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
+                m_File_ImportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
+                m_File_ExportRDP.Click += new EventHandler(ImportExportRDPFile_Button_Click);
             }
             #endregion
 
             #region icon views
             {
-                this.m_View_SLIV_Details.Click += new EventHandler(IconViews);
-                this.m_View_SLIV_Tile.Click += new EventHandler(IconViews);
-                this.m_View_SLIV_Tree.Click += new EventHandler(IconViews);
-                this.toolbar_SLIV_Details.Click += new EventHandler(IconViews);
-                this.toolbar_SLIV_Tile.Click += new EventHandler(IconViews);
-                this.toolbar_SLIV_Tree.Click += new EventHandler(IconViews);
+                m_View_SLIV_Details.Click += new EventHandler(IconViews);
+                m_View_SLIV_Tile.Click += new EventHandler(IconViews);
+                m_View_SLIV_Tree.Click += new EventHandler(IconViews);
+                toolbar_SLIV_Details.Click += new EventHandler(IconViews);
+                toolbar_SLIV_Tile.Click += new EventHandler(IconViews);
+                toolbar_SLIV_Tree.Click += new EventHandler(IconViews);
             }
             #endregion
 
-            this.m_Edit_DeleteClient.Click += new EventHandler(btnDelete_Click);
-            this.toolbar_DisconnectAll.Click += new EventHandler(btnDCAll_Click);
-            this.toolbar_DeleteClient.Click += new EventHandler(btnDelete_Click);
-            this.toolbar_ConnectAll.Click += new EventHandler(toolbar_ConnectAll_Click);
+            m_Edit_DeleteClient.Click += new EventHandler(btnDelete_Click);
+            toolbar_DisconnectAll.Click += new EventHandler(btnDCAll_Click);
+            toolbar_DeleteClient.Click += new EventHandler(btnDelete_Click);
+            toolbar_ConnectAll.Click += new EventHandler(toolbar_ConnectAll_Click);
 
-            this.m_Tools_Configuration.Click += new EventHandler(toolbar_Configuration_Click);
-            this.toolbar_Configuration.Click += new EventHandler(toolbar_Configuration_Click);
+            m_Tools_Configuration.Click += new EventHandler(toolbar_Configuration_Click);
+            toolbar_Configuration.Click += new EventHandler(toolbar_Configuration_Click);
 
-            this.m_Edit_ManageGroups.Click += new EventHandler(toolbar_ManageGroups_Click);
-            this.toolbar_ManageGroups.Click += new EventHandler(toolbar_ManageGroups_Click);
+            m_Edit_ManageGroups.Click += new EventHandler(toolbar_ManageGroups_Click);
+            toolbar_ManageGroups.Click += new EventHandler(toolbar_ManageGroups_Click);
 
-            this.m_File_Lock.Click += new EventHandler(toobar_Lock_Click);
-            this.toobar_Lock.Click += new EventHandler(toobar_Lock_Click);
+            m_File_Lock.Click += new EventHandler(toobar_Lock_Click);
+            toobar_Lock.Click += new EventHandler(toobar_Lock_Click);
         }
 
         void toobar_Lock_Click(object sender, EventArgs e)
         {
-            this.AskPassword(this);
+            AskPassword(this);
         }
 
         void toolbar_ManageGroups_Click(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace MultiRemoteDesktopClient
             GroupManagerWindow gmw = new GroupManagerWindow();
             gmw.ShowDialog(this);
 
-            this.GetServerLists();
+            GetServerLists();
         }
 
         void toolbar_Configuration_Click(object sender, EventArgs e)
@@ -78,7 +78,7 @@ namespace MultiRemoteDesktopClient
 
         void toolbar_ConnectAll_Click(object sender, EventArgs e)
         {
-            this.GroupConnectAll();
+            GroupConnectAll();
         }
 
         void IconViews(object sender, EventArgs e)
@@ -90,20 +90,20 @@ namespace MultiRemoteDesktopClient
 
             if (slView != ServerListViews.Tree)
             {
-                this.lvServerLists.View = (View)((ToolStripMenuItem)sender).Tag;
+                lvServerLists.View = (View)((ToolStripMenuItem)sender).Tag;
 
                 // move the control
-                this.lvServerLists.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-                this.lvServerLists.Location = new Point(0, lblServerListsPanelTitle.Top + lblServerListsPanelTitle.Height);
-                this.lvServerLists.Size = new Size(panelServerLists.Width - splitter.Width, panelServerLists.Height - this.lvServerLists.Top);
-                this.lvServerLists.BringToFront();
+                lvServerLists.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                lvServerLists.Location = new Point(0, lblServerListsPanelTitle.Top + lblServerListsPanelTitle.Height);
+                lvServerLists.Size = new Size(panelServerLists.Width - splitter.Width, panelServerLists.Height - lvServerLists.Top);
+                lvServerLists.BringToFront();
             }
             else if (slView == ServerListViews.Tree)
             {
-                this.tlvServerLists.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
-                this.tlvServerLists.Location = new Point(0, lblServerListsPanelTitle.Top + lblServerListsPanelTitle.Height);
-                this.tlvServerLists.Size = new Size(panelServerLists.Width-splitter.Width, panelServerLists.Height - this.tlvServerLists.Top);
-                this.tlvServerLists.BringToFront();
+                tlvServerLists.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top;
+                tlvServerLists.Location = new Point(0, lblServerListsPanelTitle.Top + lblServerListsPanelTitle.Height);
+                tlvServerLists.Size = new Size(panelServerLists.Width-splitter.Width, panelServerLists.Height - tlvServerLists.Top);
+                tlvServerLists.BringToFront();
             }
 
             splitter.BringToFront();
@@ -125,7 +125,7 @@ namespace MultiRemoteDesktopClient
             }
             else if (sender == toolbar_ExportRDP || sender == m_File_ExportRDP)
             {
-                ExportWindow ew = new ExportWindow(ref this.lvServerLists);
+                ExportWindow ew = new ExportWindow(ref lvServerLists);
                 ew.ShowDialog();
             }
         }
@@ -140,13 +140,13 @@ namespace MultiRemoteDesktopClient
 
         void btnDelete_Click(object sender, EventArgs e)
         {
-            Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[this._selIndex].Tag;
+            Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[_selIndex].Tag;
 
-            DialogResult dr = MessageBox.Show("Are you sure you want to delete this server " + sd.ServerName + " from the server list", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete this server " + sd.ServerName + " from the server list", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dr == DialogResult.Yes)
             {
-                GlobalHelper.dbServers.DeleteByID(sd.UID);
+                GlobalHelper.dbServers.DeleteByID(sd.Id);
 
                 GetServerLists();
             }
@@ -159,7 +159,7 @@ namespace MultiRemoteDesktopClient
 
         private void OpenSettingsWindow(object sender, EventArgs e)
         {
-            Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[this._selIndex].Tag;
+            Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[_selIndex].Tag;
             
             ServerSettingsWindow ssw = new ServerSettingsWindow(sd);
             ssw.ApplySettings += new ApplySettings(ssw_ApplySettings);
@@ -173,7 +173,7 @@ namespace MultiRemoteDesktopClient
 
         Rectangle ssw_GetClientWindowSize()
         {
-            Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[this._selIndex].Tag;
+            Database.ServerDetails sd = (Database.ServerDetails)lvServerLists.Items[_selIndex].Tag;
             RdpClientWindow rdpClientWin = GetClientWindowByTitleParams(sd.Username, sd.ServerName, sd.Server);
 
             if (rdpClientWin != null)
@@ -182,7 +182,7 @@ namespace MultiRemoteDesktopClient
             }
             else
             {
-                MessageBox.Show("The relative RDP Client Window for this server does not exists.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("The relative RDP Client Window for this server does not exists.", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 Rectangle r = new Rectangle(0, 0, sd.DesktopWidth, sd.DesktopHeight);
                 return r;
             }
@@ -199,7 +199,7 @@ namespace MultiRemoteDesktopClient
             }
             else
             {
-                MessageBox.Show("The relative RDP Client Window for this server does not exists.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("The relative RDP Client Window for this server does not exists.", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

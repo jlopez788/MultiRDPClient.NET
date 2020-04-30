@@ -11,13 +11,7 @@ using RijndaelEncryptDecrypt;
         public static string InitVector = "@1B2c3D4e5F6g7H8";
         public static int KeySize = 256;
 
-        public static string Encrypt(string PlainText)
-        {
-            return Rijndael.Encrypt(PlainText, PassPhrase, SaltValue, HashAlgorithm, PasswordIterations, InitVector, KeySize);
-        }
+    public static string Encrypt(string PlainText) => Rijndael.Encrypt(PlainText, PassPhrase, SaltValue, HashAlgorithm, PasswordIterations, InitVector, KeySize);
 
-        public static string Decrypt(string cipherText)
-        {
-            return Rijndael.Decrypt(cipherText, PassPhrase, SaltValue, HashAlgorithm, PasswordIterations, InitVector, KeySize);
-        }
-    }
+    public static string Decrypt(string cipherText) => Rijndael.Decrypt(cipherText, PassPhrase, SaltValue, HashAlgorithm, PasswordIterations, InitVector, KeySize);
+}

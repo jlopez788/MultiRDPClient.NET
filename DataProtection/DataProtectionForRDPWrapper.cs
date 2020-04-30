@@ -34,12 +34,12 @@ namespace DataProtection
 
         static byte[] GetBytes(string text)
         {
-            return UnicodeEncoding.Unicode.GetBytes(text);
+            return Encoding.Unicode.GetBytes(text);
         }
 
         static string GetString(byte[] byt)
         {
-            System.Text.Encoding enc = System.Text.Encoding.Unicode;
+            System.Text.Encoding enc = Encoding.Unicode;
             return enc.GetString(byt);
         }
 

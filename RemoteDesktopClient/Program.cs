@@ -27,12 +27,12 @@ namespace MultiRemoteDesktopClient
         {
             IsSingleInstance = true;
 
-            this.StartupNextInstance += new StartupNextInstanceEventHandler(SingleInstanceController_StartupNextInstance);
+            StartupNextInstance += new StartupNextInstanceEventHandler(SingleInstanceController_StartupNextInstance);
         }
 
         void SingleInstanceController_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
         {
-            RemoteDesktopClient rdc = (RemoteDesktopClient)this.MainForm;
+            RemoteDesktopClient rdc = (RemoteDesktopClient)MainForm;
 
             string[] args = new string[e.CommandLine.Count];
             e.CommandLine.CopyTo(args, 0);
@@ -45,7 +45,7 @@ namespace MultiRemoteDesktopClient
             SplashScreenWindow ssw = new SplashScreenWindow();
             ssw.ShowDialog();
 
-            this.MainForm = new RemoteDesktopClient();
+            MainForm = new RemoteDesktopClient();
         }
     }
 }

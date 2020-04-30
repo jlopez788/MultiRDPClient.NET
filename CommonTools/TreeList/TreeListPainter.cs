@@ -24,10 +24,10 @@ namespace CommonTools
 
 			public RECT(Rectangle r)
 			{
-				this.left = r.X;
-				this.top = r.Y;
-				this.right = r.Right;
-				this.bottom = r.Bottom;
+				left = r.X;
+				top = r.Y;
+				right = r.Right;
+				bottom = r.Bottom;
 			}
 			/*
 			public COMRECT(int left, int top, int right, int bottom)
@@ -191,7 +191,7 @@ namespace CommonTools
 			}
 			if (data != null)
 			{
-				cellRect = CommonTools.Util.AdjustRectangle(cellRect, format.Padding);
+				cellRect = Util.AdjustRectangle(cellRect, format.Padding);
 				//dc.DrawRectangle(Pens.Black, cellRect);
 
 				Color color = format.ForeColor;
@@ -258,7 +258,7 @@ namespace CommonTools
 					dc.FillRectangle(brush, cellRect);
 					brush.Dispose();
 				}
-				cellRect = CommonTools.Util.AdjustRectangle(cellRect, format.Padding);
+				cellRect = Util.AdjustRectangle(cellRect, format.Padding);
 				//dc.DrawRectangle(Pens.Black, cellRect);
 
 				Color color = format.ForeColor;

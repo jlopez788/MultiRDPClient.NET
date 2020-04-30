@@ -14,9 +14,8 @@ namespace CommonTools
 		public event EventHandler ValueChanged;
 		public void RaiseValueChanged(object sender)
 		{
-			if (ValueChanged != null)
-				ValueChanged(sender, null);
-		}
+            ValueChanged?.Invoke(sender, null);
+        }
 	}
 	public class BindingWithNotify : System.Windows.Forms.Binding
 	{
@@ -26,7 +25,7 @@ namespace CommonTools
 		protected override void OnBindingComplete(BindingCompleteEventArgs e)
 		{
 			base.OnBindingComplete(e);
-			this.Control.Validating += new CancelEventHandler(Control_Validating);
+			Control.Validating += new CancelEventHandler(Control_Validating);
 		}
 
 		void Control_Validating(object sender, CancelEventArgs e)

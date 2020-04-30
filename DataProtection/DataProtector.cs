@@ -42,7 +42,7 @@ namespace DataProtection
     public class DataProtector
     {
         [DllImport("Crypt32.dll", SetLastError = true,
-            CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            CharSet = CharSet.Auto)]
         private static extern bool CryptProtectData(
                                           ref DATA_BLOB pDataIn,
                                           String szDataDescr,
@@ -53,7 +53,7 @@ namespace DataProtection
                                           int dwFlags,
                                           ref DATA_BLOB pDataOut);
         [DllImport("Crypt32.dll", SetLastError = true,
-                    CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+                    CharSet = CharSet.Auto)]
         private static extern bool CryptUnprotectData(
                                           ref DATA_BLOB pDataIn,
                                           String szDataDescr,
@@ -64,7 +64,7 @@ namespace DataProtection
                                           int dwFlags,
                                           ref DATA_BLOB pDataOut);
         [DllImport("kernel32.dll",
-                    CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+                    CharSet = CharSet.Auto)]
         private unsafe static extern int FormatMessage(int dwFlags,
                                                        ref IntPtr lpSource,
                                                        int dwMessageId,

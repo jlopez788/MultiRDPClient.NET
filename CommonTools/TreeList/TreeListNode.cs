@@ -257,7 +257,7 @@ namespace CommonTools
 		}
 		internal void InsertBefore(Node insertBefore, NodeCollection owner)
 		{
-			this.m_owner = owner;
+			m_owner = owner;
 			Node next = insertBefore;
 			Node prev = null;
 			if (next != null)
@@ -268,40 +268,40 @@ namespace CommonTools
 			if (prev != null)
 				prev.m_nextSibling = this;
 
-			this.m_nextSibling = next;
-			this.m_prevSibling = prev;
+			m_nextSibling = next;
+			m_prevSibling = prev;
 			UpdateOwnerTotalCount(0, VisibleNodeCount);
 		}
 		internal void InsertAfter(Node insertAfter, NodeCollection owner)
 		{
-			this.m_owner = owner;
+			m_owner = owner;
 			Node prev = insertAfter;
 			Node next = null;
 			if (prev != null)
 			{
 				next = prev.NextSibling;
 				prev.m_nextSibling = this;
-				this.m_prevSibling = prev;
+				m_prevSibling = prev;
 			}
 			if (next != null)
 				next.m_prevSibling = this;
-			this.m_nextSibling = next;
+			m_nextSibling = next;
 			UpdateOwnerTotalCount(0, VisibleNodeCount);
 		}
 		internal void Remove()
 		{
-			Node prev = this.PrevSibling;
-			Node next = this.NextSibling;
+			Node prev = PrevSibling;
+			Node next = NextSibling;
 			if (prev != null)
 				prev.m_nextSibling = next;
 			if (next != null)
 				next.m_prevSibling = prev;
 
-			this.m_nextSibling = null;
-			this.m_prevSibling = null;
+			m_nextSibling = null;
+			m_prevSibling = null;
 			UpdateOwnerTotalCount(VisibleNodeCount, 0);
-			this.m_owner = null;
-			this.m_id = -1;
+			m_owner = null;
+			m_id = -1;
 		}
 		internal static void SetHasChildren(Node node, bool hasChildren)
 		{
@@ -427,7 +427,7 @@ namespace CommonTools
 				return;
 			m_version++;
 			ClearInternalArray();
-			Debug.Assert(node != null && object.ReferenceEquals(node.Owner, this), "Remove(Node node)");
+			Debug.Assert(node != null && ReferenceEquals(node.Owner, this), "Remove(Node node)");
 			
 			Node prev = node.PrevSibling;
 			Node next = node.NextSibling;
@@ -557,18 +557,18 @@ namespace CommonTools
 		public Node slowGetNodeFromVisibleIndex(int index)
 		{
 			int startindex = index;
-			CommonTools.Tracing.StartTrack(0);
+            Tracing.StartTrack(0);
 			RecursiveNodesEnumerator iterator = new RecursiveNodesEnumerator(m_firstNode, true);
 			while (iterator.MoveNext())
 			{
 				index--;
 				if (index < 0)
 				{
-					CommonTools.Tracing.EndTrack(0, "slowGetNodeFromVisibleIndex({0})", startindex);
+                    Tracing.EndTrack(0, "slowGetNodeFromVisibleIndex({0})", startindex);
 					return iterator.Current as Node;
 				}
 			}
-			CommonTools.Tracing.EndTrack(0, "slowGetNodeFromVisibleIndex (null)");
+            Tracing.EndTrack(0, "slowGetNodeFromVisibleIndex (null)");
 			return null;
 		}
 		

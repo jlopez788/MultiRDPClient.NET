@@ -31,7 +31,7 @@ namespace MultiRemoteDesktopClient
             tabMDI.Selected = true;
 
             tabMDIChild.TabPages.Add(tabMDI);
-            GlobalHelper.MDIChildrens = this.MdiChildren;
+            GlobalHelper.MDIChildrens = MdiChildren;
         }
 
         void clientWin_OnFormClosing(object sender, FormClosingEventArgs e, int ListIndex, IntPtr Handle)
@@ -47,7 +47,7 @@ namespace MultiRemoteDesktopClient
                 }
             }
 
-            GlobalHelper.MDIChildrens = this.MdiChildren;
+            GlobalHelper.MDIChildrens = MdiChildren;
         }
 
         void clientWin_OnFormActivated(object sender, EventArgs e, int ListIndex, IntPtr Handle)

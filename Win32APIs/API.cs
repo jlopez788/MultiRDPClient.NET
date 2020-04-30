@@ -95,7 +95,7 @@ namespace Win32APIs
                 IntPtr ptr2 = graphics.GetHdc();
                 try
                 {
-                    APIs.BitBlt(ptr2, 0, 0, w, h - yOffset, hdc, 0, yOffset, APIs.TernaryRasterOperations.SRCCOPY);
+                    BitBlt(ptr2, 0, 0, w, h - yOffset, hdc, 0, yOffset, TernaryRasterOperations.SRCCOPY);
                 }
                 catch (Exception exception1)
                 {

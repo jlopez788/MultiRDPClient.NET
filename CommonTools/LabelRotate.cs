@@ -56,9 +56,9 @@ namespace CommonTools
 		public LabelRotate()
 		{
 			SetStyle(ControlStyles.SupportsTransparentBackColor, true);
-			this.Text = string.Empty;
-			this.DoubleBuffered = true;
-			this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
+			Text = string.Empty;
+			DoubleBuffered = true;
+			SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint, true);
 		}
 		protected override void OnPaint(PaintEventArgs e)
 		{

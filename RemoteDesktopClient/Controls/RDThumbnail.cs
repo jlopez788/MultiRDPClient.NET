@@ -26,29 +26,29 @@ namespace MultiRemoteDesktopClient.Controls
         {
             set
             {
-                this._title = value;
-                lblTitle.Text = this._title;
+                _title = value;
+                lblTitle.Text = _title;
             }
-            get { return this._title; }
+            get { return _title; }
         }
 
         public Image RDImage
         {
             set
             {
-                this._tnImage = value;
-                panelDrawing.BackgroundImage = this._tnImage;
+                _tnImage = value;
+                panelDrawing.BackgroundImage = _tnImage;
             }
-            get { return this._tnImage; }
+            get { return _tnImage; }
         }
 
         public IntPtr MDIChild_Handle
         {
             set
             {
-                this._mdichild_parentHandle = value;
+                _mdichild_parentHandle = value;
             }
-            get { return this._mdichild_parentHandle; }
+            get { return _mdichild_parentHandle; }
         }
     }
 }

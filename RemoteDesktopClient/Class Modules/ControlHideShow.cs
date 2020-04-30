@@ -19,7 +19,7 @@ namespace MultiRemoteDesktopClient
 
         public void AddControl(object[] ctl)
         {
-            this._controls = ctl;
+            _controls = ctl;
 
             foreach (object o in ctl)
             {
@@ -41,14 +41,14 @@ namespace MultiRemoteDesktopClient
 
         public void AddControlToHide(object[] ctl)
         {
-            this._controlToHide = ctl;
+            _controlToHide = ctl;
         }
 
         private void c_MouseLeave(object sender, EventArgs e)
         {
             if (Enable)
             {
-                foreach (object o in this._controlToHide)
+                foreach (object o in _controlToHide)
                 {
                     Type t = o.GetType();
                     PropertyInfo pi = t.GetProperty("Visible");
@@ -64,7 +64,7 @@ namespace MultiRemoteDesktopClient
         {
             if (Enable)
             {
-                foreach (object o in this._controlToHide)
+                foreach (object o in _controlToHide)
                 {
                     Type t = o.GetType();
                     PropertyInfo pi = t.GetProperty("Visible");

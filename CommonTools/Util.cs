@@ -437,7 +437,7 @@ namespace CommonTools
 			// Get a handle to the small icon
 			IntPtr hImgSmall = SHGetFileInfo(filename, 0, ref shinfo, Marshal.SizeOf(shinfo), SHGFI_ICON | SHGFI_SMALLICON);
 			// Get the small icon from the handle
-			Icon icon = System.Drawing.Icon.FromHandle(shinfo.hIcon);
+			Icon icon = Icon.FromHandle(shinfo.hIcon);
 			iconbitmap = icon.ToBitmap();
 			DestroyIcon(shinfo.hIcon);
 			return iconbitmap;

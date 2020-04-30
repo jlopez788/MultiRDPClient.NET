@@ -54,14 +54,14 @@ namespace LiveInformationBox
         {
             if (File.Exists(XMLInfoFile))
             {
-                this._xmlInfoFile = XMLInfoFile;
-                this._winpos = winpos;
+                _xmlInfoFile = XMLInfoFile;
+                _winpos = winpos;
 
                 InitializeComponent();
                 
-                this.FormClosing += new FormClosingEventHandler(InfoWindow_FormClosing);
-                this.Paint += new PaintEventHandler(InfoWindow_Paint);
-                this.Resize += new EventHandler(InfoWindow_Resize);
+                FormClosing += new FormClosingEventHandler(InfoWindow_FormClosing);
+                Paint += new PaintEventHandler(InfoWindow_Paint);
+                Resize += new EventHandler(InfoWindow_Resize);
 
                 tmr.Interval = 5000;
                 tmr.Tick += new EventHandler(tmr_Tick);
@@ -76,11 +76,11 @@ namespace LiveInformationBox
         {
             set
             {
-                this._enableInfoWin = value;
+                _enableInfoWin = value;
             }
             get
             {
-                return this._enableInfoWin;
+                return _enableInfoWin;
             }
         }
 
@@ -101,17 +101,17 @@ namespace LiveInformationBox
 
         void InfoWindow_Paint(object sender, PaintEventArgs e)
         {
-            Brush brGradient = new System.Drawing.Drawing2D.LinearGradientBrush(this.ClientRectangle, Color.White, Color.FromArgb(228, 228,240), 90, false);
-            e.Graphics.FillRectangle(brGradient, this.ClientRectangle);
+            Brush brGradient = new System.Drawing.Drawing2D.LinearGradientBrush(ClientRectangle, Color.White, Color.FromArgb(228, 228,240), 90, false);
+            e.Graphics.FillRectangle(brGradient, ClientRectangle);
 
-            ControlPaint.DrawBorder(e.Graphics, this.ClientRectangle, Color.FromKnownColor(KnownColor.ActiveBorder), ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.FromKnownColor(KnownColor.ActiveBorder), ButtonBorderStyle.Solid);
 
-            this.lblInfo.BackColor = Color.Transparent;
+            lblInfo.BackColor = Color.Transparent;
         }
 
         void InfoWindow_Resize(object sender, EventArgs e)
         {
-            this.Invalidate();
+            Invalidate();
         }
 
         void btnClose_Click(object sender, EventArgs e)
@@ -137,7 +137,7 @@ namespace LiveInformationBox
             {
                 string controlName = piName.GetValue(sender, null).ToString();
 
-                XMLInformationReader xmlinforeader = new XMLInformationReader(this._xmlInfoFile);
+                XMLInformationReader xmlinforeader = new XMLInformationReader(_xmlInfoFile);
                 InformationDetails infoDet = xmlinforeader.Read(controlName);
 
                 if (infoDet != null)
@@ -179,13 +179,13 @@ namespace LiveInformationBox
 
         void HideWindow()
         {
-            this.Hide();
+            Hide();
             tmr.Enabled = false;
         }
 
         void ShowWindow()
         {
-            if (!this._enableInfoWin)
+            if (!_enableInfoWin)
             {
                 return;
             }
@@ -202,51 +202,51 @@ namespace LiveInformationBox
                 System.Drawing.Size s = new Size();
                 s.Height = lblInfo.Top + lblInfo.Height + margin_y;
 
-                if (lblInfo.Left + lblInfo.Width >= this.Width)
+                if (lblInfo.Left + lblInfo.Width >= Width)
                 {
                     s.Width = (margin_x + lblInfo.Width) + margin_x;
                 }
                 else
                 {
-                    s.Width = this.ClientSize.Width;
+                    s.Width = ClientSize.Width;
                 }
 
-                this.ClientSize = s;
+                ClientSize = s;
                 
                 //this.Show();
-                APIs.ShowInactiveTopmost(this.Handle);
+                APIs.ShowInactiveTopmost(Handle);
             }
             #endregion
 
             #region window postition
             {
-                switch (this._winpos)
+                switch (_winpos)
                 {
                     case WindowPositions.TOP_LEFT:
-                        this.Location = new Point(
+                        Location = new Point(
                             WinMargin_X,
                             WinMargin_Y
                         );
 
                         break;
                     case WindowPositions.TOP_RIGHT:
-                        this.Location = new Point(
-                            (Screen.PrimaryScreen.WorkingArea.Width - this.Width) - WinMargin_X,
+                        Location = new Point(
+                            (Screen.PrimaryScreen.WorkingArea.Width - Width) - WinMargin_X,
                             WinMargin_Y
                         );
 
                         break;
                     case WindowPositions.BOTTOM_LEFT:
-                        this.Location = new Point(
+                        Location = new Point(
                             WinMargin_X,
-                            (Screen.PrimaryScreen.WorkingArea.Height - this.Height) - WinMargin_Y
+                            (Screen.PrimaryScreen.WorkingArea.Height - Height) - WinMargin_Y
                         );
 
                         break;
                     case WindowPositions.BOTTOM_RIGHT:
-                        this.Location = new Point(
-                            (Screen.PrimaryScreen.WorkingArea.Width - this.Width) - WinMargin_X,
-                            (Screen.PrimaryScreen.WorkingArea.Height - this.Height) - WinMargin_Y
+                        Location = new Point(
+                            (Screen.PrimaryScreen.WorkingArea.Width - Width) - WinMargin_X,
+                            (Screen.PrimaryScreen.WorkingArea.Height - Height) - WinMargin_Y
                         );
 
                         break;

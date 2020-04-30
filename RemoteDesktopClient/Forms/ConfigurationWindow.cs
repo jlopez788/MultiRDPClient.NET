@@ -27,10 +27,10 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            this.btnSave.Click += new EventHandler(DefaultButtons_Click);
-            this.btnClose.Click += new EventHandler(DefaultButtons_Click);
+            btnSave.Click += new EventHandler(DefaultButtons_Click);
+            btnClose.Click += new EventHandler(DefaultButtons_Click);
 
-            this.lblShowPass.Click += new EventHandler(lblShowPass_Click);
+            lblShowPass.Click += new EventHandler(lblShowPass_Click);
         }
 
         void lblShowPass_Click(object sender, EventArgs e)
@@ -61,11 +61,11 @@ namespace MultiRemoteDesktopClient
 
                 if (GlobalHelper.appSettings.Save())
                 {
-                    MessageBox.Show("Your changes has been saved.\r\nYou can now close the window.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Your changes has been saved.\r\nYou can now close the window.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Failed to make changes.", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to make changes.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else if (sender == btnClose)

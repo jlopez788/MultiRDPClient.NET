@@ -41,7 +41,7 @@ namespace CommonTools
 		}
 		protected override object CreateInstance(Type itemType)
 		{
-			TreeListView owner = this.Context.Instance as TreeListView;
+			TreeListView owner = Context.Instance as TreeListView;
 			// create new default fieldname
 			string fieldname;
 			string caption;
@@ -65,7 +65,7 @@ namespace CommonTools
 		public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
 		{
 			object result = base.EditValue(context, provider, value);
-			TreeListView owner = this.Context.Instance as TreeListView;
+			TreeListView owner = Context.Instance as TreeListView;
 			owner.Invalidate();
 			return result;
 		}

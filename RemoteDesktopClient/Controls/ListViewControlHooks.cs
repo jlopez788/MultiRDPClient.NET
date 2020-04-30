@@ -15,13 +15,13 @@ namespace MultiRemoteDesktopClient.Controls
 
         public void AddControlForEmptyListItem(Object[] ctrl)
         {
-            this._objCtrl_EmptyListItem = ctrl;
-            EnableControls(false, this._objCtrl_EmptyListItem);
+            _objCtrl_EmptyListItem = ctrl;
+            EnableControls(false, _objCtrl_EmptyListItem);
         }
 
         public void AddControlForItemSelection(Object[] ctrl)
         {
-            this._objCtrl_ItemSelection = ctrl;
+            _objCtrl_ItemSelection = ctrl;
         }
 
         private void EnableControls(bool enable, Object[] ctrl)
@@ -93,33 +93,33 @@ namespace MultiRemoteDesktopClient.Controls
                 #region Handle drawing of "no items" message
                 if (Items.Count == 0 && Columns.Count > 0)
                 {
-                    if (this.GridLines)
+                    if (GridLines)
                     {
                         base.GridLines = false;
                     }
 
                     int w = 0;
-                    foreach (ColumnHeader h in this.Columns)
+                    foreach (ColumnHeader h in Columns)
                         w += h.Width;
 
                     StringFormat sf = new StringFormat();
                     sf.Alignment = StringAlignment.Center;
 
-                    Rectangle rc = new Rectangle(0, (int)(this.Font.Height * 1.5), w, this.Height);
+                    Rectangle rc = new Rectangle(0, (int)(Font.Height * 1.5), w, Height);
 
-                    using (Graphics g = this.CreateGraphics())
+                    using (Graphics g = CreateGraphics())
                     {
-                        g.FillRectangle(SystemBrushes.Window, 0, 0, this.Width, this.Height);
-                        g.DrawString(NoItemsMessage, this.Font, SystemBrushes.ControlText, rc, sf);
+                        g.FillRectangle(SystemBrushes.Window, 0, 0, Width, Height);
+                        g.DrawString(NoItemsMessage, Font, SystemBrushes.ControlText, rc, sf);
                     }
 
-                    EnableControls(false, this._objCtrl_EmptyListItem);
+                    EnableControls(false, _objCtrl_EmptyListItem);
                 }
                 else
                 {
                     //EnableControls(true, this._objCtrl_EmptyListItem);
 
-                    base.GridLines = this.GridLines;
+                    base.GridLines = GridLines;
                 }
                 #endregion
             }
@@ -136,11 +136,11 @@ namespace MultiRemoteDesktopClient.Controls
 
                 if (lvhi.Item == null)
                 {
-                    EnableControls(false, this._objCtrl_ItemSelection);
+                    EnableControls(false, _objCtrl_ItemSelection);
                 }
                 else
                 {
-                    EnableControls(true, this._objCtrl_ItemSelection);
+                    EnableControls(true, _objCtrl_ItemSelection);
                 }
             }
 

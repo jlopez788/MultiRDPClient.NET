@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using AxMSTSCLib;
 using Win32APIs;
 
 namespace MultiRemoteDesktopClient
 {
     public delegate void Connected(object sender, EventArgs e, int ListIndex);
+
     public delegate void Connecting(object sender, EventArgs e, int ListIndex);
+
     public delegate void LoginComplete(object sender, EventArgs e, int ListIndex);
+
     public delegate void Disconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e, int ListIndex);
+
     public delegate void OnFormClosing(object sender, FormClosingEventArgs e, int ListIndex, IntPtr Handle);
+
     public delegate void OnFormActivated(object sender, EventArgs e, int ListIndex, IntPtr Handle);
+
     public delegate void OnFormShown(object sender, EventArgs e, int ListIndex, IntPtr Handle);
+
     public delegate void ServerSettingsChanged(object sender, Database.ServerDetails sd, int ListIndex);
 
     public partial class RdpClientWindow : Form
@@ -45,8 +45,8 @@ namespace MultiRemoteDesktopClient
             InitializeControl(sd);
             InitializeControlEvents();
 
-            this.MdiParent = parent;
-            this.Visible = true;
+            MdiParent = parent;
+            Visible = true;
         }
 
         public void InitializeControl(Database.ServerDetails sd)
@@ -55,17 +55,16 @@ namespace MultiRemoteDesktopClient
                 btnFitToScreen
             });
 
-            this._sd = sd;
+            _sd = sd;
 
             rdpClient.Server = sd.Server;
             rdpClient.UserName = sd.Username;
             //rdpClient.Domain = sd.dom
-            rdpClient.AdvancedSettings2.ClearTextPassword = sd.Password;
+            rdpClient.AdvancedSettings2.ClearTextPassword = sd.Password ?? "";
             rdpClient.ColorDepth = sd.ColorDepth;
             rdpClient.DesktopWidth = sd.DesktopWidth;
             rdpClient.DesktopHeight = sd.DesktopHeight;
             rdpClient.FullScreen = sd.Fullscreen;
-            
 
             // this fixes the rdp control locking issue
             // when lossing its focus
@@ -83,7 +82,6 @@ namespace MultiRemoteDesktopClient
             //rdpClient.AdvancedSettings2.BitmapCacheSize = 512;
             rdpClient.AdvancedSettings2.CachePersistenceActive = -1;
 
-
             // custom port
             if (sd.Port != 0)
             {
@@ -98,8 +96,8 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            this.Shown += new EventHandler(RdpClientWindow_Shown);
-            this.FormClosing += new FormClosingEventHandler(RdpClientWindow_FormClosing);
+            Shown += new EventHandler(RdpClientWindow_Shown);
+            FormClosing += new FormClosingEventHandler(RdpClientWindow_FormClosing);
 
             btnDisconnect.Click += new EventHandler(ToolbarButtons_Click);
             btnConnect.Click += new EventHandler(ToolbarButtons_Click);
@@ -110,10 +108,10 @@ namespace MultiRemoteDesktopClient
             m_FTS_Strech.Click += new EventHandler(ToolbarButtons_Click);
             btnPopout_in.Click += new EventHandler(btnPopout_in_Click);
 
-            this.rdpClient.OnConnecting += new EventHandler(rdpClient_OnConnecting);
-            this.rdpClient.OnConnected += new EventHandler(rdpClient_OnConnected);
-            this.rdpClient.OnLoginComplete += new EventHandler(rdpClient_OnLoginComplete);
-            this.rdpClient.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(rdpClient_OnDisconnected);
+            rdpClient.OnConnecting += new EventHandler(rdpClient_OnConnecting);
+            rdpClient.OnConnected += new EventHandler(rdpClient_OnConnected);
+            rdpClient.OnLoginComplete += new EventHandler(rdpClient_OnLoginComplete);
+            rdpClient.OnDisconnected += new AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEventHandler(rdpClient_OnDisconnected);
 
             btnSndKey_TaskManager.Click += new EventHandler(SendKeys_Button_Click);
 
@@ -121,11 +119,12 @@ namespace MultiRemoteDesktopClient
         }
 
         public const int WM_LEAVING_FULLSCREEN = 0x4ff;
+
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x21)  // mouse click
             {
-                this.rdpClient.Focus();
+                rdpClient.Focus();
             }
             else if (m.Msg == WM_LEAVING_FULLSCREEN)
             {
@@ -134,8 +133,9 @@ namespace MultiRemoteDesktopClient
             base.WndProc(ref m);
         }
 
-        PopupMDIContainer popupmdi = null;
-        void btnPopout_in_Click(object sender, EventArgs e)
+        private PopupMDIContainer popupmdi = null;
+
+        private void btnPopout_in_Click(object sender, EventArgs e)
         {
             // we just can't move our entire form
             // into different window because of the ActiveX error
@@ -145,7 +145,7 @@ namespace MultiRemoteDesktopClient
             {
                 popupmdi = new PopupMDIContainer();
                 popupmdi.Show();
-                popupmdi.PopIn(ref rdpPanelBase, this, this._sd.ServerName);
+                popupmdi.PopIn(ref rdpPanelBase, this, _sd.ServerName);
 
                 btnPopout_in.Image = Properties.Resources.pop_in_16;
                 btnPopout_in.Tag = 1;
@@ -160,7 +160,8 @@ namespace MultiRemoteDesktopClient
         }
 
         #region EVENT: Send Keys
-        void SendKeys_Button_Click(object sender, EventArgs e)
+
+        private void SendKeys_Button_Click(object sender, EventArgs e)
         {
             rdpClient.Focus();
 
@@ -172,13 +173,14 @@ namespace MultiRemoteDesktopClient
 
             //rdpClient.AdvancedSettings2.HotKeyCtrlAltDel;
         }
+
         #endregion
 
         #region EVENT: RDP Client
 
-        void rdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
+        private void rdpClient_OnDisconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e)
         {
-            Status("Disconnected from " + this._sd.Server);
+            Status("Disconnected from " + _sd.Server);
 
             btnConnect.Enabled = true;
             btnDisconnect.Enabled = false;
@@ -187,43 +189,34 @@ namespace MultiRemoteDesktopClient
                 System.Diagnostics.Debug.WriteLine("OnDisconnected " + rdpClient.Connected);
             }
 
-            if (Disconnected != null)
-            {
-                Disconnected(this, e, this._listIndex);
-            }
+            Disconnected?.Invoke(this, e, _listIndex);
         }
 
-        void rdpClient_OnLoginComplete(object sender, EventArgs e)
+        private void rdpClient_OnLoginComplete(object sender, EventArgs e)
         {
-            Status("Loged in using " + this._sd.Username + " user account");
+            Status("Loged in using " + _sd.Username + " user account");
 
             { // check connection status on output
                 System.Diagnostics.Debug.WriteLine("OnLoginComplete " + rdpClient.Connected);
             }
 
-            if (LoginComplete != null)
-            {
-                LoginComplete(this, e, this._listIndex);
-            }
+            LoginComplete?.Invoke(this, e, _listIndex);
         }
 
-        void rdpClient_OnConnected(object sender, EventArgs e)
+        private void rdpClient_OnConnected(object sender, EventArgs e)
         {
-            Status("Connected to " + this._sd.Server);
+            Status("Connected to " + _sd.Server);
 
             { // check connection status on output
                 System.Diagnostics.Debug.WriteLine("OnConnected " + rdpClient.Connected);
             }
 
-            if (Connected != null)
-            {
-                Connected(this, e, this._listIndex);
-            }
+            Connected?.Invoke(this, e, _listIndex);
         }
 
-        void rdpClient_OnConnecting(object sender, EventArgs e)
+        private void rdpClient_OnConnecting(object sender, EventArgs e)
         {
-            Status("Connecting to " + this._sd.Server);
+            Status("Connecting to " + _sd.Server);
 
             btnConnect.Enabled = false;
             btnDisconnect.Enabled = true;
@@ -232,26 +225,23 @@ namespace MultiRemoteDesktopClient
                 System.Diagnostics.Debug.WriteLine("OnConnecting " + rdpClient.Connected);
             }
 
-            if (Connecting != null)
-            {
-                Connecting(this, e, this._listIndex);
-            }
+            Connecting?.Invoke(this, e, _listIndex);
         }
 
         #endregion
 
         #region EVENT: server settings window
 
-        Rectangle ssw_GetClientWindowSize()
+        private Rectangle ssw_GetClientWindowSize()
         {
             return rdpClient.RectangleToScreen(rdpClient.ClientRectangle);
         }
 
-        void ssw_ApplySettings(object sender, Database.ServerDetails sd)
+        private void ssw_ApplySettings(object sender, Database.ServerDetails sd)
         {
-            this._sd = sd;
+            _sd = sd;
 
-            MessageBox.Show("This will restart your connection", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("This will restart your connection", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             Reconnect(true, false, false);
         }
@@ -260,12 +250,12 @@ namespace MultiRemoteDesktopClient
 
         #region EVENT: other form controls
 
-        void tmrSC_Tick(object sender, EventArgs e)
+        private void tmrSC_Tick(object sender, EventArgs e)
         {
             pictureBox1.BackgroundImage = GetCurrentScreen();
         }
 
-        void ToolbarButtons_Click(object sender, EventArgs e)
+        private void ToolbarButtons_Click(object sender, EventArgs e)
         {
             if (sender == btnDisconnect)
             {
@@ -277,26 +267,23 @@ namespace MultiRemoteDesktopClient
             }
             else if (sender == btnReconnect)
             {
-                Reconnect(false, this._isFitToWindow, false);
+                Reconnect(false, _isFitToWindow, false);
             }
             else if (sender == btnSettings)
             {
-                ServerSettingsWindow ssw = new ServerSettingsWindow(this._sd);
+                ServerSettingsWindow ssw = new ServerSettingsWindow(_sd);
 
                 ssw.ApplySettings += new ApplySettings(ssw_ApplySettings);
                 ssw.GetClientWindowSize += new GetClientWindowSize(ssw_GetClientWindowSize);
                 ssw.ShowDialog();
 
-                this._sd = ssw.CurrentServerSettings();
+                _sd = ssw.CurrentServerSettings();
 
-                if (ServerSettingsChanged != null)
-                {
-                    ServerSettingsChanged(sender, this._sd, this._listIndex);
-                }
+                ServerSettingsChanged?.Invoke(sender, _sd, _listIndex);
             }
             else if (sender == btnFullscreen)
             {
-                DialogResult dr = MessageBox.Show("You are about to enter in Fullscreen mode.\r\nBy default, the remote desktop resolution will be the same as what you see on the window.\r\n\r\nWould you like to resize it automatically based on your screen resolution though it will be permanent as soon as you leave in Fullscreen.\r\n\r\nNote: This will reconnect.", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("You are about to enter in Fullscreen mode.\r\nBy default, the remote desktop resolution will be the same as what you see on the window.\r\n\r\nWould you like to resize it automatically based on your screen resolution though it will be permanent as soon as you leave in Fullscreen.\r\n\r\nNote: This will reconnect.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (dr == DialogResult.Yes)
                 {
@@ -309,7 +296,7 @@ namespace MultiRemoteDesktopClient
             }
             else if (sender == m_FTS_FitToScreen)
             {
-                DialogResult dr = MessageBox.Show("This will resize the server resolution based on this current client window size, though it will not affect you current settings.\r\n\r\nDo you want to continue?", this.Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                DialogResult dr = MessageBox.Show("This will resize the server resolution based on this current client window size, though it will not affect you current settings.\r\n\r\nDo you want to continue?", Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (dr == DialogResult.OK)
                 {
@@ -333,30 +320,24 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void RdpClientWindow_Shown(object sender, EventArgs e)
+        private void RdpClientWindow_Shown(object sender, EventArgs e)
         {
-            if (OnFormShown != null)
-            {
-                OnFormShown(this, e, this._listIndex, this.Handle);
-            }
+            OnFormShown?.Invoke(this, e, _listIndex, Handle);
 
             // stretch RD view
             ToolbarButtons_Click(m_FTS_Strech, null);
         }
 
-        void RdpClientWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void RdpClientWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dr = MessageBox.Show("Are you sure you want to close this window?", this.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult dr = MessageBox.Show("Are you sure you want to close this window?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
             if (dr == DialogResult.Yes)
             {
                 Disconnect();
                 rdpClient.Dispose();
 
-                if (OnFormClosing != null)
-                {
-                    OnFormClosing(this, e, this._listIndex, this.Handle);
-                }
+                OnFormClosing?.Invoke(this, e, _listIndex, Handle);
 
                 Dispose();
             }
@@ -366,14 +347,11 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void RdpClientWindow_Activated(object sender, EventArgs e)
+        private void RdpClientWindow_Activated(object sender, EventArgs e)
         {
-            this.rdpClient.Focus();
+            rdpClient.Focus();
 
-            if (OnFormActivated != null)
-            {
-                OnFormActivated(this, e, this._listIndex, this.Handle);
-            }
+            OnFormActivated?.Invoke(this, e, _listIndex, Handle);
         }
 
         #endregion
@@ -414,25 +392,25 @@ namespace MultiRemoteDesktopClient
 
             if (hasChanges)
             {
-                rdpClient.Server = this._sd.Server;
-                rdpClient.UserName = this._sd.Username;
-                rdpClient.AdvancedSettings2.ClearTextPassword = this._sd.Password;
-                rdpClient.ColorDepth = this._sd.ColorDepth;
+                rdpClient.Server = _sd.Server;
+                rdpClient.UserName = _sd.Username;
+                rdpClient.AdvancedSettings2.ClearTextPassword = _sd.Password??"";
+                rdpClient.ColorDepth = _sd.ColorDepth;
 
-                this._isFitToWindow = isFitToWindow;
+                _isFitToWindow = isFitToWindow;
 
                 if (isFitToWindow)
                 {
-                    rdpClient.DesktopWidth = this.rdpClient.Width;
-                    rdpClient.DesktopHeight = this.rdpClient.Height;
+                    rdpClient.DesktopWidth = rdpClient.Width;
+                    rdpClient.DesktopHeight = rdpClient.Height;
                 }
                 else
                 {
-                    rdpClient.DesktopWidth = this._sd.DesktopWidth;
-                    rdpClient.DesktopHeight = this._sd.DesktopHeight;
+                    rdpClient.DesktopWidth = _sd.DesktopWidth;
+                    rdpClient.DesktopHeight = _sd.DesktopHeight;
                 }
 
-                rdpClient.FullScreen = this._sd.Fullscreen;
+                rdpClient.FullScreen = _sd.Fullscreen;
             }
 
             if (isFullscreen)
@@ -448,7 +426,7 @@ namespace MultiRemoteDesktopClient
 
         public Image GetCurrentScreen()
         {
-            return APIs.ControlToImage.GetControlScreenshot(this.panel2);
+            return APIs.ControlToImage.GetControlScreenshot(panel2);
         }
 
         private void Status(string stat)
@@ -464,11 +442,11 @@ namespace MultiRemoteDesktopClient
         {
             get
             {
-                return this._listIndex;
+                return _listIndex;
             }
             set
             {
-                this._listIndex = value;
+                _listIndex = value;
             }
         }
 

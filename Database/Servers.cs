@@ -1,443 +1,63 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SQLite;
-using System.Text;
 
 namespace Database
 {
-    public class Servers : Database
+    public class Servers : Database<ServerDetails>
     {
-        ArrayList _alServes = new ArrayList();
-
-        public Servers()
+        public void Save(ServerDetails serverDetails)
         {
+            if (serverDetails.Password != string.Empty)
+            {
+                serverDetails.Password = RijndaelSettings.Encrypt(serverDetails.Password);
+            }
+
+            if (serverDetails.GroupID == Guid.Empty)
+            {
+                serverDetails.GroupID = Groups.UncategorizedId;
+            }
+            Execute(context => context.Upsert(serverDetails.Id, serverDetails));
         }
 
-        public ArrayList ArrayListServers
+        public void UpdateGroupIdByID(Guid id, Guid newGroupID)
         {
-            get
-            {
-                return this._alServes;
-            }
+            Execute(context => {
+                var server = context.FindById(id);
+                server.GroupID = newGroupID;
+                context.Update(id, server);
+            });
         }
 
-        public void Read()
-        {
-            string sql = "SELECT * FROM Servers";
-
-            //using (SQLiteConnection conn = new SQLiteConnection())
-            //{
-
-            //}
-
-            SQLiteDataReader reader;
-            string result = ExecuteQuery(sql, null, out reader);
-
-            this._alServes.Clear();
-
-            if (result == string.Empty)
-            {
-                while (reader.Read())
-                {
-                    ServerDetails sd = new ServerDetails();
-                    sd.UID = reader["uid"].ToString();
-                    sd.GroupID = int.Parse(reader["groupid"].ToString());
-                    sd.ServerName = reader["servername"].ToString();
-                    sd.Server = reader["server"].ToString();
-                    sd.Domain = reader["domain"].ToString();
-                    sd.Port = int.Parse(reader["port"].ToString());
-                    sd.Username = reader["username"].ToString();
-
-                    string pword = reader["password"].ToString();
-                    if (pword != string.Empty) { pword = RijndaelSettings.Decrypt(pword); }
-
-                    sd.Password = pword;
-
-                    sd.Description = reader["description"].ToString();
-                    sd.ColorDepth = int.Parse(reader["colordepth"].ToString());
-                    sd.DesktopWidth = int.Parse(reader["desktopwidth"].ToString());
-                    sd.DesktopHeight = int.Parse(reader["desktopheight"].ToString());
-                    sd.Fullscreen = int.Parse(reader["fullscreen"].ToString()) == 1 ? true : false;
-
-                    this._alServes.Add(sd);
-                }
-				reader.Close();
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-                throw new Exception(result);
-            }
-
-            CloseConnection();
-        }
-
-        public void Save(bool isNew, ServerDetails server_details)
-        {
-            if (isNew)
-            {
-                Save(server_details);
-            }
-            else
-            {
-                Update(server_details);
-            }
-        }
-
-        private void Save(ServerDetails server_details)
-        {
-            #region sql
-            string sql = "INSERT INTO Servers(uid, groupid, servername, server, domain, port, username, password, description, colordepth, desktopwidth, desktopheight, fullscreen) ";
-            sql += "VALUES(@uid, @gid, @sname, @server, @domain, @port, @uname, @pword, @desc, @cdepth, @dwidth, @dheight, @fscreen)";
-            #endregion
-
-            #region params
-            if (server_details.Password != string.Empty) { server_details.Password = RijndaelSettings.Encrypt(server_details.Password); }
-
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@uid", server_details.UID),
-                                               new SQLiteParameter("@gid", server_details.GroupID),
-                                               new SQLiteParameter("@sname", server_details.ServerName),
-                                               new SQLiteParameter("@server", server_details.Server),
-                                               new SQLiteParameter("@domain", server_details.Domain),
-                                               new SQLiteParameter("@port", server_details.Port),
-                                               new SQLiteParameter("@uname", server_details.Username),
-                                               new SQLiteParameter("@pword", server_details.Password),
-                                               new SQLiteParameter("@desc", server_details.Description),
-                                               new SQLiteParameter("@cdepth", server_details.ColorDepth),
-                                               new SQLiteParameter("@dwidth", server_details.DesktopWidth),
-                                               new SQLiteParameter("@dheight", server_details.DesktopHeight),
-                                               new SQLiteParameter("@fscreen", server_details.Fullscreen)
-                                           };
-            #endregion
-
-            string result = ExecuteNonQuery(sql, parameters);
-
-            if (result == string.Empty)
-            {
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-
-                if (result.Contains("Abort due to constraint violation"))
-                {
-                    throw new DatabaseException(DatabaseException.ExceptionTypes.DUPLICATE_ENTRY);
-                }
-                else
-                {
-                    throw new Exception(result);
-                }
-            }
-
-            CloseConnection();
-        }
-
-        private void Update(ServerDetails server_details)
-        {
-            #region sql
-            string sql = @"
-UPDATE 
-    Servers 
-SET 
-    uid=@uid, 
-    groupid=@gid,
-    servername=@sname, 
-    server=@server,
-    domain=@domain,
-    port=@port,
-    username=@uname,
-    password=@pword,
-    description=@desc,
-    colordepth=@cdepth, 
-    desktopwidth=@dwidth,
-    desktopheight=@dheight,
-    fullscreen=@fscreen
-WHERE
-    uid=@uid";
-            #endregion
-
-            #region params
-            if (server_details.Password != string.Empty) { server_details.Password = RijndaelSettings.Encrypt(server_details.Password); }
-
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@uid", server_details.UID),
-                                               new SQLiteParameter("@gid", server_details.GroupID),
-                                               new SQLiteParameter("@sname", server_details.ServerName),
-                                               new SQLiteParameter("@server", server_details.Server),
-                                               new SQLiteParameter("@domain", server_details.Domain),
-                                               new SQLiteParameter("@port", server_details.Port),
-                                               new SQLiteParameter("@uname", server_details.Username),
-                                               new SQLiteParameter("@pword", server_details.Password),
-                                               new SQLiteParameter("@desc", server_details.Description),
-                                               new SQLiteParameter("@cdepth", server_details.ColorDepth),
-                                               new SQLiteParameter("@dwidth", server_details.DesktopWidth),
-                                               new SQLiteParameter("@dheight", server_details.DesktopHeight),
-                                               new SQLiteParameter("@fscreen", server_details.Fullscreen)
-                                           };
-            #endregion
-
-            string result = ExecuteNonQuery(sql, parameters);
-
-            if (result == string.Empty)
-            {
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-
-                if (result.Contains("Abort due to constraint violation"))
-                {
-                    throw new DatabaseException(DatabaseException.ExceptionTypes.DUPLICATE_ENTRY);
-                }
-                else
-                {
-                    throw new Exception(result);
-                }
-            }
-
-            CloseConnection();
-        }
-
-        public void UpdateGroupIdByID(string id, int newGroupID)
-        {
-            string sql = "UPDATE Servers SET groupid = @gid WHERE Servers.uid = @uid";
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@gid", newGroupID),
-                                               new SQLiteParameter("@uid", id)
-                                           };
-
-            string result = ExecuteNonQuery(sql, parameters);
-
-            if (result == string.Empty)
-            {
-
-            }
-            else
-            {
-                CloseConnection();
-                throw new Exception(result);
-            }
-
-            CloseConnection();
-        }
-
-        public void DeleteByID(string id)
-        {
-            string sql = "DELETE FROM Servers WHERE Servers.uid=@uid";
-
-            SQLiteParameter[] parameters = {
-                                               new SQLiteParameter("@uid", id)
-                                           };
-
-            string result = ExecuteNonQuery(sql, parameters);
-
-            if (result == string.Empty)
-            {
-
-            }
-            else
-            {
-                CloseConnection();
-                System.Diagnostics.Debug.WriteLine(result);
-                throw new Exception(result);
-            }
-        }
+        public void DeleteByID(Guid id) => Execute(context => context.Delete(id));
     }
 
     public class ServerDetails
     {
-        string _uid = string.Empty;
-        string _serverName = string.Empty;
-        string _server = string.Empty;
-        string _domain = string.Empty;
-        int _port = 0;
-        string _username = string.Empty;
-        string _password = string.Empty;
-        string _description = string.Empty;
+        public Guid Id { set; get; }
 
-        int _colorDepth = 0;
-        int _desktopWidth = 0;
-        int _desktopHeight = 0;
-        bool _fullScreen = false;
+        public string ServerName { set; get; } = string.Empty;
 
-        int _groupID = 0;
+        public string Server { set; get; } = string.Empty;
 
-        public ServerDetails()
-        {
-        }
+        public string Domain { set; get; } = string.Empty;
 
-        public string UID
-        {
-            set
-            {
-                this._uid = value;
-            }
-            get
-            {
-                return this._uid;
-            }
-        }
+        public int Port { set; get; } = 0;
 
-        public string ServerName
-        {
-            set
-            {
-                this._serverName = value;
-            }
-            get
-            {
-                return this._serverName;
-            }
-        }
+        public string Username { set; get; } = string.Empty;
 
-        public string Server
-        {
-            set
-            {
-                this._server = value;
-            }
-            get
-            {
-                return this._server;
-            }
-        }
+        public string Password { get; set; }
 
-        public string Domain
-        {
-            set
-            {
-                this._domain = value;
-            }
-            get
-            {
-                return this._domain;
-            }
-        }
+        public string Description { set; get; } = string.Empty;
 
-        public int Port
-        {
-            set
-            {
-                this._port = value;
-            }
-            get
-            {
-                return this._port;
-            }
-        }
+        public int ColorDepth { set; get; } = 0;
 
-        public string Username
-        {
-            set
-            {
-                this._username = value;
-            }
-            get
-            {
-                return this._username;
-            }
-        }
+        public int DesktopWidth { set; get; } = 0;
 
-        public string Password
-        {
-            set
-            {
-                string val = value;
+        public int DesktopHeight { set; get; } = 0;
 
-                if (val != string.Empty)
-                {
-                    //val = RijndaelSettings.Encrypt(val);
-                }
+        public bool Fullscreen { set; get; } = false;
 
-                this._password = val;
-            }
-            get
-            {
-                if (this._password != string.Empty)
-                {
-                    //this._password = RijndaelSettings.Decrypt(this._password);
-                }
+        public Guid GroupID { set; get; }
 
-                return this._password;
-            }
-        }
-
-        public string Description
-        {
-            set
-            {
-                this._description = value;
-            }
-            get
-            {
-                return this._description;
-            }
-        }
-
-        public int ColorDepth
-        {
-            set
-            {
-                this._colorDepth = value;
-            }
-            get
-            {
-                return this._colorDepth;
-            }
-        }
-
-        public int DesktopWidth
-        {
-            set
-            {
-                this._desktopWidth = value;
-            }
-            get
-            {
-                return this._desktopWidth;
-            }
-        }
-
-        public int DesktopHeight
-        {
-            set
-            {
-                this._desktopHeight = value;
-            }
-            get
-            {
-                return this._desktopHeight;
-            }
-        }
-
-        public bool Fullscreen
-        {
-            set
-            {
-                this._fullScreen = value;
-            }
-            get
-            {
-                return this._fullScreen;
-            }
-        }
-
-        public int GroupID
-        {
-            set
-            {
-                this._groupID = value;
-            }
-            get
-            {
-                return this._groupID;
-            }
-        }
+        public ServerDetails() => Id = Guid.NewGuid();
     }
 }

@@ -53,7 +53,7 @@ namespace Messir.Windows.Forms
         {
             base.RenderMode = ToolStripRenderMode.ManagerRenderMode;
             base.Renderer = myRenderer;
-            myRenderer.RenderMode = this.RenderStyle;
+            myRenderer.RenderMode = RenderStyle;
             insPage = new DesignerVerb("Insert tab page", new EventHandler(OnInsertPageClicked));
         }
 
@@ -158,7 +158,7 @@ namespace Messir.Windows.Forms
             set
             {
                 myRenderer.RenderMode = value;
-                this.Invalidate();
+                Invalidate();
             }
         }
 
@@ -188,7 +188,7 @@ namespace Messir.Windows.Forms
             set
             {
                 myRenderer.UseVS = value;
-                this.Invalidate();
+                Invalidate();
             }
         }
 
@@ -203,7 +203,7 @@ namespace Messir.Windows.Forms
             set
             {
                 myRenderer.Mirrored = value;
-                this.Invalidate();
+                Invalidate();
             }
         }
 
@@ -229,9 +229,8 @@ namespace Messir.Windows.Forms
 
         protected void OnTabSelected(TabStripButton tab)
         {
-            this.Invalidate();
-            if (SelectedTabChanged != null)
-                SelectedTabChanged(this, new SelectedTabChangedEventArgs(tab));
+            Invalidate();
+            SelectedTabChanged?.Invoke(this, new SelectedTabChangedEventArgs(tab));
         }
 
         protected override void OnItemAdded(ToolStripItemEventArgs e)
@@ -246,9 +245,9 @@ namespace Messir.Windows.Forms
             TabStripButton clickedBtn = e.ClickedItem as TabStripButton;
             if (clickedBtn != null)
             {
-                this.SuspendLayout();
+                SuspendLayout();
                 mySelTab = clickedBtn;
-                this.ResumeLayout();
+                ResumeLayout();
                 OnTabSelected(clickedBtn);
             }
             base.OnItemClicked(e);
@@ -739,13 +738,13 @@ namespace Messir.Windows.Forms
 
         private void InitButton()
         {
-            m_SelectedFont = this.Font;
+            m_SelectedFont = Font;
         }
 
         public override Size GetPreferredSize(Size constrainingSize)
         {
             Size sz = base.GetPreferredSize(constrainingSize);
-            if (this.Owner != null && this.Owner.Orientation == Orientation.Vertical)
+            if (Owner != null && Owner.Orientation == Orientation.Vertical)
             {
                 sz.Width += 3;
                 sz.Height += 10;
@@ -801,7 +800,7 @@ namespace Messir.Windows.Forms
         [Description("Font when TabButton is selected")]
         public Font SelectedFont
         {
-            get { return (m_SelectedFont == null) ? this.Font : m_SelectedFont; }
+            get { return (m_SelectedFont == null) ? Font : m_SelectedFont; }
             set { m_SelectedFont = value; }
         }
 

@@ -43,7 +43,7 @@ namespace CommonTools
 		}
 		protected ColorListBox(Type colorType)
 		{
-			DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+			DrawMode = DrawMode.OwnerDrawFixed;
 			PropertyInfo[] propinfos = colorType.GetProperties(BindingFlags.Public | BindingFlags.Static);
 			foreach (PropertyInfo info in propinfos)
 			{
@@ -93,7 +93,7 @@ namespace CommonTools
 				if ((e.State & DrawItemState.Selected) == DrawItemState.Selected)
 					textColor = SystemColors.HighlightText;
 				else
-					textColor = this.ForeColor;
+					textColor = ForeColor;
 				Color color = (Color)Items[e.Index];
 				using (Brush brush = new SolidBrush(color))
 				{

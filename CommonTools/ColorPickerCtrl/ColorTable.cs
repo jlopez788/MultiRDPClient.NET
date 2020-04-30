@@ -109,7 +109,7 @@ namespace CommonTools
 		List<Color> m_colors = new List<Color>();
 		public ColorTable(Color[] colors)
 		{
-			this.DoubleBuffered = true;
+			DoubleBuffered = true;
 			if (colors != null)
 				m_colors = new List<Color>(colors);
 			Cols = 16;
@@ -118,7 +118,7 @@ namespace CommonTools
 		}
 		public ColorTable()
 		{
-			this.DoubleBuffered = true;
+			DoubleBuffered = true;
 			PropertyInfo[] propinfos = typeof(Color).GetProperties(BindingFlags.Public | BindingFlags.Static);
 			foreach (PropertyInfo info in propinfos)
 			{
@@ -210,9 +210,8 @@ namespace CommonTools
 				return;
 			Invalidate(GetSelectedItemRect());
 			m_selindex = index;
-			if (SelectedIndexChanged != null)
-				SelectedIndexChanged(this, null);
-			Invalidate(GetSelectedItemRect());
+            SelectedIndexChanged?.Invoke(this, null);
+            Invalidate(GetSelectedItemRect());
 		}
 		protected override void OnMouseMove(MouseEventArgs e)
 		{
