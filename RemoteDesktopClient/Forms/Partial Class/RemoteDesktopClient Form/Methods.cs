@@ -169,14 +169,14 @@ namespace MultiRemoteDesktopClient
                 if (canCreateNewForm)
                 {
                     RdpClientWindow clientWin = new RdpClientWindow(sd, this);
-                    clientWin.Connected += new Connected(clientWin_Connected);
-                    clientWin.Connecting += new Connecting(clientWin_Connecting);
-                    clientWin.LoginComplete += new LoginComplete(clientWin_LoginComplete);
-                    clientWin.Disconnected += new Disconnected(clientWin_Disconnected);
-                    clientWin.OnFormShown += new OnFormShown(clientWin_OnFormShown);
-                    clientWin.OnFormClosing += new OnFormClosing(clientWin_OnFormClosing);
-                    clientWin.OnFormActivated += new OnFormActivated(clientWin_OnFormActivated);
-                    clientWin.ServerSettingsChanged += new ServerSettingsChanged(clientWin_ServerSettingsChanged);
+                    clientWin.Connected += new Connected(ClientWin_Connected);
+                    clientWin.Connecting += new Connecting(ClientWin_Connecting);
+                    clientWin.LoginComplete += new LoginComplete(ClientWin_LoginComplete);
+                    clientWin.Disconnected += new Disconnected(ClientWin_Disconnected);
+                    clientWin.OnFormShown += new OnFormShown(ClientWin_OnFormShown);
+                    clientWin.OnFormClosing += new OnFormClosing(ClientWin_OnFormClosing);
+                    clientWin.OnFormActivated += new OnFormActivated(ClientWin_OnFormActivated);
+                    clientWin.ServerSettingsChanged += new ServerSettingsChanged(ClientWin_ServerSettingsChanged);
                     clientWin.Text = formTitle;
                     clientWin.MdiParent = this;
                     System.Diagnostics.Debug.WriteLine(Handle);

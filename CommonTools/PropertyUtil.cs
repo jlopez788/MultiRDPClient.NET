@@ -101,15 +101,15 @@ namespace CommonTools
 		}
 		static public object Parse(string value, Type type)
 		{
-			if (type == typeof(System.Drawing.SizeF))
-				return Parse(new System.Drawing.SizeF(0, 0), value);
-			if (type == typeof(System.Drawing.PointF))
-				return Parse(new System.Drawing.PointF(0, 0), value);
-			if (type == typeof(System.Drawing.Color))
+			if (type == typeof(SizeF))
+				return Parse(new SizeF(0, 0), value);
+			if (type == typeof(PointF))
+				return Parse(new PointF(0, 0), value);
+			if (type == typeof(Color))
 			{
 				value = value.Replace("Color ", "");
 				value = value.Trim(new char[] { '[', ']' });
-				System.Drawing.Color c = Color.FromName(value);
+                Color c = Color.FromName(value);
 				if (c.IsKnownColor)
 					return c;
 				ColorWrapper color = new ColorWrapper();
@@ -173,7 +173,7 @@ namespace CommonTools
 				get { return b; }
 				set { b = value; }
 			}
-			public System.Drawing.Color Color
+			public Color Color
 			{
 				get { return Color.FromArgb(a, r, g, b); }
 			}

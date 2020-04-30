@@ -120,7 +120,7 @@ namespace Win32APIs
                 return image;
             }
 
-            public static Image GetControlScreenshot(System.Windows.Forms.Control control)
+            public static Image GetControlScreenshot(Control control)
             {
                 object x = new object();
                 Bitmap bitmap = null;

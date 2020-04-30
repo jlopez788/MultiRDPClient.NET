@@ -22,7 +22,7 @@ namespace MultiRemoteDesktopClient
             InitializeControlEvents();
         }
 
-        public ExportWindow(ref MultiRemoteDesktopClient.Controls.ListViewEx lv)
+        public ExportWindow(ref Controls.ListViewEx lv)
         {
             InitializeComponent();
             InitializeControls(ref lv);
@@ -34,7 +34,7 @@ namespace MultiRemoteDesktopClient
 
         }
 
-        public void InitializeControls(ref MultiRemoteDesktopClient.Controls.ListViewEx lv)
+        public void InitializeControls(ref Controls.ListViewEx lv)
         {
             foreach (ListViewItem thisItem in lv.Items)
             {

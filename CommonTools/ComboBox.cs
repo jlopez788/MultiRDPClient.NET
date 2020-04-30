@@ -8,10 +8,10 @@ namespace CommonTools
 	public class FloatComboBox : NameObjectComboBox<float>
 	{
 	}
-	public class NameObjectComboBox<T> : System.Windows.Forms.ComboBox
-	{
-		CommonTools.NameObjectCollection<T> m_items = new CommonTools.NameObjectCollection<T>();
-		public new CommonTools.NameObjectCollection<T> Items
+	public class NameObjectComboBox<T> : ComboBox
+    {
+        NameObjectCollection<T> m_items = new NameObjectCollection<T>();
+		public new NameObjectCollection<T> Items
 		{
 			get { return m_items; }
 			set
@@ -20,9 +20,9 @@ namespace CommonTools
 				DataSource = m_items;
 			}
 		}
-		public new CommonTools.NameObject<T> SelectedItem
+		public new NameObject<T> SelectedItem
 		{
-			get { return base.SelectedItem as CommonTools.NameObject<T>; }
+			get { return base.SelectedItem as NameObject<T>; }
 			set { base.SelectedItem = value; } 
 		}
 		public NameObjectComboBox()

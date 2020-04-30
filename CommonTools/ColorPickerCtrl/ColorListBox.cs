@@ -16,7 +16,7 @@ namespace CommonTools
 		
 		[Browsable(false)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-		public new ListBox.ObjectCollection Items 
+		public new ObjectCollection Items 
 		{ 
 			get { return base.Items; } 
 		}

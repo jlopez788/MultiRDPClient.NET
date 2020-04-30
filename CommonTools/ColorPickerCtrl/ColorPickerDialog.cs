@@ -10,12 +10,12 @@ namespace CommonTools
 {
 	public partial class ColorPickerDialog : Form
 	{
-		CommonTools.ColorPickerCtrl m_colorPicker;
+        ColorPickerCtrl m_colorPicker;
 		public ColorPickerDialog()
 		{
 			InitializeComponent();
 
-			m_colorPicker = new CommonTools.ColorPickerCtrl();
+			m_colorPicker = new ColorPickerCtrl();
 			m_colorPicker.Dock = DockStyle.Fill;
 			m_colorWheelTabPage.Controls.Add(m_colorPicker);
 			m_colorPicker.SelectionChanged += new EventHandler(OnItemChanged);

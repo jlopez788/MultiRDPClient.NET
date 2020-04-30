@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Windows.Forms;
-using Microsoft.VisualBasic.ApplicationServices;
 
 namespace MultiRemoteDesktopClient
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.SetCompatibleTextRenderingDefault(false);
             Application.EnableVisualStyles();
@@ -30,7 +29,7 @@ namespace MultiRemoteDesktopClient
             StartupNextInstance += new StartupNextInstanceEventHandler(SingleInstanceController_StartupNextInstance);
         }
 
-        void SingleInstanceController_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
+        private void SingleInstanceController_StartupNextInstance(object sender, StartupNextInstanceEventArgs e)
         {
             RemoteDesktopClient rdc = (RemoteDesktopClient)MainForm;
 
@@ -42,9 +41,6 @@ namespace MultiRemoteDesktopClient
 
         protected override void OnCreateMainForm()
         {
-            SplashScreenWindow ssw = new SplashScreenWindow();
-            ssw.ShowDialog();
-
             MainForm = new RemoteDesktopClient();
         }
     }

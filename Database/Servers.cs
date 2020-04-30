@@ -6,11 +6,6 @@ namespace Database
     {
         public void Save(ServerDetails serverDetails)
         {
-            if (serverDetails.Password != string.Empty)
-            {
-                serverDetails.Password = RijndaelSettings.Encrypt(serverDetails.Password);
-            }
-
             if (serverDetails.GroupID == Guid.Empty)
             {
                 serverDetails.GroupID = Groups.UncategorizedId;
@@ -33,29 +28,16 @@ namespace Database
     public class ServerDetails
     {
         public Guid Id { set; get; }
-
-        public string ServerName { set; get; } = string.Empty;
-
-        public string Server { set; get; } = string.Empty;
-
-        public string Domain { set; get; } = string.Empty;
-
-        public int Port { set; get; } = 0;
-
-        public string Username { set; get; } = string.Empty;
-
-        public string Password { get; set; }
-
-        public string Description { set; get; } = string.Empty;
-
-        public int ColorDepth { set; get; } = 0;
-
-        public int DesktopWidth { set; get; } = 0;
-
-        public int DesktopHeight { set; get; } = 0;
-
-        public bool Fullscreen { set; get; } = false;
-
+        public string ServerName { set; get; }
+        public string Server { set; get; }
+        public int Port { set; get; }
+        public string Username { set; get; }
+        public Password Password { get; set; }
+        public string Description { set; get; }
+        public int ColorDepth { set; get; }
+        public int DesktopWidth { set; get; }
+        public int DesktopHeight { set; get; }
+        public bool Fullscreen { set; get; }
         public Guid GroupID { set; get; }
 
         public ServerDetails() => Id = Guid.NewGuid();

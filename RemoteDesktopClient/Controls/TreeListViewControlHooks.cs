@@ -10,7 +10,7 @@ namespace MultiRemoteDesktopClient.Controls
     // we just have to reference the control instead of extending something to it.
     public class TreeListViewControlHooks
     {
-        CommonTools.TreeListView _treelistview;
+        TreeListView _treelistview;
         Object[] _objCtrl_EmptyListItem;
         Object[] _objCtrl_ItemSelection;
 

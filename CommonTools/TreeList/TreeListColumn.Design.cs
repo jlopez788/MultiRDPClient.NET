@@ -182,7 +182,7 @@ namespace CommonTools
 			if (node != null)
 				return true;
 
-			CommonTools.HitInfo colinfo = tree.CalcColumnHit(point);
+            HitInfo colinfo = tree.CalcColumnHit(point);
 			if ((int)(colinfo.HitType & HitInfo.eHitType.kColumnHeader) > 0)
 				return true;
 

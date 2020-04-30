@@ -9,16 +9,16 @@ using System.Reflection;
 
 namespace CommonTools
 {
-	public class MyBindingSource : System.Windows.Forms.BindingSource
-	{
+	public class MyBindingSource : BindingSource
+    {
 		public event EventHandler ValueChanged;
 		public void RaiseValueChanged(object sender)
 		{
             ValueChanged?.Invoke(sender, null);
         }
 	}
-	public class BindingWithNotify : System.Windows.Forms.Binding
-	{
+	public class BindingWithNotify : Binding
+    {
 		public BindingWithNotify(string propertyName, object dataSource, string dataMember) : base(propertyName, dataSource, dataMember, true)
 		{
 		}

@@ -1,4 +1,5 @@
-﻿using DataProtection;
+﻿using Database;
+using DataProtection;
 using RDPFileReader;
 using System;
 using System.IO;
@@ -69,7 +70,7 @@ namespace MultiRemoteDesktopClient
 
                 #region Try decrypting the password from RDP file
 
-                {
+                
                     try
                     {
                         System.Diagnostics.Debug.WriteLine("reading password " + thisFile);
@@ -83,16 +84,14 @@ namespace MultiRemoteDesktopClient
                             RDPPassword = RDPPassword.Substring(0, RDPPassword.Length - 1);
                             // and decrypt it!
                             RDPPassword = DataProtectionForRDPWrapper.Decrypt(RDPPassword);
-
-                            sd.Password = RDPPassword;
+                            sd.Password = new Password(RDPPassword, false);
                         }
 
                         System.Diagnostics.Debug.WriteLine("reading password done");
                     }
                     catch (Exception Ex)
                     {
-                        sd.Password = string.Empty;
-
+                        sd.Password = Password.Empty; 
                         if (Ex.Message == "Problem converting Hex to Bytes")
                         {
                             MessageBox.Show("This RDP File '" + Path.GetFileNameWithoutExtension(thisFile) + "' contains a secured password which is currently unsported by this application.\r\nThe importing can still continue but without the password.\r\nYou can edit the password later by selecting a server in 'All Listed Servers' and click 'Edit Settings' button on the toolbar", Text, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -106,7 +105,7 @@ namespace MultiRemoteDesktopClient
                             MessageBox.Show("An unknown error occured while decrypting the password from '" + Path.GetFileNameWithoutExtension(thisFile) + "'", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-                }
+                
 
                 #endregion
 

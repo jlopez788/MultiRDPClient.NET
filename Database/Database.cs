@@ -4,11 +4,20 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Database
 {
     public class Database
     {
+        static Database()
+        {
+            BsonMapper.Global.RegisterType(
+                serialize: pwd => new BsonValue(pwd.Encrypted),
+                deserialize: str => new Password(str.AsString, true)
+            );
+        }
+
         protected string Filename { get; }
 
         public Database()
@@ -51,18 +60,20 @@ namespace Database
         public void ResetDatabase()
         {
             Delete(true);
-
             OnReset();
         }
 
-        protected virtual void OnReset() { }
-    }
+        protected virtual void OnReset() => ExecuteDb(db => {
+            var groups = db.GetCollection<GroupDetails>();
+            var servers = db.GetCollection<ServerDetails>();
+            groups.EnsureIndex(nameof(GroupDetails.GroupName), true);
+            groups.InsertBulk(new[] {
+                    new GroupDetails(Groups.UncategorizedId,"Uncategorized"),
+                    new GroupDetails("Application Servers"),
+                    new GroupDetails("Web Servers")
+            });
 
-    public class Database<TCollection> : Database
-    {
-        public IReadOnlyCollection<TCollection> Items => Execute(context => {
-            var items = context.FindAll();
-            return items.ToList().AsReadOnly();
+            return 1;
         });
 
         protected TResult ExecuteDb<TResult>(Func<LiteDatabase, TResult> execute)
@@ -75,11 +86,27 @@ namespace Database
                     result = execute(context);
                 }
             }
-            catch (Exception)
+            catch (LiteException ex)
             {
+                if (ex.Message.Contains("duplicate key"))
+                {
+                    MessageBox.Show("A group by that name is already exist. Please give a different name.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to save the group due to error.\r\n\r\nError Message: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return result;
         }
+    }
+
+    public class Database<TCollection> : Database
+    {
+        public IReadOnlyCollection<TCollection> Items => Execute(context => {
+            var items = context.FindAll();
+            return items.ToList().AsReadOnly();
+        });
 
         protected TResult Execute<TResult>(Func<LiteCollection<TCollection>, TResult> execute) => ExecuteDb(db => execute(db.GetCollection<TCollection>()));
 

@@ -10,7 +10,7 @@ namespace CommonTools
 	{
 		static public ImageList GetToolbarImageList(Type type, string resourceName, Size imageSize, Color transparentColor)
 		{
-			System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(type, resourceName);
+            Bitmap bitmap = new Bitmap(type, resourceName);
 			ImageList imageList = new ImageList();
 			imageList.ImageSize = imageSize;
 			imageList.TransparentColor = transparentColor;

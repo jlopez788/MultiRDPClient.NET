@@ -36,33 +36,29 @@ namespace MultiRemoteDesktopClient
         {
             lvGroups.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(lvGroups_ItemSelectionChanged);
             btnCreate.Click += new EventHandler(btnCreate_Click);
-            btnUpdate.Click += new EventHandler(btnUpdate_Click);
-            btnDelete.Click += new EventHandler(btnDelete_Click);
+            btnUpdate.Click += new EventHandler(BtnUpdate_Click);
+            btnDelete.Click += new EventHandler(BtnDelete_Click);
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void BtnUpdate_Click(object sender, EventArgs e)
         {
+            if (lvGroups.SelectedItems.Count == 0)
+                return;
             string group_name = CreateForm(string.Empty);
             if (group_name == null)
-            { return; }
+                return;
 
             var groupid = Guid.Parse(lvGroups.SelectedItems[0].Tag.ToString());
-            Database.GroupDetails gd = new Database.GroupDetails();
-            gd.Id = groupid;
-            gd.GroupName = group_name;
-            GlobalHelper.dbGroups.Save(false, gd);
+            GlobalHelper.dbGroups.Save(new GroupDetails(groupid, group_name));
 
             // let's just repopulate for a while
             PopulateListView(lvGroups);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
-            //if (!trw.isAllFieldSet())
-            //{
-            //    MessageBox.Show("One of the required field is empty", this.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            //    return;
-            //}
+            if (lvGroups.SelectedItems.Count == 0)
+                return;
 
             ListViewItem item = lvGroups.SelectedItems[0];
 
@@ -78,7 +74,7 @@ namespace MultiRemoteDesktopClient
                 if (dr == DialogResult.Yes)
                 {
                     var servers = GlobalHelper.dbServers.Items;
-                    foreach (Database.ServerDetails sd in servers)
+                    foreach (ServerDetails sd in servers)
                     {
                         if (groupid == sd.GroupID)
                         {
@@ -114,24 +110,9 @@ namespace MultiRemoteDesktopClient
             if (group_name == null)
             { return; }
 
-            Database.GroupDetails gd = new Database.GroupDetails();
-            gd.GroupName = group_name;
+            GroupDetails gd = new GroupDetails(group_name);
 
-            try
-            {
-                GlobalHelper.dbGroups.Save(true, gd);
-            }
-            catch (Database.DatabaseException ex)
-            {
-                if (ex.ExceptionType == Database.DatabaseException.ExceptionTypes.DUPLICATE_ENTRY)
-                {
-                    MessageBox.Show("A group by that name is already exist. Please give a different name.", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Unable to save the group due to error.\r\n\r\nError Message: " + ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            GlobalHelper.dbGroups.Save(gd);
 
             // let's just repopulate for a while
             PopulateListView(lvGroups);
@@ -216,7 +197,7 @@ namespace MultiRemoteDesktopClient
             lv.Items.Clear();
             var groups = GlobalHelper.dbGroups.Items;
             GlobalHelper.dbGroups.GetGroupsWithServerCount();
-            foreach (Database.GroupDetails gd in groups)
+            foreach (GroupDetails gd in groups)
             {
                 ListViewItem item = new ListViewItem(gd.GroupName);
                 item.SubItems.Add(gd.ServerCount.ToString());

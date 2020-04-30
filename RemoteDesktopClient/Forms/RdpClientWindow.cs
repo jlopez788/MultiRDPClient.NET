@@ -60,7 +60,7 @@ namespace MultiRemoteDesktopClient
             rdpClient.Server = sd.Server;
             rdpClient.UserName = sd.Username;
             //rdpClient.Domain = sd.dom
-            rdpClient.AdvancedSettings2.ClearTextPassword = sd.Password ?? "";
+            rdpClient.AdvancedSettings2.ClearTextPassword = sd.Password;
             rdpClient.ColorDepth = sd.ColorDepth;
             rdpClient.DesktopWidth = sd.DesktopWidth;
             rdpClient.DesktopHeight = sd.DesktopHeight;
@@ -394,7 +394,7 @@ namespace MultiRemoteDesktopClient
             {
                 rdpClient.Server = _sd.Server;
                 rdpClient.UserName = _sd.Username;
-                rdpClient.AdvancedSettings2.ClearTextPassword = _sd.Password??"";
+                rdpClient.AdvancedSettings2.ClearTextPassword = _sd.Password;
                 rdpClient.ColorDepth = _sd.ColorDepth;
 
                 _isFitToWindow = isFitToWindow;

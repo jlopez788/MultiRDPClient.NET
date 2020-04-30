@@ -197,10 +197,7 @@ namespace MultiRemoteDesktopClient
                 rdpClientWin._sd = sd;
                 rdpClientWin.Reconnect(true, false, false);
             }
-            else
-            {
-                MessageBox.Show("The relative RDP Client Window for this server does not exists.", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+             
         }
 
         #endregion

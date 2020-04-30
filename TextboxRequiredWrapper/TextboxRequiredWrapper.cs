@@ -5,26 +5,19 @@ Application Developer - Anomalist Designs LLC
  * --
  * TextboxRequiredWrapper 1.0
  * --
- 
+
 */
+
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Windows.Forms;
 
 namespace TextboxRequiredWrappers
 {
-    using System.Windows.Forms;
-
     public class TextboxRequiredWrapper
     {
-        Control[] _textbox;
-        Control[] _assocCtl;
-
-        string reqFieldMessage = "This field is required";
-
-        public TextboxRequiredWrapper()
-        {
-        }
+        private Control[] _assocCtl;
+        private Control[] _textbox;
+        private string reqFieldMessage = "This field is required";
 
         /// <summary>
         /// Add common controls for validation.
@@ -33,7 +26,6 @@ namespace TextboxRequiredWrappers
         public void AddRange(Control[] textbox)
         {
             _textbox = textbox;
-
             foreach (Control ctrl in _textbox)
             {
                 if (ctrl.Text == string.Empty)
@@ -42,18 +34,55 @@ namespace TextboxRequiredWrappers
                     ctrl.Font = new System.Drawing.Font(ctrl.Font.FontFamily, ctrl.Font.Size, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                 }
 
-                ctrl.LostFocus += new EventHandler(ctrl_LostFocus);
-                ctrl.GotFocus += new EventHandler(ctrl_GotFocus);
-                ctrl.TextChanged += new EventHandler(ctrl_TextChanged);
+                ctrl.LostFocus += new EventHandler(Ctrl_LostFocus);
+                ctrl.GotFocus += new EventHandler(Ctrl_GotFocus);
+                ctrl.TextChanged += new EventHandler(Ctrl_TextChanged);
             }
         }
 
-        public void AddAssociateControl(Control[] ctl)
+        public bool IsAllFieldSet()
         {
-            _assocCtl = ctl;
+            bool ret = true;
+
+            if (_textbox == null)
+            {
+                return true;
+            }
+
+            foreach (Control ctrl in _textbox)
+            {
+                if (ctrl.Text == reqFieldMessage)
+                {
+                    ret = false;
+                    break;
+                }
+            }
+
+            return ret;
         }
 
-        void ctrl_TextChanged(object sender, EventArgs e)
+        private void Ctrl_GotFocus(object sender, EventArgs e)
+        {
+            Control ctrl = (Control)sender;
+
+            if (ctrl.Text == reqFieldMessage)
+            {
+                ctrl.Text = string.Empty;
+            }
+        }
+
+        private void Ctrl_LostFocus(object sender, EventArgs e)
+        {
+            Control ctrl = (Control)sender;
+
+            if (ctrl.Text == string.Empty)
+            {
+                ctrl.Font = new System.Drawing.Font(ctrl.Font.FontFamily, ctrl.Font.Size, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                ctrl.Text = reqFieldMessage;
+            }
+        }
+
+        private void Ctrl_TextChanged(object sender, EventArgs e)
         {
             Control ctrl = (Control)sender;
 
@@ -81,48 +110,6 @@ namespace TextboxRequiredWrappers
                     }
                 }
             }
-        }
-
-        void ctrl_LostFocus(object sender, EventArgs e)
-        {
-            Control ctrl = (Control)sender;
-
-            if (ctrl.Text == string.Empty)
-            {
-                ctrl.Font = new System.Drawing.Font(ctrl.Font.FontFamily, ctrl.Font.Size, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                ctrl.Text = reqFieldMessage;
-            }
-        }
-
-        void ctrl_GotFocus(object sender, EventArgs e)
-        {
-            Control ctrl = (Control)sender;
-
-            if (ctrl.Text == reqFieldMessage)
-            {
-                ctrl.Text = string.Empty;
-            }
-        }
-
-        public bool isAllFieldSet()
-        {
-            bool ret = true;
-
-            if (_textbox == null)
-            {
-                return true;
-            }
-
-            foreach (Control ctrl in _textbox)
-            {
-                if (ctrl.Text == reqFieldMessage)
-                {
-                    ret = false;
-                    break;
-                }
-            }
-
-            return ret;
         }
     }
 }

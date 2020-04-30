@@ -17,7 +17,7 @@ namespace DataProtection
 {
     public class DataProtectionForRDPWrapper
     {
-        static DataProtection.DataProtector dp = new DataProtector(DataProtector.Store.USE_MACHINE_STORE);
+        static DataProtector dp = new DataProtector(DataProtector.Store.USE_MACHINE_STORE);
 
         public static string Encrypt(string text_password)
         {
@@ -39,7 +39,7 @@ namespace DataProtection
 
         static string GetString(byte[] byt)
         {
-            System.Text.Encoding enc = Encoding.Unicode;
+            Encoding enc = Encoding.Unicode;
             return enc.GetString(byt);
         }
 

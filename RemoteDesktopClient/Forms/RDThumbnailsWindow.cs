@@ -42,7 +42,7 @@ namespace MultiRemoteDesktopClient
                 {
                     bool safeToCreateWindow = true;
 
-                    foreach (MultiRemoteDesktopClient.Controls.RDThumbnail rdt in flowLayoutPanel1.Controls)
+                    foreach (Controls.RDThumbnail rdt in flowLayoutPanel1.Controls)
                     {
                         if (f.Handle == rdt.MDIChild_Handle)
                         {
@@ -61,14 +61,14 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void UpdateThumbnail(Image RDImage, MultiRemoteDesktopClient.Controls.RDThumbnail RDThumb)
+        void UpdateThumbnail(Image RDImage, Controls.RDThumbnail RDThumb)
         {
             RDThumb.RDImage = RDImage;
         }
 
         void CreateThumbnail(RdpClientWindow window)
         {
-            MultiRemoteDesktopClient.Controls.RDThumbnail RDThumb = new MultiRemoteDesktopClient.Controls.RDThumbnail();
+            Controls.RDThumbnail RDThumb = new Controls.RDThumbnail();
             RDThumb.Title = window.Text;
             RDThumb.RDImage = window.GetCurrentScreen();
             RDThumb.Visible = true;

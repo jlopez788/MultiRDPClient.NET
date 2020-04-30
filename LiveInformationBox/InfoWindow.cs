@@ -199,7 +199,7 @@ namespace LiveInformationBox
 
                 lblInfo.Location = new Point(margin_x, panel1.Height + margin_y);
 
-                System.Drawing.Size s = new Size();
+                Size s = new Size();
                 s.Height = lblInfo.Top + lblInfo.Height + margin_y;
 
                 if (lblInfo.Left + lblInfo.Width >= Width)

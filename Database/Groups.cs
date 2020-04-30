@@ -12,6 +12,12 @@ namespace Database
 
         public GroupDetails() => Id = Guid.NewGuid();
 
+        public GroupDetails(Guid id, string name)
+        {
+            Id = id;
+            GroupName = name;
+        }
+
         public GroupDetails(string groupName)
         {
             Id = Guid.NewGuid();
@@ -23,25 +29,7 @@ namespace Database
     {
         public static readonly Guid UncategorizedId = new Guid("10000000-0000-0000-0000-000000000012");
 
-        public static readonly Lazy<GroupDetails> Uncategorized = new Lazy<GroupDetails>(() => new GroupDetails("Uncategorized") {
-            Id = UncategorizedId
-        });
-
-        public void Save(bool isNew, GroupDetails group_details)
-        {
-            if (isNew)
-            {
-                Save(group_details);
-            }
-            else
-            {
-                Update(group_details);
-            }
-        }
-
-        private void Save(GroupDetails groupDetails) => Execute(context => context.Insert(new BsonValue(groupDetails.Id), groupDetails));
-
-        private void Update(GroupDetails groupDetails) => Execute(context => context.Upsert(new BsonValue(groupDetails.Id), groupDetails));
+        public void Save(GroupDetails groupDetails) => Execute(context => context.Upsert(new BsonValue(groupDetails.Id), groupDetails));
 
         public void DeleteByID(Guid id) => Execute(context => context.Delete(new BsonValue(id)));
 
@@ -66,15 +54,5 @@ namespace Database
                 return 1;
             });
         }
-
-        protected override void OnReset() => Execute(context => {
-            context.InsertBulk(new[] {
-                    Uncategorized.Value,
-                    new GroupDetails("Application Servers"),
-                    new GroupDetails("Web Servers")}
-            );
-
-            var items = context.FindAll().ToList();
-        });
     }
 }

@@ -345,7 +345,7 @@ namespace CommonTools
 		public delegate TreeNode NodeCallback(TreeNode node, ref bool doContinue);
 		protected TreeView		m_tree;
 		protected NodeCallback	m_callback;
-		public TreeIterator(System.Windows.Forms.TreeView tree, NodeCallback cb)
+		public TreeIterator(TreeView tree, NodeCallback cb)
 		{
 			m_tree = tree;
 			m_callback = cb;
@@ -379,7 +379,7 @@ namespace CommonTools
 	class TreeIteratorMatchTag : TreeIterator
 	{
 		object m_tagToMatch;
-		public TreeIteratorMatchTag(System.Windows.Forms.TreeView tree, object tag) : base(tree, null)
+		public TreeIteratorMatchTag(TreeView tree, object tag) : base(tree, null)
 		{
 			m_tagToMatch = tag;
 			m_callback = nodeCallback;
@@ -426,7 +426,7 @@ namespace CommonTools
 
 		[DllImport("Shell32.dll")]
 		static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, int cbFileInfo, uint uFlags);
-		[System.Runtime.InteropServices.DllImport("user32.dll", CharSet = CharSet.Auto)]
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		static extern bool DestroyIcon(IntPtr handle);
 
 		public static Bitmap GetIcon(string filename)

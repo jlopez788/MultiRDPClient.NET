@@ -248,7 +248,7 @@ namespace CommonTools
 		{
 			return CalcHitNode(PointToClient(MousePosition));
 		}
-		public CommonTools.HitInfo CalcColumnHit(Point mousepoint)
+		public HitInfo CalcColumnHit(Point mousepoint)
 		{
 			return Columns.CalcHitInfo(mousepoint, HScrollValue());
 		}
@@ -476,7 +476,7 @@ namespace CommonTools
 			}
 
 			TreeListColumn hotcol = null;
-			CommonTools.HitInfo info = Columns.CalcHitInfo(new Point(e.X, e.Y), HScrollValue());
+            HitInfo info = Columns.CalcHitInfo(new Point(e.X, e.Y), HScrollValue());
 			if ((int)(info.HitType & HitInfo.eHitType.kColumnHeader) > 0)
 				hotcol = info.Column;
 			if ((int)(info.HitType & HitInfo.eHitType.kColumnHeaderResize) > 0)
@@ -537,7 +537,7 @@ namespace CommonTools
 
 			if (e.Button == MouseButtons.Left)
 			{
-				CommonTools.HitInfo info = Columns.CalcHitInfo(new Point(e.X, e.Y), HScrollValue());
+                HitInfo info = Columns.CalcHitInfo(new Point(e.X, e.Y), HScrollValue());
 				if ((int)(info.HitType & HitInfo.eHitType.kColumnHeaderResize) > 0)
 				{
 					m_resizingColumn = info.Column;
@@ -692,7 +692,7 @@ namespace CommonTools
 			}
 		}
 
-		protected virtual CommonTools.TreeList.TextFormatting GetFormatting(CommonTools.Node node, CommonTools.TreeListColumn column)
+		protected virtual TreeList.TextFormatting GetFormatting(Node node, TreeListColumn column)
 		{
 			return column.CellFormat;
 		}
@@ -1036,9 +1036,9 @@ namespace CommonTools
 			get { return base.DesignMode; }
 		}
 
-        public CommonTools.Node FindNode(string text, bool searchFields)
+        public Node FindNode(string text, bool searchFields)
         {
-            CommonTools.Node ret = null;
+            Node ret = null;
 
             NodeFind(text, Nodes, searchFields, out ret);
 
@@ -1046,7 +1046,7 @@ namespace CommonTools
         }
 
         // TreeListView recursion
-        private void NodeFind(string text, CommonTools.NodeCollection cNodes, bool searchFields, out CommonTools.Node outNode)
+        private void NodeFind(string text, NodeCollection cNodes, bool searchFields, out Node outNode)
         {
             bool found = false;
             outNode = null;

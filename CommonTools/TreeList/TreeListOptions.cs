@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace CommonTools.TreeList
 {
-	[TypeConverterAttribute(typeof(OptionsSettingTypeConverter))]
+	[TypeConverter(typeof(OptionsSettingTypeConverter))]
 	public class TextFormatting
 	{
 		ContentAlignment	m_alignment = ContentAlignment.MiddleLeft;
@@ -88,7 +88,7 @@ namespace CommonTools.TreeList
 		}
 	}
 	
-	[TypeConverterAttribute(typeof(OptionsSettingTypeConverter))]
+	[TypeConverter(typeof(OptionsSettingTypeConverter))]
 	public class ViewSetting
 	{
 		TreeListView			m_owner;
@@ -168,7 +168,7 @@ namespace CommonTools.TreeList
 		}
 	}
 	
-	[TypeConverterAttribute(typeof(OptionsSettingTypeConverter))]
+	[TypeConverter(typeof(OptionsSettingTypeConverter))]
 	public class CollumnSetting
 	{
 		int				m_leftMargin = 5;
@@ -203,7 +203,7 @@ namespace CommonTools.TreeList
 		}
 	}
 
-	[TypeConverterAttribute(typeof(OptionsSettingTypeConverter))]
+	[TypeConverter(typeof(OptionsSettingTypeConverter))]
 	public class RowSetting
 	{
 		TreeListView	m_owner;

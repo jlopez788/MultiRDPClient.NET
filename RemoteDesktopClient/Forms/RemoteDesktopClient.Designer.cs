@@ -103,6 +103,10 @@
             this.panelServerLists = new System.Windows.Forms.Panel();
             this.splitter = new System.Windows.Forms.Panel();
             this.tlvServerLists = new CommonTools.TreeListView();
+            this.lvServerLists = new MultiRemoteDesktopClient.Controls.ListViewEx();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnPinServerLists = new System.Windows.Forms.Button();
             this.btnHideServerLists = new System.Windows.Forms.Button();
             this.lblServerListsPanelTitle = new System.Windows.Forms.Label();
@@ -114,10 +118,6 @@
             this.systray = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabstripLeftPanel = new Messir.Windows.Forms.TabStrip();
             this.tabServerLists = new Messir.Windows.Forms.TabStripButton();
-            this.lvServerLists = new MultiRemoteDesktopClient.Controls.ListViewEx();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -168,7 +168,7 @@
             this.m_File_NewClient.ImageTransparentColor = System.Drawing.Color.Black;
             this.m_File_NewClient.Name = "m_File_NewClient";
             this.m_File_NewClient.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.m_File_NewClient.Size = new System.Drawing.Size(214, 22);
+            this.m_File_NewClient.Size = new System.Drawing.Size(211, 22);
             this.m_File_NewClient.Text = "&New Client";
             this.m_File_NewClient.Click += new System.EventHandler(this.ShowNewForm);
             // 
@@ -178,45 +178,45 @@
             this.m_File_EditSettings.ImageTransparentColor = System.Drawing.Color.Black;
             this.m_File_EditSettings.Name = "m_File_EditSettings";
             this.m_File_EditSettings.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.m_File_EditSettings.Size = new System.Drawing.Size(214, 22);
+            this.m_File_EditSettings.Size = new System.Drawing.Size(211, 22);
             this.m_File_EditSettings.Text = "&Edit Client Settings";
             this.m_File_EditSettings.Click += new System.EventHandler(this.OpenSettingsWindow);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(211, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(208, 6);
             // 
             // m_File_ImportRDP
             // 
             this.m_File_ImportRDP.Image = global::MultiRemoteDesktopClient.Properties.Resources.import_16;
             this.m_File_ImportRDP.Name = "m_File_ImportRDP";
-            this.m_File_ImportRDP.Size = new System.Drawing.Size(214, 22);
+            this.m_File_ImportRDP.Size = new System.Drawing.Size(211, 22);
             this.m_File_ImportRDP.Text = "Import RDP Files";
             // 
             // m_File_ExportRDP
             // 
             this.m_File_ExportRDP.Image = global::MultiRemoteDesktopClient.Properties.Resources.export_16;
             this.m_File_ExportRDP.Name = "m_File_ExportRDP";
-            this.m_File_ExportRDP.Size = new System.Drawing.Size(214, 22);
+            this.m_File_ExportRDP.Size = new System.Drawing.Size(211, 22);
             this.m_File_ExportRDP.Text = "Export to RDP Format";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(211, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(208, 6);
             // 
             // m_File_Lock
             // 
             this.m_File_Lock.Image = global::MultiRemoteDesktopClient.Properties.Resources.LogOff_16;
             this.m_File_Lock.Name = "m_File_Lock";
-            this.m_File_Lock.Size = new System.Drawing.Size(214, 22);
+            this.m_File_Lock.Size = new System.Drawing.Size(211, 22);
             this.m_File_Lock.Text = "Lock";
             // 
             // m_File_Exit
             // 
             this.m_File_Exit.Name = "m_File_Exit";
-            this.m_File_Exit.Size = new System.Drawing.Size(214, 22);
+            this.m_File_Exit.Size = new System.Drawing.Size(211, 22);
             this.m_File_Exit.Text = "E&xit";
             this.m_File_Exit.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
             // 
@@ -235,19 +235,19 @@
             this.m_Edit_DeleteClient.Image = global::MultiRemoteDesktopClient.Properties.Resources.delRDP_16;
             this.m_Edit_DeleteClient.Name = "m_Edit_DeleteClient";
             this.m_Edit_DeleteClient.ShortcutKeyDisplayString = "Ctrl+DEL";
-            this.m_Edit_DeleteClient.Size = new System.Drawing.Size(192, 22);
+            this.m_Edit_DeleteClient.Size = new System.Drawing.Size(191, 22);
             this.m_Edit_DeleteClient.Text = "Delete Client";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(189, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(188, 6);
             // 
             // m_Edit_ManageGroups
             // 
             this.m_Edit_ManageGroups.Image = global::MultiRemoteDesktopClient.Properties.Resources.manage_groups_16;
             this.m_Edit_ManageGroups.Name = "m_Edit_ManageGroups";
-            this.m_Edit_ManageGroups.Size = new System.Drawing.Size(192, 22);
+            this.m_Edit_ManageGroups.Size = new System.Drawing.Size(191, 22);
             this.m_Edit_ManageGroups.Text = "Manage Groups";
             // 
             // viewMenu
@@ -267,7 +267,7 @@
             this.toolBarToolStripMenuItem.CheckOnClick = true;
             this.toolBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolBarToolStripMenuItem.Name = "toolBarToolStripMenuItem";
-            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.toolBarToolStripMenuItem.Text = "&Toolbar";
             this.toolBarToolStripMenuItem.Click += new System.EventHandler(this.ToolBarToolStripMenuItem_Click);
             // 
@@ -277,14 +277,14 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.statusBarToolStripMenuItem.Text = "&Status Bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(180, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(182, 6);
             // 
             // m_View_SLIV
             // 
@@ -294,7 +294,7 @@
             this.m_View_SLIV_Tree});
             this.m_View_SLIV.Image = global::MultiRemoteDesktopClient.Properties.Resources.icon_view_tile;
             this.m_View_SLIV.Name = "m_View_SLIV";
-            this.m_View_SLIV.Size = new System.Drawing.Size(183, 22);
+            this.m_View_SLIV.Size = new System.Drawing.Size(185, 22);
             this.m_View_SLIV.Text = "Server Lists Icon View";
             // 
             // m_View_SLIV_Details
@@ -323,14 +323,14 @@
             this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_Tools_Configuration});
             this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(46, 20);
+            this.toolsMenu.Size = new System.Drawing.Size(47, 20);
             this.toolsMenu.Text = "&Tools";
             // 
             // m_Tools_Configuration
             // 
             this.m_Tools_Configuration.Image = global::MultiRemoteDesktopClient.Properties.Resources.config_16;
             this.m_Tools_Configuration.Name = "m_Tools_Configuration";
-            this.m_Tools_Configuration.Size = new System.Drawing.Size(147, 22);
+            this.m_Tools_Configuration.Size = new System.Drawing.Size(146, 22);
             this.m_Tools_Configuration.Text = "&Configuration";
             // 
             // windowsMenu
@@ -339,7 +339,7 @@
             this.windowLayoutsToolStripMenuItem,
             this.closeAllToolStripMenuItem});
             this.windowsMenu.Name = "windowsMenu";
-            this.windowsMenu.Size = new System.Drawing.Size(68, 20);
+            this.windowsMenu.Size = new System.Drawing.Size(67, 20);
             this.windowsMenu.Text = "&Windows";
             // 
             // windowLayoutsToolStripMenuItem
@@ -350,13 +350,13 @@
             this.tileVerticalToolStripMenuItem,
             this.arrangeIconsToolStripMenuItem});
             this.windowLayoutsToolStripMenuItem.Name = "windowLayoutsToolStripMenuItem";
-            this.windowLayoutsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.windowLayoutsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.windowLayoutsToolStripMenuItem.Text = "Window Layouts";
             // 
             // cascadeToolStripMenuItem
             // 
             this.cascadeToolStripMenuItem.Name = "cascadeToolStripMenuItem";
-            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.cascadeToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.cascadeToolStripMenuItem.Tag = "0";
             this.cascadeToolStripMenuItem.Text = "&Cascade";
             this.cascadeToolStripMenuItem.Click += new System.EventHandler(this.LayoutMdi_Click);
@@ -364,7 +364,7 @@
             // tileHorizontalToolStripMenuItem
             // 
             this.tileHorizontalToolStripMenuItem.Name = "tileHorizontalToolStripMenuItem";
-            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.tileHorizontalToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.tileHorizontalToolStripMenuItem.Tag = "1";
             this.tileHorizontalToolStripMenuItem.Text = "Tile &Horizontal";
             this.tileHorizontalToolStripMenuItem.Click += new System.EventHandler(this.LayoutMdi_Click);
@@ -372,7 +372,7 @@
             // tileVerticalToolStripMenuItem
             // 
             this.tileVerticalToolStripMenuItem.Name = "tileVerticalToolStripMenuItem";
-            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.tileVerticalToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.tileVerticalToolStripMenuItem.Tag = "2";
             this.tileVerticalToolStripMenuItem.Text = "Tile &Vertical";
             this.tileVerticalToolStripMenuItem.Click += new System.EventHandler(this.LayoutMdi_Click);
@@ -380,7 +380,7 @@
             // arrangeIconsToolStripMenuItem
             // 
             this.arrangeIconsToolStripMenuItem.Name = "arrangeIconsToolStripMenuItem";
-            this.arrangeIconsToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.arrangeIconsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.arrangeIconsToolStripMenuItem.Tag = "3";
             this.arrangeIconsToolStripMenuItem.Text = "&Arrange Icons";
             this.arrangeIconsToolStripMenuItem.Click += new System.EventHandler(this.LayoutMdi_Click);
@@ -388,7 +388,7 @@
             // closeAllToolStripMenuItem
             // 
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.closeAllToolStripMenuItem.Text = "C&lose All";
             this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.CloseAllToolStripMenuItem_Click);
             // 
@@ -460,7 +460,7 @@
             this.toobar_Lock.Image = global::MultiRemoteDesktopClient.Properties.Resources.LogOff_16;
             this.toobar_Lock.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toobar_Lock.Name = "toobar_Lock";
-            this.toobar_Lock.Size = new System.Drawing.Size(50, 22);
+            this.toobar_Lock.Size = new System.Drawing.Size(51, 22);
             this.toobar_Lock.Text = "Lock";
             // 
             // toolStripSeparator12
@@ -518,7 +518,7 @@
             this.toolbar_ManageGroups.Image = global::MultiRemoteDesktopClient.Properties.Resources.manage_groups_16;
             this.toolbar_ManageGroups.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolbar_ManageGroups.Name = "toolbar_ManageGroups";
-            this.toolbar_ManageGroups.Size = new System.Drawing.Size(110, 22);
+            this.toolbar_ManageGroups.Size = new System.Drawing.Size(109, 22);
             this.toolbar_ManageGroups.Text = "Manage Groups";
             // 
             // toolStripSeparator1
@@ -531,7 +531,7 @@
             this.toolbar_ImportRDP.Image = global::MultiRemoteDesktopClient.Properties.Resources.import_16;
             this.toolbar_ImportRDP.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolbar_ImportRDP.Name = "toolbar_ImportRDP";
-            this.toolbar_ImportRDP.Size = new System.Drawing.Size(106, 22);
+            this.toolbar_ImportRDP.Size = new System.Drawing.Size(108, 22);
             this.toolbar_ImportRDP.Text = "Import RDP File";
             // 
             // toolbar_ExportRDP
@@ -556,7 +556,7 @@
             this.toolbar_SLIV_Tree});
             this.toolbar_SLIV.Image = global::MultiRemoteDesktopClient.Properties.Resources.icon_view_tile;
             this.toolbar_SLIV.Name = "toolbar_SLIV";
-            this.toolbar_SLIV.Size = new System.Drawing.Size(145, 22);
+            this.toolbar_SLIV.Size = new System.Drawing.Size(147, 22);
             this.toolbar_SLIV.Text = "Server Lists Icon View";
             // 
             // toolbar_SLIV_Details
@@ -635,39 +635,39 @@
             this.toolStripSeparator2,
             this.lvServerListsContextMenu_ConnectAll});
             this.lvServerListContextMenu.Name = "lvServerListContextMenu";
-            this.lvServerListContextMenu.Size = new System.Drawing.Size(173, 98);
+            this.lvServerListContextMenu.Size = new System.Drawing.Size(181, 98);
             // 
             // lvServerListsContextMenu_NewClient
             // 
             this.lvServerListsContextMenu_NewClient.Image = global::MultiRemoteDesktopClient.Properties.Resources.newRDP_16;
             this.lvServerListsContextMenu_NewClient.Name = "lvServerListsContextMenu_NewClient";
-            this.lvServerListsContextMenu_NewClient.Size = new System.Drawing.Size(172, 22);
+            this.lvServerListsContextMenu_NewClient.Size = new System.Drawing.Size(180, 22);
             this.lvServerListsContextMenu_NewClient.Text = "New Client";
             // 
             // lvServerListsContextMenu_DeleteClient
             // 
             this.lvServerListsContextMenu_DeleteClient.Image = global::MultiRemoteDesktopClient.Properties.Resources.delRDP_16;
             this.lvServerListsContextMenu_DeleteClient.Name = "lvServerListsContextMenu_DeleteClient";
-            this.lvServerListsContextMenu_DeleteClient.Size = new System.Drawing.Size(172, 22);
+            this.lvServerListsContextMenu_DeleteClient.Size = new System.Drawing.Size(180, 22);
             this.lvServerListsContextMenu_DeleteClient.Text = "Delete Client";
             // 
             // lvServerListsContextMenu_EditClientSettings
             // 
             this.lvServerListsContextMenu_EditClientSettings.Image = global::MultiRemoteDesktopClient.Properties.Resources.open_16;
             this.lvServerListsContextMenu_EditClientSettings.Name = "lvServerListsContextMenu_EditClientSettings";
-            this.lvServerListsContextMenu_EditClientSettings.Size = new System.Drawing.Size(172, 22);
+            this.lvServerListsContextMenu_EditClientSettings.Size = new System.Drawing.Size(180, 22);
             this.lvServerListsContextMenu_EditClientSettings.Text = "Edit Client Settings";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(169, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // lvServerListsContextMenu_ConnectAll
             // 
             this.lvServerListsContextMenu_ConnectAll.Image = global::MultiRemoteDesktopClient.Properties.Resources.connectall_16;
             this.lvServerListsContextMenu_ConnectAll.Name = "lvServerListsContextMenu_ConnectAll";
-            this.lvServerListsContextMenu_ConnectAll.Size = new System.Drawing.Size(172, 22);
+            this.lvServerListsContextMenu_ConnectAll.Size = new System.Drawing.Size(180, 22);
             this.lvServerListsContextMenu_ConnectAll.Text = "Connect All";
             // 
             // lvServerLists_IL48
@@ -731,6 +731,43 @@
             this.tlvServerLists.Text = "treeListView1";
             this.tlvServerLists.ViewOptions.ShowGridLines = false;
             // 
+            // lvServerLists
+            // 
+            this.lvServerLists.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvServerLists.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvServerLists.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.lvServerLists.ContextMenuStrip = this.lvServerListContextMenu;
+            this.lvServerLists.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.lvServerLists.FullRowSelect = true;
+            this.lvServerLists.HideSelection = false;
+            this.lvServerLists.LargeImageList = this.lvServerLists_IL48;
+            this.lvServerLists.Location = new System.Drawing.Point(9, 44);
+            this.lvServerLists.MultiSelect = false;
+            this.lvServerLists.Name = "lvServerLists";
+            this.lvServerLists.Size = new System.Drawing.Size(220, 77);
+            this.lvServerLists.SmallImageList = this.lvServerLists_IL16;
+            this.lvServerLists.TabIndex = 4;
+            this.lvServerLists.TileSize = new System.Drawing.Size(188, 64);
+            this.lvServerLists.UseCompatibleStateImageBehavior = false;
+            this.lvServerLists.View = System.Windows.Forms.View.Tile;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Server Name";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Server";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Description";
+            // 
             // btnPinServerLists
             // 
             this.btnPinServerLists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -757,8 +794,8 @@
             // 
             // lblServerListsPanelTitle
             // 
-            this.lblServerListsPanelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblServerListsPanelTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lblServerListsPanelTitle.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblServerListsPanelTitle.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblServerListsPanelTitle.Location = new System.Drawing.Point(0, 0);
@@ -798,7 +835,7 @@
             this.toolbar_DisconnectAll.Image = global::MultiRemoteDesktopClient.Properties.Resources.disconnect_all_16;
             this.toolbar_DisconnectAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolbar_DisconnectAll.Name = "toolbar_DisconnectAll";
-            this.toolbar_DisconnectAll.Size = new System.Drawing.Size(97, 22);
+            this.toolbar_DisconnectAll.Size = new System.Drawing.Size(107, 22);
             this.toolbar_DisconnectAll.Text = "&Disconnect All";
             // 
             // tabMDIChild
@@ -849,50 +886,14 @@
             this.tabServerLists.Padding = new System.Windows.Forms.Padding(0);
             this.tabServerLists.SelectedFont = new System.Drawing.Font("Trebuchet MS", 8.25F);
             this.tabServerLists.SelectedTextColor = System.Drawing.SystemColors.ControlText;
-            this.tabServerLists.Size = new System.Drawing.Size(25, 98);
+            this.tabServerLists.Size = new System.Drawing.Size(25, 103);
             this.tabServerLists.Text = "Server Lists";
             this.tabServerLists.TextDirection = System.Windows.Forms.ToolStripTextDirection.Vertical270;
             this.tabServerLists.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             // 
-            // lvServerLists
-            // 
-            this.lvServerLists.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.lvServerLists.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvServerLists.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
-            this.lvServerLists.ContextMenuStrip = this.lvServerListContextMenu;
-            this.lvServerLists.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.lvServerLists.FullRowSelect = true;
-            this.lvServerLists.LargeImageList = this.lvServerLists_IL48;
-            this.lvServerLists.Location = new System.Drawing.Point(9, 44);
-            this.lvServerLists.MultiSelect = false;
-            this.lvServerLists.Name = "lvServerLists";
-            this.lvServerLists.Size = new System.Drawing.Size(220, 77);
-            this.lvServerLists.SmallImageList = this.lvServerLists_IL16;
-            this.lvServerLists.TabIndex = 4;
-            this.lvServerLists.TileSize = new System.Drawing.Size(188, 64);
-            this.lvServerLists.UseCompatibleStateImageBehavior = false;
-            this.lvServerLists.View = System.Windows.Forms.View.Tile;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Server Name";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Server";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Description";
-            // 
             // RemoteDesktopClient
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(900, 600);
             this.Controls.Add(this.panelMDIToolbars);

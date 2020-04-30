@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using TextboxRequiredWrappers;
@@ -39,7 +40,6 @@ namespace MultiRemoteDesktopClient
                 txServername,
                 txComputer,
                 txUsername,
-                txDescription,
                 ddGroup
             });
 
@@ -50,7 +50,6 @@ namespace MultiRemoteDesktopClient
             tbColor_Scroll(tbColor, null);
 
             isUpdating = false;
-
             btnGetClientWinS.Enabled = false;
 
             GlobalHelper.PopulateGroupsDropDown(ddGroup, string.Empty);
@@ -69,7 +68,6 @@ namespace MultiRemoteDesktopClient
 
             txServername.Text = sd.ServerName;
             txComputer.Text = sd.Server;
-            txDomain.Text = sd.Domain;
             txPort.Text = sd.Port.ToString();
             txUsername.Text = sd.Username;
             txPassword.Text = sd.Password;
@@ -150,11 +148,8 @@ namespace MultiRemoteDesktopClient
         {
             tbDeskSize.Scroll += new EventHandler(tbDeskSize_Scroll);
             tbColor.Scroll += new EventHandler(tbColor_Scroll);
-
             btnSave.Click += new EventHandler(btnSave_Click);
-
             btnGetClientWinS.Click += new EventHandler(btnGetClientWinS_Click);
-
             ddGroup.SelectedIndexChanged += new EventHandler(ddGroup_SelectedIndexChanged);
         }
 
@@ -170,25 +165,26 @@ namespace MultiRemoteDesktopClient
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (!trw.isAllFieldSet())
+            if (!trw.IsAllFieldSet())
             {
                 MessageBox.Show("One of the required field is empty", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
-            Database.ServerDetails sd = new Database.ServerDetails();
-            sd.GroupID = GlobalHelper.dbGroups.GetIDByGroupName(ddGroup.Text);
-            sd.ServerName = txServername.Text;
-            sd.Server = txComputer.Text;
-            sd.Domain = txDomain.Text;
-            sd.Port = int.Parse(txPort.Text == string.Empty ? "0" : txPort.Text);
-            sd.Username = txUsername.Text;
-            sd.Password = txPassword.Text;
-            sd.Description = txDescription.Text;
-            sd.ColorDepth = (int)lblColorDepth.Tag;
-            sd.DesktopWidth = int.Parse(txWidth.Text);
-            sd.DesktopHeight = int.Parse(txHeight.Text);
-            sd.Fullscreen = cbFullscreen.Checked;
+            int.TryParse(txPort.Text, out var port);
+            var sd = new Database.ServerDetails {
+                GroupID = GlobalHelper.dbGroups.GetIDByGroupName(ddGroup.Text),
+                ServerName = txServername.Text,
+                Server = txComputer.Text,
+                Port = port,
+                Username = txUsername.Text,
+                Password = new Password(txPassword.Text, false),
+                Description = txDescription.Text,
+                ColorDepth = (int)lblColorDepth.Tag,
+                DesktopWidth = int.Parse(txWidth.Text),
+                DesktopHeight = int.Parse(txHeight.Text),
+                Fullscreen = cbFullscreen.Checked
+            };
 
             try
             {
@@ -198,10 +194,6 @@ namespace MultiRemoteDesktopClient
                     sd.Id = oldSD.Id;
 
                     GlobalHelper.dbServers.Save(sd);
-                    if (sd.Password != string.Empty)
-                    {
-                        sd.Password = RijndaelSettings.Decrypt(sd.Password);
-                    }
 
                     // new settings changed
                     // pass new settings on our oldSD
@@ -212,13 +204,12 @@ namespace MultiRemoteDesktopClient
                     {
                         ApplySettings?.Invoke(sender, oldSD);
                     }
-
-                    Close();
                 }
                 else
                 {
                     GlobalHelper.dbServers.Save(sd);
                     MessageBox.Show("New conenction settings successfully saved", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
                 }
             }
             catch (Database.DatabaseException settingEx)

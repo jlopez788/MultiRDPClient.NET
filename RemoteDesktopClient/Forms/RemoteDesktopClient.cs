@@ -6,7 +6,7 @@ namespace MultiRemoteDesktopClient
 {
     public partial class RemoteDesktopClient : Form
     {
-        MultiRemoteDesktopClient.Controls.TreeListViewControlHooks tlvch;
+        Controls.TreeListViewControlHooks tlvch;
         FormWindowState _lastWindowState;
 
         public void Initialize()
@@ -112,7 +112,7 @@ namespace MultiRemoteDesktopClient
 
             #region tree listview control hooks
             {
-                tlvch = new MultiRemoteDesktopClient.Controls.TreeListViewControlHooks(ref tlvServerLists);
+                tlvch = new Controls.TreeListViewControlHooks(ref tlvServerLists);
 
                 tlvch.AddControlForEmptyListItem(new object[] {
                     toolbar_DeleteClient,
@@ -213,12 +213,7 @@ namespace MultiRemoteDesktopClient
             ncm.OnLock_Clicked += new DelegateLockEvent(toobar_Lock_Click);
             ncm.OnServer_Clicked += new DelegateServerEvent(ncm_OnServer_Clicked);
 
-            systray.ContextMenuStrip = ncm;
-            //CommonTools.Node n = tlvServerLists.FindNode("92.48.83.65", true);
-            //if (n != null)
-            //{
-            //    MessageBox.Show(n[0].ToString());
-            //}
+            systray.ContextMenuStrip = ncm; 
         }
 
         // check RemoteDesktopClient_Shown(object sender, EventArgs e)
