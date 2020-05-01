@@ -309,6 +309,7 @@
     <None Include="ICO\manage_groups_48.png" />
     <None Include="ICO\manage_groups_16.png" />
     <None Include="ICO\LogOff_16.png" />
+    <Content Include="app.ico" />
     <Content Include="History.txt" />
     <None Include="ICO\add_groupp_16.png" />
     <None Include="ICO\delete_16.png" />

@@ -114,7 +114,6 @@
             this.panelMDIToolbars = new System.Windows.Forms.Panel();
             this.toolstripMDI = new System.Windows.Forms.ToolStrip();
             this.toolbar_DisconnectAll = new System.Windows.Forms.ToolStripButton();
-            this.tabMDIChild = new Crownwood.Magic.Controls.TabControl();
             this.systray = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabstripLeftPanel = new Messir.Windows.Forms.TabStrip();
             this.tabServerLists = new Messir.Windows.Forms.TabStripButton();
@@ -142,7 +141,7 @@
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.MdiWindowListItem = this.windowsMenu;
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(900, 24);
+            this.menuStrip.Size = new System.Drawing.Size(1008, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -451,7 +450,7 @@
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip.Size = new System.Drawing.Size(900, 25);
+            this.toolStrip.Size = new System.Drawing.Size(1008, 25);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -608,9 +607,9 @@
             this.statusStrip.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.status_TextStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 578);
+            this.statusStrip.Location = new System.Drawing.Point(0, 719);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(900, 22);
+            this.statusStrip.Size = new System.Drawing.Size(1008, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
@@ -812,11 +811,10 @@
             // panelMDIToolbars
             // 
             this.panelMDIToolbars.Controls.Add(this.toolstripMDI);
-            this.panelMDIToolbars.Controls.Add(this.tabMDIChild);
             this.panelMDIToolbars.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMDIToolbars.Location = new System.Drawing.Point(26, 49);
             this.panelMDIToolbars.Name = "panelMDIToolbars";
-            this.panelMDIToolbars.Size = new System.Drawing.Size(874, 52);
+            this.panelMDIToolbars.Size = new System.Drawing.Size(982, 24);
             this.panelMDIToolbars.TabIndex = 27;
             // 
             // toolstripMDI
@@ -824,9 +822,9 @@
             this.toolstripMDI.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolstripMDI.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolbar_DisconnectAll});
-            this.toolstripMDI.Location = new System.Drawing.Point(0, 25);
+            this.toolstripMDI.Location = new System.Drawing.Point(0, 0);
             this.toolstripMDI.Name = "toolstripMDI";
-            this.toolstripMDI.Size = new System.Drawing.Size(874, 25);
+            this.toolstripMDI.Size = new System.Drawing.Size(982, 25);
             this.toolstripMDI.TabIndex = 26;
             this.toolstripMDI.Text = "toolStrip1";
             // 
@@ -837,19 +835,6 @@
             this.toolbar_DisconnectAll.Name = "toolbar_DisconnectAll";
             this.toolbar_DisconnectAll.Size = new System.Drawing.Size(107, 22);
             this.toolbar_DisconnectAll.Text = "&Disconnect All";
-            // 
-            // tabMDIChild
-            // 
-            this.tabMDIChild.Appearance = Crownwood.Magic.Controls.TabControl.VisualAppearance.MultiDocument;
-            this.tabMDIChild.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabMDIChild.HideTabsMode = Crownwood.Magic.Controls.TabControl.HideTabsModes.ShowAlways;
-            this.tabMDIChild.IDEPixelArea = false;
-            this.tabMDIChild.IDEPixelBorder = false;
-            this.tabMDIChild.ImageList = this.lvServerLists_IL16;
-            this.tabMDIChild.Location = new System.Drawing.Point(0, 0);
-            this.tabMDIChild.Name = "tabMDIChild";
-            this.tabMDIChild.Size = new System.Drawing.Size(874, 25);
-            this.tabMDIChild.TabIndex = 25;
             // 
             // systray
             // 
@@ -869,7 +854,7 @@
             this.tabstripLeftPanel.Name = "tabstripLeftPanel";
             this.tabstripLeftPanel.RenderStyle = System.Windows.Forms.ToolStripRenderMode.Custom;
             this.tabstripLeftPanel.SelectedTab = this.tabServerLists;
-            this.tabstripLeftPanel.Size = new System.Drawing.Size(26, 529);
+            this.tabstripLeftPanel.Size = new System.Drawing.Size(26, 670);
             this.tabstripLeftPanel.TabIndex = 31;
             this.tabstripLeftPanel.Text = "tabStrip1";
             this.tabstripLeftPanel.UseVisualStyles = true;
@@ -895,7 +880,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 600);
+            this.ClientSize = new System.Drawing.Size(1008, 741);
             this.Controls.Add(this.panelMDIToolbars);
             this.Controls.Add(this.tabstripLeftPanel);
             this.Controls.Add(this.panelServerLists);
@@ -908,6 +893,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "RemoteDesktopClient";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Multi Remote Desktop Client .NET";
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -1000,7 +986,6 @@
         private System.Windows.Forms.Panel panelMDIToolbars;
         private System.Windows.Forms.ToolStrip toolstripMDI;
         private System.Windows.Forms.ToolStripButton toolbar_DisconnectAll;
-        private Crownwood.Magic.Controls.TabControl tabMDIChild;
         private System.Windows.Forms.Button btnPinServerLists;
         private CommonTools.TreeListView tlvServerLists;
         private System.Windows.Forms.Panel splitter;

@@ -33,6 +33,9 @@ namespace MultiRemoteDesktopClient
             Initialize();
 
             Welcome();
+
+            var size = Screen.PrimaryScreen.Bounds.Size;
+            Size = new Size(Convert.ToInt32(size.Width * 0.9), Convert.ToInt32(size.Height * 0.8));
             if (!AskPassword(this))
             {
                 toobar_Lock.Enabled = false;
@@ -206,8 +209,8 @@ namespace MultiRemoteDesktopClient
 
             #region mdi tabs
 
-            tabMDIChild.SelectionChanged += new EventHandler(TabMDIChild_SelectionChanged);
-            tabMDIChild.ClosePressed += new EventHandler(TabMDIChild_ClosePressed);
+            //tabMDIChild.SelectionChanged += new EventHandler(TabMDIChild_SelectionChanged);
+            //tabMDIChild.ClosePressed += new EventHandler(TabMDIChild_ClosePressed);
 
             #endregion
 
@@ -310,18 +313,18 @@ namespace MultiRemoteDesktopClient
 
         private void TabMDIChild_SelectionChanged(object sender, EventArgs e)
         {
-            if (tabMDIChild.SelectedTab == null)
-                return;
+            //if (tabMDIChild.SelectedTab == null)
+            //    return;
 
-            foreach (RdpClientWindow f in MdiChildren)
-            {
-                if ((IntPtr)tabMDIChild.SelectedTab.Tag == f.Handle)
-                {
-                    f.Activate();
-                    f.rdpClient.Focus();
-                    break;
-                }
-            }
+            //foreach (RdpClientWindow f in MdiChildren)
+            //{
+            //    if ((IntPtr)tabMDIChild.SelectedTab.Tag == f.Handle)
+            //    {
+            //        f.Activate();
+            //        f.rdpClient.Focus();
+            //        break;
+            //    }
+            //}
         }
 
         #endregion

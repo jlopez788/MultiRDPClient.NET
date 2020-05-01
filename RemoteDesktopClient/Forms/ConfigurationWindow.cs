@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
@@ -33,7 +27,7 @@ namespace MultiRemoteDesktopClient
             lblShowPass.Click += new EventHandler(lblShowPass_Click);
         }
 
-        void lblShowPass_Click(object sender, EventArgs e)
+        private void lblShowPass_Click(object sender, EventArgs e)
         {
             lblShowPass = (Label)sender;
 
@@ -51,7 +45,7 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void DefaultButtons_Click(object sender, EventArgs e)
+        private void DefaultButtons_Click(object sender, EventArgs e)
         {
             if (sender == btnSave)
             {
@@ -61,15 +55,12 @@ namespace MultiRemoteDesktopClient
 
                 if (GlobalHelper.appSettings.Save())
                 {
-                    MessageBox.Show("Your changes has been saved.\r\nYou can now close the window.", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
                 }
                 else
                 {
                     MessageBox.Show("Failed to make changes.", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-            else if (sender == btnClose)
-            {
             }
         }
     }

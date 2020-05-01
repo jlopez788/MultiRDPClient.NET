@@ -8,32 +8,32 @@ namespace MultiRemoteDesktopClient
         private void ClientWin_LoginComplete(object sender, EventArgs e, int ListIndex)
         {
             lvServerLists.Items[ListIndex].ImageIndex = 0;
-            tabMDIChild.SelectedTab.ImageIndex = 0;
+            //tabMDIChild.SelectedTab.ImageIndex = 0;
         }
 
         private void ClientWin_OnFormActivated(object sender, EventArgs e, int ListIndex, IntPtr Handle)
         {
-            foreach (Crownwood.Magic.Controls.TabPage tabMDI in tabMDIChild.TabPages)
-            {
-                if ((IntPtr)tabMDI.Tag == Handle)
-                {
-                    tabMDI.Selected = true;
-                    break;
-                }
-            }
+            //foreach (Crownwood.Magic.Controls.TabPage tabMDI in tabMDIChild.TabPages)
+            //{
+            //    if ((IntPtr)tabMDI.Tag == Handle)
+            //    {
+            //        tabMDI.Selected = true;
+            //        break;
+            //    }
+            //}
         }
 
         private void ClientWin_OnFormClosing(object sender, FormClosingEventArgs e, int ListIndex, IntPtr Handle)
         {
             lvServerLists.Items[ListIndex].ImageIndex = 1;
-            foreach (Crownwood.Magic.Controls.TabPage tabMDI in tabMDIChild.TabPages)
-            {
-                if ((IntPtr)tabMDI.Tag == Handle)
-                {
-                    tabMDIChild.TabPages.Remove(tabMDI);
-                    break;
-                }
-            }
+            //foreach (Crownwood.Magic.Controls.TabPage tabMDI in tabMDIChild.TabPages)
+            //{
+            //    if ((IntPtr)tabMDI.Tag == Handle)
+            //    {
+            //        tabMDIChild.TabPages.Remove(tabMDI);
+            //        break;
+            //    }
+            //}
 
             GlobalHelper.MDIChildrens = MdiChildren;
         }
@@ -49,7 +49,7 @@ namespace MultiRemoteDesktopClient
             rcw = null;
             tabMDI.Selected = true;
 
-            tabMDIChild.TabPages.Add(tabMDI);
+            //tabMDIChild.TabPages.Add(tabMDI);
             GlobalHelper.MDIChildrens = MdiChildren;
         }
 

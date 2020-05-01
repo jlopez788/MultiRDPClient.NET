@@ -70,8 +70,7 @@ namespace MultiRemoteDesktopClient
 
         private void ClientWin_StateChange(object sender, StateChangeEventArgs e)
         {
-            lvServerLists.Items[e.ListIndex].ImageIndex = (int)e.State;
-            tabMDIChild.SelectedTab.ImageIndex = (int)e.State;
+            lvServerLists.Items[e.ListIndex].ImageIndex = (int)e.State; 
 
             var context = new RdpContext(e.Server, e.State);
             Predicate<RdpContext> predicate = e.State == RdpState.Disconnected ? new Predicate<RdpContext>(Contexts.Remove) : Contexts.Add;
