@@ -6,7 +6,7 @@ using TextboxRequiredWrappers;
 
 namespace MultiRemoteDesktopClient
 {
-    public delegate void ApplySettings(object sender, Database.ServerDetails sd);
+    public delegate void ApplySettings(object sender, ServerDetails sd);
 
     public delegate Rectangle GetClientWindowSize();
 
@@ -16,7 +16,7 @@ namespace MultiRemoteDesktopClient
         public event GetClientWindowSize GetClientWindowSize;
 
         private TextboxRequiredWrapper trw = new TextboxRequiredWrapper();
-        private Database.ServerDetails oldSD;
+        private ServerDetails oldSD;
 
         private bool isUpdating = false;
 
@@ -27,7 +27,7 @@ namespace MultiRemoteDesktopClient
             InitializeControlEvents();
         }
 
-        public ServerSettingsWindow(Database.ServerDetails sd)
+        public ServerSettingsWindow(ServerDetails sd)
         {
             InitializeComponent();
             InitializeControls(sd);
@@ -47,7 +47,7 @@ namespace MultiRemoteDesktopClient
             tbDeskSize_Scroll(tbDeskSize, null);
 
             tbColor.Value = 2;
-            tbColor_Scroll(tbColor, null);
+            TbColor_Scroll(tbColor, null);
 
             isUpdating = false;
             btnGetClientWinS.Enabled = false;
@@ -55,7 +55,7 @@ namespace MultiRemoteDesktopClient
             GlobalHelper.PopulateGroupsDropDown(ddGroup, string.Empty);
         }
 
-        public void InitializeControls(Database.ServerDetails sd)
+        public void InitializeControls(ServerDetails sd)
         {
             oldSD = sd;
 
@@ -91,7 +91,7 @@ namespace MultiRemoteDesktopClient
                     tbColor.Value = 4;
                     break;
             }
-            tbColor_Scroll(tbColor, null);
+            TbColor_Scroll(tbColor, null);
 
             if (sd.DesktopWidth == 640 && sd.DesktopHeight == 480)
             {
@@ -121,7 +121,7 @@ namespace MultiRemoteDesktopClient
             {
                 tbDeskSize.Value = 7;
             }
-            tbColor_Scroll(tbColor, null);
+            TbColor_Scroll(tbColor, null);
 
             txWidth.Text = sd.DesktopWidth.ToString();
             txHeight.Text = sd.DesktopHeight.ToString();
@@ -147,7 +147,7 @@ namespace MultiRemoteDesktopClient
         public void InitializeControlEvents()
         {
             tbDeskSize.Scroll += new EventHandler(tbDeskSize_Scroll);
-            tbColor.Scroll += new EventHandler(tbColor_Scroll);
+            tbColor.Scroll += new EventHandler(TbColor_Scroll);
             btnSave.Click += new EventHandler(btnSave_Click);
             btnGetClientWinS.Click += new EventHandler(btnGetClientWinS_Click);
             ddGroup.SelectedIndexChanged += new EventHandler(ddGroup_SelectedIndexChanged);
@@ -172,7 +172,7 @@ namespace MultiRemoteDesktopClient
             }
 
             int.TryParse(txPort.Text, out var port);
-            var sd = new Database.ServerDetails {
+            var sd = new ServerDetails {
                 GroupID = GlobalHelper.dbGroups.GetIDByGroupName(ddGroup.Text),
                 ServerName = txServername.Text,
                 Server = txComputer.Text,
@@ -186,42 +186,32 @@ namespace MultiRemoteDesktopClient
                 Fullscreen = cbFullscreen.Checked
             };
 
-            try
+            if (isUpdating)
             {
-                if (isUpdating)
+                // pass our old UID to new UID for saving
+                sd.Id = oldSD.Id;
+
+                GlobalHelper.dbServers.Save(sd);
+
+                // new settings changed
+                // pass new settings on our oldSD
+                oldSD = sd;
+
+                DialogResult dr = MessageBox.Show("Conection settings successfully updated.\r\nDo you want to apply your current changes.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dr == DialogResult.Yes)
                 {
-                    // pass our old UID to new UID for saving
-                    sd.Id = oldSD.Id;
-
-                    GlobalHelper.dbServers.Save(sd);
-
-                    // new settings changed
-                    // pass new settings on our oldSD
-                    oldSD = sd;
-
-                    DialogResult dr = MessageBox.Show("Conection settings successfully updated.\r\nDo you want to apply your current changes.", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if (dr == DialogResult.Yes)
-                    {
-                        ApplySettings?.Invoke(sender, oldSD);
-                    }
-                }
-                else
-                {
-                    GlobalHelper.dbServers.Save(sd);
-                    MessageBox.Show("New conenction settings successfully saved", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Close();
+                    ApplySettings?.Invoke(sender, oldSD);
                 }
             }
-            catch (Database.DatabaseException settingEx)
+            else
             {
-                if (settingEx.ExceptionType == Database.DatabaseException.ExceptionTypes.DUPLICATE_ENTRY)
-                {
-                    MessageBox.Show("Can't save your connection settings due to duplicate entry", Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
+                GlobalHelper.dbServers.Save(sd);
+                MessageBox.Show("New conenction settings successfully saved", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Close();
             }
         }
 
-        private void tbColor_Scroll(object sender, EventArgs e)
+        private void TbColor_Scroll(object sender, EventArgs e)
         {
             switch (tbColor.Value)
             {
@@ -259,54 +249,47 @@ namespace MultiRemoteDesktopClient
                     lblResolution.Text = "640 by 480 pixels";
                     txWidth.Text = "640";
                     txHeight.Text = "480";
-
                     break;
 
                 case 2:
                     lblResolution.Text = "800 by 600 pixels";
                     txWidth.Text = "800";
                     txHeight.Text = "600";
-
                     break;
 
                 case 3:
                     lblResolution.Text = "1024 by 768 pixels";
                     txWidth.Text = "1024";
                     txHeight.Text = "768";
-
                     break;
 
                 case 4:
                     lblResolution.Text = "1120 by 700 pixels";
                     txWidth.Text = "1120";
                     txHeight.Text = "700";
-
                     break;
 
                 case 5:
                     lblResolution.Text = "1152 by 864 pixels";
                     txWidth.Text = "1152";
                     txHeight.Text = "864";
-
                     break;
 
                 case 6:
                     lblResolution.Text = "1280 by 800 pixels";
                     txWidth.Text = "1280";
                     txHeight.Text = "800";
-
                     break;
 
                 case 7:
                     lblResolution.Text = "1280 by 1024 pixels";
                     txWidth.Text = "1280";
                     txHeight.Text = "1024";
-
                     break;
             }
         }
 
-        public Database.ServerDetails CurrentServerSettings()
+        public ServerDetails CurrentServerSettings()
         {
             return oldSD;
         }

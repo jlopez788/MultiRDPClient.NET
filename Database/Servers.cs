@@ -4,13 +4,13 @@ namespace Database
 {
     public class Servers : Database<ServerDetails>
     {
-        public void Save(ServerDetails serverDetails)
+        public bool Save(ServerDetails serverDetails)
         {
             if (serverDetails.GroupID == Guid.Empty)
             {
                 serverDetails.GroupID = Groups.UncategorizedId;
             }
-            Execute(context => context.Upsert(serverDetails.Id, serverDetails));
+            return Execute(context => context.Upsert(serverDetails.Id, serverDetails));
         }
 
         public void UpdateGroupIdByID(Guid id, Guid newGroupID)
@@ -41,5 +41,11 @@ namespace Database
         public Guid GroupID { set; get; }
 
         public ServerDetails() => Id = Guid.NewGuid();
+
+        public override bool Equals(object obj) => obj is ServerDetails srv && (Server, Port, Username, Password.Encrypted) == (srv.Server, srv.Port, srv.Username, srv.Password.Encrypted);
+
+        public override int GetHashCode() => (Server, Port, Username, Password.Encrypted).GetHashCode();
+
+        public override string ToString() => $"@{Username} {Server}:{Port}";
     }
 }

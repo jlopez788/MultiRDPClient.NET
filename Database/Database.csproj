@@ -98,6 +98,7 @@
     <Compile Include="RijndaelHelper.cs" />
     <Compile Include="Servers.cs" />
     <Compile Include="SettingsException.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RijndaelEncryptDecrypt\RijndaelEncryptDecrypt.csproj">

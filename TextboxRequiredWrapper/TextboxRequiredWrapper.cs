@@ -15,7 +15,6 @@ namespace TextboxRequiredWrappers
 {
     public class TextboxRequiredWrapper
     {
-        private Control[] _assocCtl;
         private Control[] _textbox;
         private string reqFieldMessage = "This field is required";
 
@@ -91,24 +90,6 @@ namespace TextboxRequiredWrappers
             if (ctrl.Text != reqFieldMessage)
             {
                 ctrl.Font = new System.Drawing.Font(ctrl.Font.FontFamily, ctrl.Font.Size, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-
-                if (_assocCtl != null)
-                {
-                    foreach (Control c in _assocCtl)
-                    {
-                        c.Enabled = true;
-                    }
-                }
-            }
-            else
-            {
-                if (_assocCtl != null)
-                {
-                    foreach (Control c in _assocCtl)
-                    {
-                        c.Enabled = false;
-                    }
-                }
             }
         }
     }

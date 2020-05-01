@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.IO;
-
+﻿using DataProtection;
 using RDPFileReader;
-using DataProtection;
+using System;
+using System.IO;
+using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
 {
     public partial class ExportWindow : Form
     {
-        OpenFileDialog ofd = null;
-
         public ExportWindow()
         {
             InitializeComponent();
-            InitializeControls();
             InitializeControlEvents();
         }
 
@@ -29,9 +21,10 @@ namespace MultiRemoteDesktopClient
             InitializeControlEvents();
         }
 
-        public void InitializeControls()
+        public void InitializeControlEvents()
         {
-
+            Shown += new EventHandler(ExportWindow_Shown);
+            btnStart.Click += new EventHandler(BtnStart_Click);
         }
 
         public void InitializeControls(ref Controls.ListViewEx lv)
@@ -47,13 +40,7 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        public void InitializeControlEvents()
-        {
-            Shown += new EventHandler(ExportWindow_Shown);
-            btnStart.Click += new EventHandler(btnStart_Click);
-        }
-
-        void btnStart_Click(object sender, EventArgs e)
+        private void BtnStart_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.ShowDialog();
@@ -68,18 +55,20 @@ namespace MultiRemoteDesktopClient
 
                         Database.ServerDetails sd = (Database.ServerDetails)thisItem.Tag;
 
-                        RDPFile rdp = new RDPFile();
-                        rdp.ScreenMode = 1;
-                        rdp.DesktopWidth = sd.DesktopWidth;
-                        rdp.DesktopHeight = sd.DesktopHeight;
-                        rdp.SessionBPP = (RDPFile.SessionBPPs)sd.ColorDepth;
+                        RDPFile rdp = new RDPFile {
+                            ScreenMode = 1,
+                            DesktopWidth = sd.DesktopWidth,
+                            DesktopHeight = sd.DesktopHeight,
+                            SessionBPP = (RDPFile.SessionBPPs)sd.ColorDepth
+                        };
 
                         RDPFile.WindowsPosition winpos = new RDPFile.WindowsPosition();
-                        RDPFile.RECT r = new RDPFile.RECT();
-                        r.Top = 0;
-                        r.Left = 0;
-                        r.Width = sd.DesktopWidth;
-                        r.Height = sd.DesktopHeight;
+                        RDPFile.RECT r = new RDPFile.RECT {
+                            Top = 0,
+                            Left = 0,
+                            Width = sd.DesktopWidth,
+                            Height = sd.DesktopHeight
+                        };
                         winpos.Rect = r;
                         winpos.WinState = RDPFile.WindowState.MAXMIZE;
 
@@ -99,9 +88,9 @@ namespace MultiRemoteDesktopClient
                         rdp.AlternateShell = string.Empty;
                         rdp.ShellWorkingDirectory = string.Empty;
 
-                        // what's with the ZERO ? 
+                        // what's with the ZERO ?
                         // http://www.remkoweijnen.nl/blog/2008/03/02/how-rdp-passwords-are-encrypted-2/
-                        rdp.Password = (sd.Password == string.Empty ? string.Empty : DataProtectionForRDPWrapper.Encrypt(sd.Password) + "0"); 
+                        rdp.Password = (sd.Password.IsEmpty ? string.Empty : DataProtectionForRDPWrapper.Encrypt(sd.Password) + "0");
 
                         //System.Diagnostics.Debug.WriteLine(ss.Password);
                         rdp.DisableWallpaper = 1;
@@ -112,30 +101,29 @@ namespace MultiRemoteDesktopClient
                         rdp.BitmapCachePersistEnable = 1;
 
                         #region try exporting the file
+
+                        try
                         {
-                            try
-                            {
-                                rdp.Save(Path.Combine(fbd.SelectedPath, sd.ServerName + ".rdp"));
+                            rdp.Save(Path.Combine(fbd.SelectedPath, sd.ServerName + ".rdp"));
 
-                                thisItem.SubItems[1].Text = "Done!";
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("An error occured while exporting the server '" + sd.ServerName + "' to RDP file format.\r\n\r\nError Message: " + ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                System.Diagnostics.Debug.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
-
-                                continue;
-                            }
+                            thisItem.SubItems[1].Text = "Done!";
                         }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("An error occured while exporting the server '" + sd.ServerName + "' to RDP file format.\r\n\r\nError Message: " + ex.Message, Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            System.Diagnostics.Debug.WriteLine(ex.Message + "\r\n" + ex.StackTrace);
+
+                            continue;
+                        }
+
                         #endregion
                     }
                 }
             }
         }
 
-        void ExportWindow_Shown(object sender, EventArgs e)
+        private void ExportWindow_Shown(object sender, EventArgs e)
         {
-            
         }
     }
 }

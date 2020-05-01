@@ -11,12 +11,12 @@ namespace RDPPasswordEncryptDecrypt
             InitializeComponent();
         }
 
-        private void btnEncrypt_Click(object sender, EventArgs e)
+        private void BtnEncrypt_Click(object sender, EventArgs e)
         {
             txHash.Text = DataProtectionForRDPWrapper.Encrypt(txPassword.Text);
         }
 
-        private void btnDecrypt_Click(object sender, EventArgs e)
+        private void BtnDecrypt_Click(object sender, EventArgs e)
         {
             txPassword.Text = DataProtectionForRDPWrapper.Decrypt(txHash.Text);
         }

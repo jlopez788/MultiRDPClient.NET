@@ -58,6 +58,7 @@ C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\R
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\RijndaelEncryptDecrypt.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\TextboxRequiredWrapper.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\Win32APIs.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\LiteDB.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\CommonTools.pdb
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\CommonTools.dll.config
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\Database.pdb
@@ -69,6 +70,7 @@ C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\R
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\RijndaelEncryptDecrypt.pdb
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\TextboxRequiredWrapper.pdb
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\Win32APIs.pdb
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\LiteDB.xml
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\MultiRemoteDesktopClient.csprojAssemblyReference.cache
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\MultiRemoteDesktopClient.Controls.RDThumbnail.resources
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\MultiRemoteDesktopClient.ConfigurationWindow.resources
@@ -89,5 +91,3 @@ C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\M
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\MultiRemoteDesktopClient.csproj.CopyComplete
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\MultiRemoteDesktopClient.exe
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\obj\Debug\MultiRemoteDesktopClient.pdb
-C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\LiteDB.dll
-C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\RemoteDesktopClient\bin\Debug\LiteDB.xml

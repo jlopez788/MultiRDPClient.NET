@@ -1,4 +1,6 @@
-﻿namespace MultiRemoteDesktopClient
+﻿using Database;
+
+namespace MultiRemoteDesktopClient
 {
     partial class RdpClientWindow
     {
@@ -18,13 +20,7 @@
                 components.Dispose();
             }
 
-            try // cannot access a disposed object;
-            {
-                base.Dispose(disposing);
-            }
-            catch (System.Exception ex)
-            {
-            }
+            Utility.Try(() => base.Dispose(disposing));
         }
 
         #region Windows Form Designer generated code

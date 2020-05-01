@@ -3,15 +3,14 @@
     Application Developer - Anomalist Designs LLC
  *  ---
  *  RDPFileReader 1.0
- *  
+ *
  *  RDP File Settings - http://dev.remotenetworktechnology.com/ts/rdpfile.htm
  *  Terminal Services Team Blog - http://blogs.msdn.com/ts/archive/2008/09/02/specifying-the-ts-client-start-location-on-the-virtual-desktop.aspx
 */
+
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace RDPFileReader
 {
@@ -72,7 +71,8 @@ namespace RDPFileReader
         private string _filename = string.Empty;
 
         #region RDP template
-        string[] _rdpTemplate = {
+
+        private string[] _rdpTemplate = {
                                     "screen mode id:i:{0}",
                                     "desktopwidth:i:{1}",
                                     "desktopheight:i:{2}",
@@ -100,36 +100,13 @@ namespace RDPFileReader
                                     "disable cursor setting:i:{28}",
                                     "bitmapcachepersistenable:i:{29}"
                                 };
+
         #endregion
 
         #region member fields
 
-        int _screenMode = 0;
-        int _desktopWidth = 0;
-        int _desktopHeight = 0;
-        SessionBPPs _sessionBPP = 0;
-        WindowsPosition _winPosStr;
-        string _fullAddress = string.Empty;
-        int _compression = 0;
-        KeyboardHooks _keyboardHook = 0;
-        AudioModes _audiomode = 0;
-        int _redirectDrives = 0;
-        int _redirectPrinters = 0;
-        int _redirectComPorts = 0;
-        int _redirectSmartCards = 0;
-        int _displayConnectionBar = 0;
-        int _autoReconnectionEnabled = 0;
-        string _username = string.Empty;
-        string _domain = string.Empty;
-        string _alternateShell = string.Empty;
-        string _shellWorkingDirectory = string.Empty;
-        string _password = string.Empty;
-        int _disableWallpaper = 0;
-        int _disableFullWindowDrag = 0;
-        int _disableMenuAnims = 0;
-        int _disableThemes = 0;
-        int _disableCursorSettings = 0;
-        int _bitmapCachePersistEnable = 0;
+        private WindowsPosition _winPosStr;
+        private int _disableCursorSettings = 0;
 
         #endregion
 
@@ -137,293 +114,57 @@ namespace RDPFileReader
 
         #region properties
 
-        public int ScreenMode
-        {
-            get
-            {
-                return _screenMode;
-            }
-            set
-            {
-                _screenMode = value;
-            }
-        }
+        public int ScreenMode { get; set; }
 
-        public int DesktopWidth
-        {
-            get
-            {
-                return _desktopWidth;
-            }
-            set
-            {
-                _desktopWidth = value;
-            }
-        }
+        public int DesktopWidth { get; set; }
 
-        public int DesktopHeight
-        {
-            get
-            {
-                return _desktopHeight;
-            }
-            set
-            {
-                _desktopHeight = value;
-            }
-        }
+        public int DesktopHeight { get; set; }
 
-        public SessionBPPs SessionBPP
-        {
-            get
-            {
-                return _sessionBPP;
-            }
-            set
-            {
-                _sessionBPP = value;
-            }
-        }
+        public SessionBPPs SessionBPP { get; set; }
 
         public WindowsPosition WinPosStr
         {
-            get
-            {
-                return _winPosStr;
-            }
-            set
-            {
-                _winPosStr = value;
-            }
+            get => _winPosStr;
+            set => _winPosStr = value;
         }
 
-        public string FullAddress
-        {
-            get
-            {
-                return _fullAddress;
-            }
-            set
-            {
-                _fullAddress = value;
-            }
-        }
+        public string FullAddress { get; set; }
 
-        public int Compression
-        {
-            get
-            {
-                return _compression;
-            }
-            set
-            {
-                _compression = value;
-            }
-        }
+        public int Compression { get; set; }
 
-        public KeyboardHooks KeyboardHook
-        {
-            get
-            {
-                return _keyboardHook;
-            }
-            set
-            {
-                _keyboardHook = value;
-            }
-        }
+        public KeyboardHooks KeyboardHook { get; set; }
 
-        public AudioModes AudioMode
-        {
-            get
-            {
-                return _audiomode;
-            }
-            set
-            {
-                _audiomode = value;
-            }
-        }
+        public AudioModes AudioMode { get; set; }
 
-        public int RedirectDrives
-        {
-            get
-            {
-                return _redirectDrives;
-            }
-            set
-            {
-                _redirectDrives = value;
-            }
-        }
+        public int RedirectDrives { get; set; }
 
-        public int RedirectPrinters
-        {
-            get
-            {
-                return _redirectPrinters;
-            }
-            set
-            {
-                _redirectPrinters = value;
-            }
-        }
+        public int RedirectPrinters { get; set; }
 
-        public int RedirectComPorts
-        {
-            get
-            {
-                return _redirectComPorts;
-            }
-            set
-            {
-                _redirectComPorts = value;
-            }
-        }
+        public int RedirectComPorts { get; set; }
 
-        public int RedirectSmartCards
-        {
-            get
-            {
-                return _redirectSmartCards;
-            }
-            set
-            {
-                _redirectSmartCards = value;
-            }
-        }
+        public int RedirectSmartCards { get; set; }
 
-        public int DisplayConnectionBar
-        {
-            get
-            {
-                return _displayConnectionBar;
-            }
-            set
-            {
-                _displayConnectionBar = value;
-            }
-        }
+        public int DisplayConnectionBar { get; set; }
 
-        public int AutoReconnectionEnabled
-        {
-            get
-            {
-                return _autoReconnectionEnabled;
-            }
-            set
-            {
-                _autoReconnectionEnabled = value;
-            }
-        }
+        public int AutoReconnectionEnabled { get; set; }
 
-        public string Username
-        {
-            get
-            {
-                return _username;
-            }
-            set
-            {
-                _username = value;
-            }
-        }
+        public string Username { get; set; }
 
-        public string Domain
-        {
-            get
-            {
-                return _domain;
-            }
-            set
-            {
-                _domain = value;
-            }
-        }
+        public string Domain { get; set; }
 
-        public string AlternateShell
-        {
-            get
-            {
-                return _alternateShell;
-            }
-            set
-            {
-                _alternateShell = value;
-            }
-        }
+        public string AlternateShell { get; set; }
 
-        public string ShellWorkingDirectory
-        {
-            get
-            {
-                return _shellWorkingDirectory;
-            }
-            set
-            {
-                _shellWorkingDirectory = value;
-            }
-        }
+        public string ShellWorkingDirectory { get; set; }
 
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                _password = value;
-            }
-        }
+        public string Password { get; set; }
 
-        public int DisableWallpaper
-        {
-            get
-            {
-                return _disableWallpaper;
-            }
-            set
-            {
-                _disableWallpaper = value;
-            }
-        }
+        public int DisableWallpaper { get; set; }
 
-        public int DisableFullWindowDrag
-        {
-            get
-            {
-                return _disableFullWindowDrag;
-            }
-            set
-            {
-                _disableFullWindowDrag = value;
-            }
-        }
+        public int DisableFullWindowDrag { get; set; }
 
-        public int DisableMenuAnims
-        {
-            get
-            {
-                return _disableMenuAnims;
-            }
-            set
-            {
-                _disableMenuAnims = value;
-            }
-        }
+        public int DisableMenuAnims { get; set; }
 
-        public int DisableThemes
-        {
-            get
-            {
-                return _disableThemes;
-            }
-            set
-            {
-                _disableThemes = value;
-            }
-        }
+        public int DisableThemes { get; set; }
 
         public int DisableCursorSettings
         {
@@ -433,21 +174,11 @@ namespace RDPFileReader
             }
             set
             {
-                _displayConnectionBar = value;
+                DisplayConnectionBar = value;
             }
         }
 
-        public int BitmapCachePersistEnable
-        {
-            get
-            {
-                return _bitmapCachePersistEnable;
-            }
-            set
-            {
-                _bitmapCachePersistEnable = value;
-            }
-        }
+        public int BitmapCachePersistEnable { get; set; }
 
         #endregion
 
@@ -469,7 +200,7 @@ namespace RDPFileReader
             foreach (string thisSetting in settings)
             {
                 string regex = "(?<type>.*)\\:(?<dtype>\\w)\\:(?<value>.*)";
-                
+
                 RegexOptions options = ((RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline) | RegexOptions.IgnoreCase);
                 Regex reg = new Regex(regex, options);
 
@@ -482,19 +213,19 @@ namespace RDPFileReader
                     switch (m.Groups["type"].Value)
                     {
                         case "screen mode id":
-                            _screenMode = int.Parse(v);
+                            ScreenMode = int.Parse(v);
                             break;
 
                         case "desktopwidth":
-                            _desktopWidth = int.Parse(v);
+                            DesktopWidth = int.Parse(v);
                             break;
 
                         case "desktopheight":
-                            _desktopHeight = int.Parse(v);
+                            DesktopHeight = int.Parse(v);
                             break;
 
                         case "session bpp":
-                            _sessionBPP = (SessionBPPs)int.Parse(v);
+                            SessionBPP = (SessionBPPs)int.Parse(v);
                             break;
 
                         case "winposstr":
@@ -510,79 +241,79 @@ namespace RDPFileReader
                             break;
 
                         case "full address":
-                            _fullAddress = v;
+                            FullAddress = v;
                             break;
-                            
+
                         case "compression":
-                            _compression = int.Parse(v);
+                            Compression = int.Parse(v);
                             break;
 
                         case "keyboardhook":
-                            _keyboardHook = (KeyboardHooks)int.Parse(v);
+                            KeyboardHook = (KeyboardHooks)int.Parse(v);
                             break;
 
                         case "audiomode":
-                            _audiomode = (AudioModes)int.Parse(v);
+                            AudioMode = (AudioModes)int.Parse(v);
                             break;
 
                         case "redirectdrives":
-                            _redirectDrives = int.Parse(v);
+                            RedirectDrives = int.Parse(v);
                             break;
 
                         case "redirectprinters":
-                            _redirectPrinters = int.Parse(v);
+                            RedirectPrinters = int.Parse(v);
                             break;
 
                         case "redirectcomports":
-                            _redirectComPorts = int.Parse(v);
+                            RedirectComPorts = int.Parse(v);
                             break;
 
                         case "redirectsmartcards":
-                            _redirectSmartCards = int.Parse(v);
+                            RedirectSmartCards = int.Parse(v);
                             break;
 
                         case "displayconnectionbar":
-                            _displayConnectionBar = int.Parse(v);
+                            DisplayConnectionBar = int.Parse(v);
                             break;
 
                         case "autoreconnection enabled":
-                            _autoReconnectionEnabled = int.Parse(v);
+                            AutoReconnectionEnabled = int.Parse(v);
                             break;
 
                         case "username":
-                            _username = v;
+                            Username = v;
                             break;
 
                         case "domain":
-                            _domain = v;
+                            Domain = v;
                             break;
 
                         case "alternate shell":
-                            _alternateShell = v;
+                            AlternateShell = v;
                             break;
 
                         case "shell working directory":
-                            _shellWorkingDirectory = v;
+                            ShellWorkingDirectory = v;
                             break;
 
                         case "password 51":
-                            _password = v;
+                            Password = v;
                             break;
 
                         case "disable wallpaper":
-                            _disableWallpaper = int.Parse(v);
+                            DisableWallpaper = int.Parse(v);
                             break;
 
                         case "disable full window drag":
-                            _disableFullWindowDrag = int.Parse(v);
+                            DisableFullWindowDrag = int.Parse(v);
                             break;
 
                         case "disable menu anims":
-                            _disableMenuAnims = int.Parse(v);
+                            DisableMenuAnims = int.Parse(v);
                             break;
 
                         case "disable themes":
-                            _disableThemes = int.Parse(v);
+                            DisableThemes = int.Parse(v);
                             break;
 
                         case "disable cursor setting":
@@ -590,7 +321,7 @@ namespace RDPFileReader
                             break;
 
                         case "bitmapcachepersistenable":
-                            _bitmapCachePersistEnable = int.Parse(v);
+                            BitmapCachePersistEnable = int.Parse(v);
                             break;
                     }
                 }
@@ -606,40 +337,34 @@ namespace RDPFileReader
         {
             _filename = filepath;
 
-            string template = string.Empty;
-
-            foreach (string temp in _rdpTemplate)
-            {
-                template += temp + "\r\n";
-            }
-
+            string template = string.Join("\r\n", _rdpTemplate);
             string data = string.Format(template,
-                _screenMode,
-                _desktopWidth,
-                _desktopHeight,
-                (int)_sessionBPP,
+                ScreenMode,
+                DesktopWidth,
+                DesktopHeight,
+                (int)SessionBPP,
                 (int)_winPosStr.WinState, _winPosStr.Rect.Top, _winPosStr.Rect.Left, _winPosStr.Rect.Width, _winPosStr.Rect.Height,
-                _fullAddress,
-                _compression,
-                (int)_keyboardHook,
-                (int)_audiomode,
-                _redirectDrives,
-                _redirectPrinters,
-                _redirectComPorts,
-                _redirectSmartCards,
-                _displayConnectionBar,
-                _autoReconnectionEnabled,
-                _username,
-                _domain,
-                _alternateShell,
-                _shellWorkingDirectory,
-                _password,
-                _disableWallpaper,
-                _disableFullWindowDrag,
-                _disableMenuAnims,
-                _disableThemes,
+                FullAddress,
+                Compression,
+                (int)KeyboardHook,
+                (int)AudioMode,
+                RedirectDrives,
+                RedirectPrinters,
+                RedirectComPorts,
+                RedirectSmartCards,
+                DisplayConnectionBar,
+                AutoReconnectionEnabled,
+                Username,
+                Domain,
+                AlternateShell,
+                ShellWorkingDirectory,
+                Password,
+                DisableWallpaper,
+                DisableFullWindowDrag,
+                DisableMenuAnims,
+                DisableThemes,
                 _disableCursorSettings,
-                _bitmapCachePersistEnable
+                BitmapCachePersistEnable
             );
 
             using (StreamWriter writer = new StreamWriter(filepath))

@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using Database;
+using System;
 using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
 {
     public partial class PasswordWindow : Form
     {
-        int incPassCount = 0;
+        private int incPassCount = 0;
 
-        bool isCanceled = true;
+        private bool isCanceled = true;
 
         public PasswordWindow()
         {
@@ -29,25 +24,19 @@ namespace MultiRemoteDesktopClient
             btnRenewCAPTCHA.Click += new EventHandler(btnRenewCAPTCHA_Click);
         }
 
-        void PasswordWindow_Shown(object sender, EventArgs e)
+        private void PasswordWindow_Shown(object sender, EventArgs e)
         {
-            // check our password
-            try
-            {
-                string pword = GlobalHelper.appSettings.Settings.Password;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Your password has been tampered and it will cause the application to terminate and it will not run until you deleted the configuration file.\r\n\r\nDatabase is safe, please make a backup before deleting the configuration file.\r\n\r\nApplication will now terminate ...", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Utility.Try(() => _ = GlobalHelper.appSettings.Settings.Password, ex => {
                 isCanceled = true;
+                MessageBox.Show("Your password has been tampered and it will cause the application to terminate and it will not run until you deleted the configuration file.\r\n\r\nDatabase is safe, please make a backup before deleting the configuration file.\r\n\r\nApplication will now terminate ...", Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
-            }
+            });
         }
 
-        void PasswordWindow_FormClosing(object sender, FormClosingEventArgs e)
+        private void PasswordWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             // set the default DialogResult value to OK
-            // we have to set this because this form's DialogResult 
+            // we have to set this because this form's DialogResult
             // is set to Cancel
             DialogResult = DialogResult.OK;
 
@@ -57,7 +46,7 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void btnGo_Click(object sender, EventArgs e)
+        private void btnGo_Click(object sender, EventArgs e)
         {
             if (txPassword.Text == GlobalHelper.appSettings.Settings.Password)
             {
@@ -98,17 +87,17 @@ namespace MultiRemoteDesktopClient
             }
         }
 
-        void btnCancel_Click(object sender, EventArgs e)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             isCanceled = true;
         }
 
-        void btnRenewCAPTCHA_Click(object sender, EventArgs e)
+        private void btnRenewCAPTCHA_Click(object sender, EventArgs e)
         {
             captcha1.Renew();
         }
 
-        void ResizeWindow(bool showCAPTCHA)
+        private void ResizeWindow(bool showCAPTCHA)
         {
             if (!showCAPTCHA)
             {

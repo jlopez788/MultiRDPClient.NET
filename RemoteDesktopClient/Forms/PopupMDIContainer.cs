@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Crownwood.Magic.Forms;
 
 namespace MultiRemoteDesktopClient
 {
@@ -25,12 +19,11 @@ namespace MultiRemoteDesktopClient
 
         public void InitializeControlEvents()
         {
-            tabMDIChild.SelectionChanged += new EventHandler(tabMDIChild_SelectionChanged);
+            tabMDIChild.SelectionChanged += new EventHandler(TabMDIChild_SelectionChanged);
         }
 
-        void tabMDIChild_SelectionChanged(object sender, EventArgs e)
+        private void TabMDIChild_SelectionChanged(object sender, EventArgs e)
         {
-            
         }
 
         public void PopIn(ref Panel panel, Form parentForm, string title)
@@ -58,16 +51,15 @@ namespace MultiRemoteDesktopClient
             parentForm.WindowState = FormWindowState.Normal;
         }
 
-        void CreateTab(ref Panel panel, string text)
+        private void CreateTab(ref Panel panel, string text)
         {
             Crownwood.Magic.Controls.TabPage newPage = new Crownwood.Magic.Controls.TabPage(text, panel);
             newPage.Tag = panel.Handle;
 
-
             tabMDIChild.TabPages.Add(newPage);
         }
 
-        void DestroyTab(IntPtr PanelHandle, RdpClientWindow parentForm)
+        private void DestroyTab(IntPtr PanelHandle, RdpClientWindow parentForm)
         {
             Crownwood.Magic.Controls.TabPage thisPage = null;
             // destroy tag
@@ -96,7 +88,7 @@ namespace MultiRemoteDesktopClient
             // check if this form can be closed
             if (tabMDIChild.TabPages.Count == 0)
             {
-                //this.Close();
+                Close();
             }
         }
     }

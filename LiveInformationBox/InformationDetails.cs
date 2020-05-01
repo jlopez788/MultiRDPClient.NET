@@ -3,19 +3,23 @@
  * by Jayson Ragasa aka Nullstring
  * Baguio City, Philippines
  * -
- * 
+ *
 */
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Xml;
-using System.Xml.XPath;
 
 namespace LiveInformationBox
 {
+    public class InformationDetails
+    {
+        public string Information { set; get; }
+        public string ShortDescription { set; get; }
+        public string Title { set; get; }
+    }
+
     public class XMLInformationReader
     {
-        string _xmlInfoFile = string.Empty;
+        private string _xmlInfoFile = string.Empty;
 
         public XMLInformationReader(string XMLInfoFile)
         {
@@ -56,60 +60,13 @@ namespace LiveInformationBox
                 node = thisNode.SelectSingleNode("./infos/text()");
                 if (node != null)
                 {
-                    infoDet.Information = node.Value; 
+                    infoDet.Information = node.Value;
                 }
             }
 
             d = null;
 
             return infoDet;
-        }
-    }
-
-    public class InformationDetails
-    {
-        string _title = string.Empty;
-        string _short_description = string.Empty;
-        string _infos = string.Empty;
-
-        public InformationDetails()
-        {
-        }
-
-        public string Title
-        {
-            set
-            {
-                _title = value;
-            }
-            get
-            {
-                return _title;
-            }
-        }
-
-        public string ShortDescription
-        {
-            set
-            {
-                _short_description = value;
-            }
-            get
-            {
-                return _short_description;
-            }
-        }
-
-        public string Information
-        {
-            set
-            {
-                _infos = value;
-            }
-            get
-            {
-                return _infos;
-            }
         }
     }
 }

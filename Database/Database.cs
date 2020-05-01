@@ -73,6 +73,7 @@ namespace Database
                     new GroupDetails("Web Servers")
             });
 
+            servers.EnsureIndex(nameof(ServerDetails.ServerName), true);
             return 1;
         });
 

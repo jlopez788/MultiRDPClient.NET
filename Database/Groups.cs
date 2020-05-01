@@ -29,7 +29,7 @@ namespace Database
     {
         public static readonly Guid UncategorizedId = new Guid("10000000-0000-0000-0000-000000000012");
 
-        public void Save(GroupDetails groupDetails) => Execute(context => context.Upsert(new BsonValue(groupDetails.Id), groupDetails));
+        public bool Save(GroupDetails groupDetails) => Execute(context => context.Upsert(new BsonValue(groupDetails.Id), groupDetails));
 
         public void DeleteByID(Guid id) => Execute(context => context.Delete(new BsonValue(id)));
 

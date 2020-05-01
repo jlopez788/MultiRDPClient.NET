@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Configuration;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MultiRemoteDesktopClient
 {
     public class ApplicationSettings
     {
-        bool _isAppConfigExists = false;
-        ExeConfigurationFileMap _exeFileMap = new ExeConfigurationFileMap();
-        Configuration config = null;
+        private bool _isAppConfigExists = false;
+        private ExeConfigurationFileMap _exeFileMap = new ExeConfigurationFileMap();
+        private Configuration config = null;
         public SettingsModel Settings = new SettingsModel();
 
         public ApplicationSettings()
@@ -68,9 +66,9 @@ namespace MultiRemoteDesktopClient
             catch (Exception ex)
             {
                 MessageBox.Show(
-                    string.Format("An error has occured while saving the configuration.\r\n\r\nMessage: {0}\r\n\r\nSource:\r\n{1}", 
+                    string.Format("An error has occured while saving the configuration.\r\n\r\nMessage: {0}\r\n\r\nSource:\r\n{1}",
                         ex.Message, ex.StackTrace
-                    ), 
+                    ),
                     "ApplicationSettings", MessageBoxButtons.OK, MessageBoxIcon.Information
                 );
 
@@ -84,6 +82,7 @@ namespace MultiRemoteDesktopClient
         {
             public SettingsModel()
             {
+                HideInformationPopupWindow = true;
             }
 
             [ConfigurationProperty("Password")]
@@ -92,13 +91,11 @@ namespace MultiRemoteDesktopClient
                 get
                 {
                     string ret = RijndaelSettings.Decrypt((string)this["Password"]);
-                    //string ret = (string)this["Password"];
                     return ret;
                 }
                 set
                 {
                     string val = RijndaelSettings.Encrypt(value);
-                    //string val = value;
                     this["Password"] = val;
                 }
             }

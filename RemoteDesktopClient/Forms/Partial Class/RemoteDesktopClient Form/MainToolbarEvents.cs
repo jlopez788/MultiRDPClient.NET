@@ -194,7 +194,7 @@ namespace MultiRemoteDesktopClient
 
             if (rdpClientWin != null)
             {
-                rdpClientWin._sd = sd;
+                rdpClientWin.CurrentServer = sd;
                 rdpClientWin.Reconnect(true, false, false);
             }
              

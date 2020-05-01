@@ -44,7 +44,7 @@
             this.btnDecrypt.TabIndex = 0;
             this.btnDecrypt.Text = "Decrypt";
             this.btnDecrypt.UseVisualStyleBackColor = true;
-            this.btnDecrypt.Click += new System.EventHandler(this.btnDecrypt_Click);
+            this.btnDecrypt.Click += new System.EventHandler(this.BtnDecrypt_Click);
             // 
             // btnEncrypt
             // 
@@ -54,7 +54,7 @@
             this.btnEncrypt.TabIndex = 1;
             this.btnEncrypt.Text = "Encrypt";
             this.btnEncrypt.UseVisualStyleBackColor = true;
-            this.btnEncrypt.Click += new System.EventHandler(this.btnEncrypt_Click);
+            this.btnEncrypt.Click += new System.EventHandler(this.BtnEncrypt_Click);
             // 
             // txPassword
             // 

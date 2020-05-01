@@ -5,6 +5,15 @@ E:\Codes\Multi Remote Desktop Client .NET\Win32APIs\obj\Debug\Win32APIs.dll
 E:\Codes\Multi Remote Desktop Client .NET\Win32APIs\obj\Debug\Win32APIs.pdb
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\Win32APIs.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\Win32APIs.pdb
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\Database.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\LiteDB.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\RijndaelEncryptDecrypt.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\Database.pdb
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\Database.dll.config
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\LiteDB.xml
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\bin\Debug\RijndaelEncryptDecrypt.pdb
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\obj\Debug\Win32APIs.csprojAssemblyReference.cache
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\obj\Debug\Win32APIs.csproj.CoreCompileInputs.cache
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\obj\Debug\Win32APIs.csproj.CopyComplete
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\obj\Debug\Win32APIs.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\Win32APIs\obj\Debug\Win32APIs.pdb

@@ -11,7 +11,14 @@ E:\Codes\Multi Remote Desktop Client .NET\LiveInformationBox\obj\Debug\LiveInfor
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\LiveInformationBox.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\LiveInformationBox.pdb
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\Win32APIs.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\Database.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\LiteDB.dll
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\RijndaelEncryptDecrypt.dll
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\Win32APIs.pdb
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\Database.pdb
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\Database.dll.config
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\LiteDB.xml
+C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\bin\Debug\RijndaelEncryptDecrypt.pdb
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\obj\Debug\LiveInformationBox.csprojAssemblyReference.cache
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\obj\Debug\LiveInformationBox.InfoWindow.resources
 C:\Users\OnePc\Desktop\github\MultiRDPClient.NET\LiveInformationBox\obj\Debug\LiveInformationBox.Properties.Resources.resources

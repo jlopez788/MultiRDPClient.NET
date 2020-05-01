@@ -5,23 +5,6 @@ namespace MultiRemoteDesktopClient
 {
     partial class RemoteDesktopClient
     {
-        private void ClientWin_Connected(object sender, EventArgs e, int ListIndex)
-        {
-            //lvServerLists.Items[ListIndex].ImageIndex = 0;
-            //tabMDIChild.SelectedTab.ImageIndex = 0;
-        }
-
-        private void ClientWin_Connecting(object sender, EventArgs e, int ListIndex)
-        {
-            lvServerLists.Items[ListIndex].ImageIndex = 2;
-        }
-
-        private void ClientWin_Disconnected(object sender, AxMSTSCLib.IMsTscAxEvents_OnDisconnectedEvent e, int ListIndex)
-        {
-            lvServerLists.Items[ListIndex].ImageIndex = 1;
-            tabMDIChild.SelectedTab.ImageIndex = 1;
-        }
-
         private void ClientWin_LoginComplete(object sender, EventArgs e, int ListIndex)
         {
             lvServerLists.Items[ListIndex].ImageIndex = 0;
@@ -43,7 +26,6 @@ namespace MultiRemoteDesktopClient
         private void ClientWin_OnFormClosing(object sender, FormClosingEventArgs e, int ListIndex, IntPtr Handle)
         {
             lvServerLists.Items[ListIndex].ImageIndex = 1;
-
             foreach (Crownwood.Magic.Controls.TabPage tabMDI in tabMDIChild.TabPages)
             {
                 if ((IntPtr)tabMDI.Tag == Handle)

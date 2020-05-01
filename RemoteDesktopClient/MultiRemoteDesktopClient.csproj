@@ -178,6 +178,7 @@
     <Compile Include="Forms\PopupMDIContainer.Designer.cs">
       <DependentUpon>PopupMDIContainer.cs</DependentUpon>
     </Compile>
+    <Compile Include="RdpState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\RDThumbnail.resx">

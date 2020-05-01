@@ -48,7 +48,6 @@ namespace LiveInformationBox
 
         private string _xmlInfoFile = string.Empty;
         private WindowPositions _winpos = WindowPositions.BOTTOM_RIGHT;
-        private bool _enableInfoWin = false;
 
         public InfoWindow(string XMLInfoFile, WindowPositions winpos)
         {
@@ -72,17 +71,7 @@ namespace LiveInformationBox
 
         #region control extra properties
 
-        public bool EnableInformationWindow
-        {
-            set
-            {
-                _enableInfoWin = value;
-            }
-            get
-            {
-                return _enableInfoWin;
-            }
-        }
+        public bool EnableInformationWindow { set; get; } = false;
 
         #endregion
 
@@ -185,7 +174,7 @@ namespace LiveInformationBox
 
         void ShowWindow()
         {
-            if (!_enableInfoWin)
+            if (!EnableInformationWindow)
             {
                 return;
             }

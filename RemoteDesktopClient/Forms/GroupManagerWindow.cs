@@ -142,7 +142,7 @@ namespace MultiRemoteDesktopClient
                 Button btnCreate = new Button();
                 btnCreate.Text = "Create";
                 btnCreate.Location = new Point(lbl.Location.X, txGroup.Location.Y + txGroup.Size.Height + 3);
-                btnCreate.Click += new EventHandler(delegate {
+                btnCreate.Click += new EventHandler((s, e) => {
                     if (txGroup.Text == string.Empty)
                     {
                         MessageBox.Show("Please enter a group name", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);

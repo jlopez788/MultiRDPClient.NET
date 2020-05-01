@@ -1,6 +1,7 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using Database;
+using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace Win32APIs
@@ -56,7 +57,7 @@ namespace Win32APIs
         public static extern int GetWindowRect(IntPtr hwnd, out RECT rc);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-        static extern bool SetWindowPos(
+        private static extern bool SetWindowPos(
              int hWnd,           // window handle
              int hWndInsertAfter,    // placement-order handle
              int X,          // horizontal position
@@ -66,7 +67,7 @@ namespace Win32APIs
              uint uFlags);       // window positioning flags
 
         [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         [DllImport("gdi32.dll", CharSet = CharSet.Ansi, SetLastError = true, ExactSpelling = true)]
         public static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, TernaryRasterOperations dwRop);
@@ -93,30 +94,10 @@ namespace Win32APIs
                 Graphics graphics = Graphics.FromImage(image);
                 IntPtr hdc = formg.GetHdc();
                 IntPtr ptr2 = graphics.GetHdc();
-                try
-                {
-                    BitBlt(ptr2, 0, 0, w, h - yOffset, hdc, 0, yOffset, TernaryRasterOperations.SRCCOPY);
-                }
-                catch (Exception exception1)
-                {
-                }
-                finally
-                {
-                    try
-                    {
-                        formg.ReleaseHdc(hdc);
-                    }
-                    catch (Exception exception2)
-                    {
-                    }
-                    try
-                    {
-                        graphics.ReleaseHdc(ptr2);
-                    }
-                    catch (Exception exception3)
-                    {
-                    }
-                }
+
+                Utility.Try(() => BitBlt(ptr2, 0, 0, w, h - yOffset, hdc, 0, yOffset, TernaryRasterOperations.SRCCOPY),
+                    onFinal: () => Utility.Try(() => formg.ReleaseHdc(hdc), onFinal: () => graphics.ReleaseHdc(ptr2)));
+                
                 return image;
             }
 
@@ -130,7 +111,8 @@ namespace Win32APIs
                     if (control == null || control.Handle == IntPtr.Zero)
                         return (Image)bitmap;
 
-                    if (control.Width < 1 || control.Height < 1) return (Image)bitmap;
+                    if (control.Width < 1 || control.Height < 1)
+                        return (Image)bitmap;
 
                     if (bitmap != null)
                         bitmap.Dispose();
